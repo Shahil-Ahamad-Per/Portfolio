@@ -1,3 +1,4 @@
+import GitBlogContent from "./BlogContents/GitHub.content";
 
 export const blogPosts = [
   {
@@ -8,6 +9,7 @@ export const blogPosts = [
     category: "Git & GitHub",
     date: "2024-01-15",
     readTime: "8 min read",
+    content:GitBlogContent,
   },
   {
     id: 2,

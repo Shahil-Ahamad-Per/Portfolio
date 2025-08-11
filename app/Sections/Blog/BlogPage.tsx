@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Tag, Calendar } from "lucide-react"
 import { useState } from "react"
 import { blogPosts } from "./Blogs"
+import Link from "next/link"  // ✅ Add this
 
 const categories = ["All", "Git & GitHub", "NX Workspace", "TypeScript", "JavaScript"]
 
@@ -13,34 +14,34 @@ export default function BlogSection() {
     selectedCategory === "All" ? blogPosts : blogPosts.filter((post) => post.category === selectedCategory)
 
   return (
-<section id="blog" className="py-20 px-6">
-        <div className="container mx-auto max-w-6xl">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-center text-charcoal-800 dark:text-slate-100 mb-16 hover:text-sage-600 dark:hover:text-gold-400 transition-colors duration-300">
-            Latest Articles
-          </h2>
+    <section id="blog" className="py-20 px-6">
+      <div className="container mx-auto max-w-6xl">
+        <h2 className="text-4xl md:text-5xl font-serif font-bold text-center text-charcoal-800 dark:text-slate-100 mb-16 hover:text-sage-600 dark:hover:text-gold-400 transition-colors duration-300">
+          Latest Articles
+        </h2>
 
-          {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                onClick={() => setSelectedCategory(category)}
-                className={
-                  selectedCategory === category
-                    ? "bg-sage-600 hover:bg-sage-700 dark:bg-gold-600 dark:hover:bg-gold-700 text-white hover:scale-110 hover:shadow-lg transition-all duration-300"
-                    : "border-sage-600 text-sage-600 hover:bg-sage-50 dark:border-gold-400 dark:text-gold-400 dark:hover:bg-slate-800 hover:scale-110 hover:shadow-lg transition-all duration-300"
-                }
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
+        {/* Category Filter */}
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          {categories.map((category) => (
+            <Button
+              key={category}
+              variant={selectedCategory === category ? "default" : "outline"}
+              onClick={() => setSelectedCategory(category)}
+              className={
+                selectedCategory === category
+                  ? "bg-sage-600 hover:bg-sage-700 dark:bg-gold-600 dark:hover:bg-gold-700 text-white hover:scale-110 hover:shadow-lg transition-all duration-300"
+                  : "border-sage-600 text-sage-600 hover:bg-sage-50 dark:border-gold-400 dark:text-gold-400 dark:hover:bg-slate-800 hover:scale-110 hover:shadow-lg transition-all duration-300"
+              }
+            >
+              {category}
+            </Button>
+          ))}
+        </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {filteredPosts.map((post) => (
+        <div className="grid md:grid-cols-2 gap-8">
+          {filteredPosts.map((post) => (
+            <Link key={post.id} href={`/blog/${post.id}`} passHref>
               <Card
-                key={post.id}
                 className="bg-cream-50 dark:bg-slate-800 border-sage-200 dark:border-slate-600 hover:shadow-2xl hover:scale-105 hover:-translate-y-2 hover:border-sage-400 dark:hover:border-gold-500 transition-all duration-500 group cursor-pointer"
               >
                 <CardHeader>
@@ -79,9 +80,10 @@ export default function BlogSection() {
                   </div>
                 </CardContent>
               </Card>
-            ))}
-          </div>
+            </Link>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
   )
 }

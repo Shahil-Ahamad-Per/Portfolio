@@ -1,9 +1,7 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
-
-import Header from "./Sections/Header"
+import NavBar from "@/components/Navbar"
 import HeroSection from "./Sections/MainPage"
 import { AboutSection } from "./Sections/About"
 import SkillsSection from "@/app/Sections/Skill/skillPage"
@@ -17,7 +15,7 @@ export default function Portfolio() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [showWelcome, setShowWelcome] = useState(true)
-  const [activeSection, setActiveSection] = useState("")
+  const [activeSection, setActiveSection] = useState("home")
 
   useEffect(() => {
     setMounted(true)
@@ -37,7 +35,6 @@ export default function Portfolio() {
         if (element) {
           const offsetTop = element.offsetTop
           const offsetHeight = element.offsetHeight
-
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             setActiveSection(section)
             break
@@ -48,7 +45,6 @@ export default function Portfolio() {
 
     window.addEventListener("scroll", handleScroll)
     handleScroll()
-
     return () => window.removeEventListener("scroll", handleScroll)
   }, [showWelcome])
 
@@ -70,12 +66,7 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cream-50 to-sage-50 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900 transition-all duration-1000 animate-fadeIn">
-      <Header
-        theme={theme}
-        setTheme={setTheme}
-        activeSection={activeSection}
-        scrollToSection={scrollToSection}
-      />
+      <NavBar theme={theme} setTheme={setTheme} activeSection={activeSection} scrollToSection={scrollToSection} />
       <HeroSection scrollToSection={scrollToSection} />
       <AboutSection />
       <SkillsSection />

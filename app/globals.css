@@ -159,3 +159,9 @@ html {
 .animation-delay-600 {
   animation-delay: 600ms;
 }
+
+
+#blog-content h2,
+#blog-content h3 {
+  scroll-margin-top: 5rem; /* Matches sticky navbar height */
+}
