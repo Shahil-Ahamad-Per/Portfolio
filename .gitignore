@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/dist
 
 # next.js
 /.next/
@@ -35,7 +36,7 @@ next-env.d.ts
 # Next.js
 .next
 out
-/dist
+
 /tmp
 /out-tsc
 .env
