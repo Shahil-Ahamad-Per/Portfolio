@@ -1,0 +1,4 @@
+name = "portfolio"
+main = ".vercel/output/static/_worker.js"
+compatibility_date = "2024-07-14"
+compatibility_flags = ["nodejs_compat"]

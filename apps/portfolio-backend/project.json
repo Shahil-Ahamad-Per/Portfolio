@@ -1,0 +1,40 @@
+{
+  "name": "portfolio-backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/portfolio-backend/src",
+  "projectType": "application",
+  "tags": ["scope:backend"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/portfolio-backend",
+        "main": "apps/portfolio-backend/src/main.ts",
+        "tsConfig": "apps/portfolio-backend/tsconfig.json"
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "portfolio-backend:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "portfolio-backend:build"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/portfolio-backend/jest.config.ts"
+      }
+    }
+  }
+}

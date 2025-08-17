@@ -1,0 +1,27 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@portfolio/frontend/ui": ["libs/portfolio-frontend-libs/ui/index.ts"],
+      "@portfolio/frontend/utils": ["libs/portfolio-frontend-libs/utils/index.ts"],
+      "@portfolio/frontend/hooks": ["libs/portfolio-frontend-libs/hooks/index.ts"],
+      "@portfolio/backend/api": ["libs/portfolio-backend-libs/api/index.ts"],
+      "@portfolio/backend/auth": ["libs/portfolio-backend-libs/auth/index.ts"],
+      "@portfolio/backend/database": ["libs/portfolio-backend-libs/database/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

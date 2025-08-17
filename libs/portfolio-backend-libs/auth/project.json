@@ -1,0 +1,19 @@
+{
+  "name": "portfolio-backend-auth",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/portfolio-backend-libs/auth",
+  "projectType": "library",
+  "tags": ["scope:backend", "type:auth"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/portfolio-backend-libs/auth/jest.config.ts"
+      }
+    }
+  }
+}
