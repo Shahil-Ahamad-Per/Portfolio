@@ -19,7 +19,24 @@ export default function Portfolio() {
 
   useEffect(() => {
     setMounted(true)
+    const hasVisited = localStorage.getItem('hasVisitedBefore')
+    if (hasVisited) {
+      setShowWelcome(false)
+    }
   }, [])
+  const handleWelcomeExit = () => {
+    setShowWelcome(false)
+    // Set flag in localStorage to remember the user has visited
+    localStorage.setItem('hasVisitedBefore', 'true')
+  }
+
+  // Handle initial hash route
+  useEffect(() => {
+    if (!showWelcome && window.location.hash) {
+      const section = window.location.hash.slice(1) // Remove the # symbol
+      scrollToSection(section, false)
+    }
+  }, [showWelcome])
 
   // Scroll spy effect for active section tracking
   useEffect(() => {
@@ -37,6 +54,11 @@ export default function Portfolio() {
           const offsetHeight = element.offsetHeight
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             setActiveSection(section)
+            // Update URL hash without triggering scroll
+            const currentHash = window.location.hash.slice(1)
+            if (currentHash !== section) {
+              window.history.pushState(null, '', `#${section}`)
+            }
             break
           }
         }
@@ -48,7 +70,7 @@ export default function Portfolio() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [showWelcome])
 
-  const scrollToSection = (sectionId: string) => {
+  const scrollToSection = (sectionId: string, updateHash: boolean = true) => {
     const element = document.getElementById(sectionId)
     if (!element) return
 
@@ -59,11 +81,30 @@ export default function Portfolio() {
       top: elementPosition - headerOffset,
       behavior: "smooth",
     })
+
+    // Update URL hash
+    if (updateHash) {
+      window.history.pushState(null, '', `#${sectionId}`)
+    }
+    setActiveSection(sectionId)
   }
 
-  if (!mounted) return null
-  if (showWelcome) return <WelcomeScreen onExit={() => setShowWelcome(false)} />
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (!showWelcome) {
+        const section = window.location.hash.slice(1) || "home"
+        scrollToSection(section, false)
+      }
+    }
 
+    window.addEventListener("hashchange", handleHashChange)
+    return () => window.removeEventListener("hashchange", handleHashChange)
+  }, [showWelcome])
+
+ 
+  if (!mounted) return null
+  if (showWelcome) return <WelcomeScreen onExit={handleWelcomeExit} />
   return (
     <div className="min-h-screen bg-gradient-to-br from-cream-50 to-sage-50 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900 transition-all duration-1000 animate-fadeIn">
       <NavBar theme={theme} setTheme={setTheme} activeSection={activeSection} scrollToSection={scrollToSection} />
