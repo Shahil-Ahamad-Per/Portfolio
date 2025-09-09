@@ -2930,6 +2930,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"emailjs-com@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "emailjs-com@npm:3.2.0"
+  checksum: 10c0/3c6865ce89ebabeccd4f678fbd5f545f58482bb99fc23c17d9cebbf895705275df2da9c6fadaef8148397fe7fcc18cbbe49f9c720b5ad88b2dd6b82680ef169f
+  languageName: node
+  linkType: hard
+
 "embla-carousel-react@npm:8.5.1":
   version: 8.5.1
   resolution: "embla-carousel-react@npm:8.5.1"
@@ -4385,6 +4392,7 @@ __metadata:
     clsx: "npm:^2.1.1"
     cmdk: "npm:1.0.4"
     date-fns: "npm:4.1.0"
+    emailjs-com: "npm:^3.2.0"
     embla-carousel-react: "npm:8.5.1"
     input-otp: "npm:1.4.1"
     lucide-react: "npm:^0.454.0"
