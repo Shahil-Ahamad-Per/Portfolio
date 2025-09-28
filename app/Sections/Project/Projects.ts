@@ -7,11 +7,10 @@ export const projects = [
     live: "https://expressjs-weather-api.onrender.com/api-docs/",
   },
   {
-    title: "React JS Weather App (UpComing)",
-    description: "A Weather App build using React.js, Tailwind CSS, and OpenWeatherMap API.",
-    tech: ["React", "Tailwind CSS", "OpenWeatherMap API"],
-    github: "#",
-    live: "#",
+    title: "Browser Code Editor",
+    description: "A Browser Code Editor build using React.js, Tailwind CSS, and Piston API.",
+    tech: ["React", "Tailwind CSS", "Piston API"],
+    live: "https://browser-code-editor-six.vercel.app/",
   },
  
 ]
