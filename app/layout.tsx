@@ -56,6 +56,7 @@ export default function RootLayout({
         <meta property="og:image" content="https://www.shahilahamad.com.np/homePage.png" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.shahilahamad.com.np/" />
+        <meta name='dmca-site-verification' content='U1luU3FJZTQ4eHFDUmZaaUdQRVZoa1BVdDNiUU9iamVRSy9BdUNDcm0yQT01' />
       </head>
       <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange={false}>
