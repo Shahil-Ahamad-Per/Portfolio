@@ -4,7 +4,7 @@ export const projects = [
     description: "A Weather API build using Node.js, Express.js, and Swagger.",
     tech: ["Node.JS", "TypeScript", "Express JS", "Swagger"],
     github: "https://github.com/Shahil-Ahamad-Per/ExpressJS-Weather-API",
-    live: "https://expressjs-weather-api.onrender.com/api-docs/",
+    live: "https://weatherapi.shahilahamad.com.np/api-docs/",
   },
   {
     title: "Browser Code Editor",
