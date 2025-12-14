@@ -8,7 +8,8 @@
   "packageManager": "pnpm@10.11.1",
   "scripts": {
     "build": "next build",
-    "deploy": "wrangler deploy .yarn/output",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "deploy": "pnpm pages:build && wrangler pages deploy .vercel/output/static",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start"
