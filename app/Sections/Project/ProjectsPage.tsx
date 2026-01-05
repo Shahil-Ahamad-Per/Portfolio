@@ -1,13 +1,21 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Github, ExternalLink, Clock } from "lucide-react"
-import { projects } from "./Projects"
-
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Github, ExternalLink, Clock } from "lucide-react";
+import { projects } from "./Projects";
 
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="py-20 px-6 bg-cream-100/50 dark:bg-slate-800/50">
+    <section
+      id="projects"
+      className="py-20 px-6 bg-cream-100/50 dark:bg-slate-800/50"
+    >
       <div className="container mx-auto max-w-6xl">
         <h2 className="text-4xl md:text-5xl font-serif font-bold text-center text-charcoal-800 dark:text-slate-100 mb-16 hover:text-sage-600 dark:hover:text-gold-400 transition-colors duration-300">
           Featured Projects
@@ -15,13 +23,15 @@ export default function ProjectsSection() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => {
-            const isComingSoon = project.status === "Coming Soon"
-            
+            const isComingSoon =
+              project.status === "Coming Soon" ||
+              project.status === "Work In Progress";
+
             return (
               <Card
                 key={index}
                 className={`bg-cream-50 dark:bg-slate-800 border-sage-200 dark:border-slate-600 hover:shadow-2xl hover:scale-105 hover:-translate-y-2 hover:border-sage-400 dark:hover:border-gold-500 transition-all duration-500 group cursor-pointer ${
-                  isComingSoon ? 'opacity-90' : ''
+                  isComingSoon ? "opacity-90" : ""
                 }`}
               >
                 <CardHeader>
@@ -32,7 +42,9 @@ export default function ProjectsSection() {
                     {isComingSoon && (
                       <Badge className="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-300 dark:border-amber-700 flex items-center gap-1 whitespace-nowrap pointer-events-none">
                         <Clock className="h-3 w-3" />
-                        Soon
+                        {project.status === "Work In Progress"
+                          ? "In Development"
+                          : "Soon"}
                       </Badge>
                     )}
                   </div>
@@ -60,7 +72,9 @@ export default function ProjectsSection() {
                         onClick={() => window.open(project.github, "_blank")}
                         disabled={isComingSoon}
                         className={`border-sage-600 text-sage-600 hover:bg-sage-50 dark:border-gold-400 dark:text-gold-400 dark:hover:bg-slate-800 bg-transparent transition-all duration-300 ${
-                          !isComingSoon ? 'hover:scale-110 hover:shadow-lg' : 'opacity-50 cursor-not-allowed'
+                          !isComingSoon
+                            ? "hover:scale-110 hover:shadow-lg"
+                            : "opacity-50 cursor-not-allowed"
                         }`}
                       >
                         <Github className="h-4 w-4 mr-2" />
@@ -72,9 +86,11 @@ export default function ProjectsSection() {
                         variant="outline"
                         size="sm"
                         onClick={() => window.open(project.live, "_blank")}
-                        disabled={isComingSoon}
+                        disabled={project.status === "Coming Soon"}
                         className={`border-sage-600 text-sage-600 hover:bg-sage-50 dark:border-gold-400 dark:text-gold-400 dark:hover:bg-slate-800 bg-transparent transition-all duration-300 ${
-                          !isComingSoon ? 'hover:scale-110 hover:shadow-lg' : 'opacity-50 cursor-not-allowed'
+                          project.status !== "Coming Soon"
+                            ? "hover:scale-110 hover:shadow-lg"
+                            : "opacity-50 cursor-not-allowed"
                         }`}
                       >
                         <ExternalLink className="h-4 w-4 mr-2" />
@@ -95,10 +111,10 @@ export default function ProjectsSection() {
                   </div>
                 </CardContent>
               </Card>
-            )
+            );
           })}
         </div>
       </div>
     </section>
-  )
+  );
 }
