@@ -14,16 +14,17 @@ export const projects = [
     live: "https://browser-code-editor-six.vercel.app/",
   },
   {
+    title: "SA Docs Converter",
+    description:
+      "A Free online tools to convert, merge, split, and compress PDF files and images. Fast, secure, and easy to use..",
+    tech: ["ReactJS", "Tailwind CSS", "ShadCn/ui"],
+    live: "https://docsconverter.shahilahamad.com.np/",
+  },
+  {
     title: "Aditya Rana Portfolio",
     description: "A Portfolio Website build using Next.js, Tailwind CSS.",
     tech: ["Next Js", "Tailwind CSS", "ShadCn/ui"],
     live: "https://www.adityarana.com.np/",
     status: "Work In Progress",
-  },
-  {
-    title: "Blog Website",
-    description: "A Blog Website build using Astro Js, Tailwind CSS.",
-    tech: ["Astro", "Tailwind CSS", "ShadCn/ui"],
-    status: "Coming Soon",
   },
 ];
