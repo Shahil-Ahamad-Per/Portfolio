@@ -21,6 +21,21 @@ export const projects = [
     live: "https://docsconverter.shahilahamad.com.np/",
   },
   {
+    title: "SA Sudoku",
+    description:
+      "Play free Sudoku online. Easy, Medium, Hard, and Expert puzzles with hints, notes, and score tracking.",
+    tech: ["Next Js", "Tailwind CSS", "ShadCn/ui"],
+    live: "https://sudoku.shahilahamad.com.np/",
+  },
+  {
+    title: "SA BagChal",
+    description:
+      "Experience Bagchal, the ancient strategy board game from Nepal. Play as the Tigers hunting goats, or the Goats trapping the tigers. High-fidelity visuals, AI engine, and local PVP.",
+    tech: ["Next Js", "Tailwind CSS", "ShadCn/ui"],
+    live: "https://bagchal.shahilahamad.com.np/",
+    status: "Work In Progress",
+  },
+  {
     title: "Aditya Rana Portfolio",
     description: "A Portfolio Website build using Next.js, Tailwind CSS.",
     tech: ["Next Js", "Tailwind CSS", "ShadCn/ui"],
