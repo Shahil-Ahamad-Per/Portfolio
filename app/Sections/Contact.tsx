@@ -1,74 +1,62 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useRef, useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Mail, Github, Linkedin, CheckCircle, Loader2 } from "lucide-react"
-import emailjs from 'emailjs-com'
+import type React from "react";
+import { useRef, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Mail, Github, Linkedin, CheckCircle, Loader2 } from "lucide-react";
 
 export default function ContactSection() {
-  const form = useRef<HTMLFormElement>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const form = useRef<HTMLFormElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError(null)
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
 
-    const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || ''
-    const templateIDToYou = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || ''
-    // const templateIDToSender = process.env.NEXT_PUBLIC_EMAILJS_REPLY_TEMPLATE_ID || ''
-    const userID = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ''
+    const formData = new FormData(e.currentTarget);
+    // Using your specific Web3Forms access key
+    formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "");
+
+    // Optional Web3Forms Enhancements:
+    formData.append("subject", "New message from your Portfolio Contact Form!");
+    formData.append("from_name", "Portfolio Website");
 
     try {
-      // Send email to you
-      const response = await emailjs.sendForm(
-        serviceID,
-        templateIDToYou,
-        form.current!,
-        userID
-      )
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
 
-      // Send confirmation email to sender
-      // if (form.current) {
-      //   const senderEmail = form.current.querySelector<HTMLInputElement>('input[name="reply_to"]')?.value
-      //   const senderName = form.current.querySelector<HTMLInputElement>('input[name="from_name"]')?.value
+      const data = await response.json();
 
-      //   await emailjs.send(
-      //     serviceID,
-      //     templateIDToSender,
-      //     {
-      //       to_email: senderEmail,
-      //       from_name: 'Shahil Ahamad',
-      //       sender_name: senderName,
-      //     },
-      //     userID
-      //   )
-      // }
+      if (data.success) {
+        setIsSuccess(true);
+        form.current?.reset();
 
-      setIsSuccess(true)
-      form.current?.reset()
-
-      // Hide success message after 5 seconds
-      setTimeout(() => {
-        setIsSuccess(false)
-      }, 5000)
-
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 5000);
+      } else {
+        setError(data.message || "Failed to send message.");
+      }
     } catch (err) {
-      setError('Failed to send message. Please try again later.')
-      console.error('Email send error:', err)
+      setError("Failed to send message. Please try again later.");
+      console.error("Email send error:", err);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
-    <section id="contact" className="py-20 px-6 bg-cream-100/50 dark:bg-slate-800/50 relative overflow-hidden">
-
-
+    <section
+      id="contact"
+      className="py-20 px-6 bg-cream-100/50 dark:bg-slate-800/50 relative overflow-hidden"
+    >
       <div className="container mx-auto max-w-4xl">
         <h2 className="text-4xl md:text-5xl font-serif font-bold text-center text-charcoal-800 dark:text-slate-100 mb-16 hover:text-sage-600 dark:hover:text-gold-400 transition-colors duration-300">
           Let's Work Together
@@ -81,8 +69,9 @@ export default function ContactSection() {
               Get In Touch
             </h3>
             <p className="text-lg text-charcoal-700 dark:text-slate-200 leading-relaxed hover:text-charcoal-800 dark:hover:text-slate-100 transition-colors duration-300">
-              I'm always interested in new opportunities and exciting projects. Whether you have a question or just want
-              to say hello, feel free to reach out!
+              I'm always interested in new opportunities and exciting projects.
+              Whether you have a question or just want to say hello, feel free
+              to reach out!
             </p>
 
             <div className="space-y-4">
@@ -100,7 +89,11 @@ export default function ContactSection() {
               <div className="flex items-center space-x-3 hover:scale-105 hover:translate-x-2 transition-all duration-300 group cursor-pointer">
                 <Github className="h-5 w-5 text-sage-600 dark:text-gold-400 group-hover:scale-125 transition-transform duration-300" />
                 <span className="text-charcoal-700 dark:text-slate-200 group-hover:text-sage-600 dark:group-hover:text-gold-400 transition-colors duration-300">
-                  <a href="https://github.com/Shahil-Ahamad-Per" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://github.com/Shahil-Ahamad-Per"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     github.com/Shahil-Ahamad-Per
                   </a>
                 </span>
@@ -108,7 +101,11 @@ export default function ContactSection() {
               <div className="flex items-center space-x-3 hover:scale-105 hover:translate-x-2 transition-all duration-300 group cursor-pointer">
                 <Linkedin className="h-5 w-5 text-sage-600 dark:text-gold-400 group-hover:scale-125 transition-transform duration-300" />
                 <span className="text-charcoal-700 dark:text-slate-200 group-hover:text-sage-600 dark:group-hover:text-gold-400 transition-colors duration-300">
-                  <a href="https://linkedin.com/in/shahil-ahamad" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://linkedin.com/in/shahil-ahamad"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     linkedin.com/in/shahil-ahamad
                   </a>
                 </span>
@@ -117,24 +114,37 @@ export default function ContactSection() {
           </div>
 
           {/* RIGHT SIDE FORM */}
-          <div className={`transition-all duration-500 ${isSuccess ? "scale-105" : ""}`}>
+          <div
+            className={`transition-all duration-500 ${isSuccess ? "scale-105" : ""}`}
+          >
             {isSuccess && (
-              <div className="absolute inset-0 flex items-center justify-center z-20 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-lg">
-                <div className="text-center space-y-4">
-                  <CheckCircle className="h-16 w-16 text-sage-600 dark:text-gold-400 mx-auto animate-bounce" />
-                  <h3 className="text-2xl font-semibold text-sage-700 dark:text-gold-300">Message Sent!</h3>
-                  <p className="text-sage-600 dark:text-gold-400">
-                    Thank you for reaching out. I'll get back to you soon!
+              <div className="absolute inset-0 flex items-center justify-center z-20 bg-cream-50/95 dark:bg-slate-800/95 backdrop-blur-xl rounded-2xl border border-sage-200/50 dark:border-slate-600/50 shadow-2xl animate-in fade-in zoom-in duration-500">
+                <div className="text-center p-8 max-w-sm transform transition-all">
+                  <div className="relative mx-auto w-24 h-24 mb-8">
+                    <div className="absolute inset-0 bg-green-200 dark:bg-green-900/50 rounded-full animate-ping opacity-75 duration-1000"></div>
+                    <div className="relative flex items-center justify-center w-24 h-24 bg-green-100 dark:bg-green-800/80 rounded-full border-4 border-white dark:border-slate-700 shadow-xl">
+                      <CheckCircle className="h-12 w-12 text-green-600 dark:text-green-400" />
+                    </div>
+                  </div>
+                  <h3 className="text-3xl font-serif font-bold text-charcoal-800 dark:text-slate-100 mb-4 tracking-tight">
+                    Message Sent!
+                  </h3>
+                  <p className="text-charcoal-600 dark:text-slate-300 text-lg leading-relaxed">
+                    Thank you for reaching out. I'll get back to you as soon as
+                    possible.
                   </p>
                 </div>
               </div>
             )}
 
-
-            <form ref={form} onSubmit={handleSubmit} className="space-y-6 relative">
+            <form
+              ref={form}
+              onSubmit={handleSubmit}
+              className="space-y-6 relative"
+            >
               <div>
                 <Input
-                  name="from_name"
+                  name="name"
                   placeholder="Your Name"
                   required
                   disabled={isLoading}
@@ -144,7 +154,7 @@ export default function ContactSection() {
               <div>
                 <Input
                   type="email"
-                  name="reply_to"
+                  name="email"
                   placeholder="Your Email"
                   required
                   disabled={isLoading}
@@ -162,7 +172,19 @@ export default function ContactSection() {
                 />
               </div>
 
-              {error && <div className="text-red-600 dark:text-red-400 text-sm text-center">{error}</div>}
+              {/* Web3Forms required fields for better functionality (optional) */}
+              <input
+                type="checkbox"
+                name="botcheck"
+                className="hidden"
+                style={{ display: "none" }}
+              />
+
+              {error && (
+                <div className="text-red-600 dark:text-red-400 text-sm text-center">
+                  {error}
+                </div>
+              )}
 
               <button
                 type="submit"
@@ -183,5 +205,5 @@ export default function ContactSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
