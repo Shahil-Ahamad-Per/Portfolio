@@ -132,7 +132,7 @@ export default function ContactSection() {
 
               <div className="space-y-6">
                 <a
-                  href="mailto:shahilahamad04@gmail.com"
+                  href="mailto:contact@shahilahamad.com.np"
                   target="_blank"
                   className="flex items-start space-x-4 group cursor-pointer p-3 -m-3 rounded-xl hover:bg-sage-50 dark:hover:bg-slate-700/50 transition-colors duration-300"
                   rel="noreferrer"
@@ -145,7 +145,7 @@ export default function ContactSection() {
                       Email
                     </p>
                     <p className="text-charcoal-800 dark:text-slate-200 font-medium group-hover:text-sage-600 dark:group-hover:text-gold-400 transition-colors">
-                      shahilahamad04@gmail.com
+                      contact@shahilahamad.com.np
                     </p>
                   </div>
                 </a>
