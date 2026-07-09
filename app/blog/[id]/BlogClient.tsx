@@ -167,7 +167,7 @@ export default function BlogClient({ post }: BlogClientProps) {
       <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-cream-50 to-sage-50 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900 px-6">
         <div className="text-center">
           <div className="text-6xl mb-6">😢</div>
-          <h1 className="text-3xl font-bold mb-4 text-charcoal-800 dark:text-slate-100">Article not found</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-charcoal-800 dark:text-slate-100">Article not found</h1>
           <p className="text-charcoal-600 dark:text-slate-300 mb-6">The article you&apos;re looking for doesn&apos;t exist.</p>
           <Link href="/" className="inline-flex items-center px-6 py-3 bg-sage-600 dark:bg-gold-500 text-white rounded-lg hover:bg-sage-700 dark:hover:bg-gold-600 transition-colors">
             ← Back to Home
@@ -183,21 +183,21 @@ export default function BlogClient({ post }: BlogClientProps) {
         <NavBar theme={theme} setTheme={setTheme} />
         <main className="flex-grow flex flex-col justify-center items-center px-6 py-20">
           <div className="text-center max-w-2xl">
-            <div className="text-8xl mb-8">🚀</div>
-            <h1 className="text-4xl font-bold mb-6 text-charcoal-800 dark:text-slate-100">{post.title}</h1>
-            <div className="bg-gradient-to-r from-sage-500 to-gold-500 bg-clip-text text-transparent text-2xl font-semibold mb-6">
+            <div className="text-6xl sm:text-8xl mb-6 sm:mb-8">🚀</div>
+            <h1 className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6 text-charcoal-800 dark:text-slate-100">{post.title}</h1>
+            <div className="bg-gradient-to-r from-sage-500 to-gold-500 bg-clip-text text-transparent text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">
               Coming Soon!
             </div>
-            <p className="text-lg text-charcoal-600 dark:text-slate-300 mb-8 leading-relaxed">
+            <p className="text-base sm:text-lg text-charcoal-600 dark:text-slate-300 mb-6 sm:mb-8 leading-relaxed">
               This blog post is currently being crafted with care. Stay tuned for amazing content that&apos;s worth the wait!
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link href="/" className="inline-flex items-center px-6 py-3 bg-sage-600 dark:bg-gold-500 text-white rounded-lg hover:bg-sage-700 dark:hover:bg-gold-600 transition-colors">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full sm:w-auto">
+              <Link href="/" className="inline-flex items-center justify-center px-6 py-3 bg-sage-600 dark:bg-gold-500 text-white rounded-lg hover:bg-sage-700 dark:hover:bg-gold-600 transition-colors w-full sm:w-auto">
                 ← Back to Home
               </Link>
               <button
                 onClick={() => window.history.back()}
-                className="inline-flex items-center px-6 py-3 border border-sage-200 dark:border-slate-600 text-charcoal-700 dark:text-slate-300 rounded-lg hover:bg-sage-100 dark:hover:bg-slate-800 transition-colors"
+                className="inline-flex items-center justify-center px-6 py-3 border border-sage-200 dark:border-slate-600 text-charcoal-700 dark:text-slate-300 rounded-lg hover:bg-sage-100 dark:hover:bg-slate-800 transition-colors w-full sm:w-auto"
               >
                 Go Back
               </button>
@@ -215,17 +215,17 @@ export default function BlogClient({ post }: BlogClientProps) {
 
       <header className="border-b border-sage-200 dark:border-slate-700 bg-cream-50/50 dark:bg-slate-800/50 backdrop-blur-sm">
         <div className="container mx-auto max-w-6xl px-6 py-8">
-          <div className="flex items-center gap-2 text-sm text-charcoal-600 dark:text-slate-400 mb-4">
-            <Link href="/" className="hover:text-sage-600 dark:hover:text-gold-400 transition-colors">Home</Link>
-            <span>/</span>
-            <Link href="/#blog" className="hover:text-sage-600 dark:hover:text-gold-400 transition-colors">Blog</Link>
-            <span>/</span>
-            <span className="text-charcoal-800 dark:text-slate-200">{post.title}</span>
+          <div className="flex items-center gap-2 text-sm text-charcoal-600 dark:text-slate-400 mb-4 overflow-x-auto whitespace-nowrap pb-1 scrollbar-none">
+            <Link href="/" className="hover:text-sage-600 dark:hover:text-gold-400 transition-colors shrink-0">Home</Link>
+            <span className="shrink-0">/</span>
+            <Link href="/#blog" className="hover:text-sage-600 dark:hover:text-gold-400 transition-colors shrink-0">Blog</Link>
+            <span className="shrink-0">/</span>
+            <span className="text-charcoal-800 dark:text-slate-200 truncate min-w-0">{post.title}</span>
           </div>
-          <h1 className="text-4xl lg:text-5xl font-bold text-charcoal-800 dark:text-slate-100 mb-4 leading-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal-800 dark:text-slate-100 mb-4 leading-tight">
             {post.title}
           </h1>
-          <div className="flex items-center gap-6 text-sm text-charcoal-600 dark:text-slate-400">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-charcoal-600 dark:text-slate-400">
             <div className="flex items-center gap-2">
               <FileText className="h-4 w-4" />
               <span>Technical Guide</span>
@@ -238,15 +238,16 @@ export default function BlogClient({ post }: BlogClientProps) {
         </div>
       </header>
 
-      <main className="container mx-auto max-w-6xl px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <main className="container mx-auto max-w-6xl px-6 py-8 sm:py-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
         <article className="lg:col-span-8">
           <div
             id="blog-content"
-            className="prose prose-lg dark:prose-invert max-w-none
+            className="prose dark:prose-invert max-w-none
+              prose-sm sm:prose-lg
               prose-headings:font-serif prose-headings:font-bold prose-headings:text-charcoal-800 dark:prose-headings:text-slate-100
-              prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:text-sage-800 dark:prose-h2:text-sage-400 prose-h2:scroll-mt-20
-              prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-sage-700 dark:prose-h3:text-sage-300 prose-h3:scroll-mt-20
-              prose-p:text-charcoal-700 dark:prose-p:text-slate-300 prose-p:leading-relaxed prose-p:mb-6
+              prose-h2:text-2xl sm:prose-h2:text-3xl prose-h2:mt-8 sm:prose-h2:mt-12 prose-h2:mb-3 sm:prose-h2:mb-4 prose-h2:text-sage-800 dark:prose-h2:text-sage-400 prose-h2:scroll-mt-20
+              prose-h3:text-xl sm:prose-h3:text-2xl prose-h3:mt-6 sm:prose-h3:mt-8 prose-h3:mb-2 sm:prose-h3:mb-3 prose-h3:text-sage-700 dark:prose-h3:text-sage-300 prose-h3:scroll-mt-20
+              prose-p:text-charcoal-700 dark:prose-p:text-slate-300 prose-p:leading-relaxed prose-p:mb-4 sm:prose-p:mb-6
               prose-strong:text-charcoal-800 dark:prose-strong:text-slate-200
               prose-a:text-sage-600 dark:prose-a:text-gold-400
               prose-a:no-underline hover:prose-a:underline
@@ -254,10 +255,10 @@ export default function BlogClient({ post }: BlogClientProps) {
               prose-li:my-1
               prose-table:w-full prose-table:border-collapse
               prose-th:border prose-th:border-sage-200 dark:prose-th:border-slate-600
-              prose-th:px-6 prose-th:py-3 prose-th:text-left prose-th:font-semibold
+              prose-th:px-3 sm:prose-th:px-6 prose-th:py-2 sm:prose-th:py-3 prose-th:text-left prose-th:font-semibold
               prose-th:bg-sage-50 dark:prose-th:bg-slate-800
               prose-td:border prose-td:border-sage-200 dark:prose-td:border-slate-600
-              prose-td:px-6 prose-td:py-2"
+              prose-td:px-3 sm:prose-td:px-6 prose-td:py-1 sm:prose-td:py-2"
           >
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
@@ -277,7 +278,7 @@ export default function BlogClient({ post }: BlogClientProps) {
                   if (!isBlock) {
                     return (
                       <code
-                        className="bg-sage-100 dark:bg-slate-800 text-sage-800 dark:text-gold-400 px-1.5 py-0.5 rounded text-sm"
+                        className="bg-sage-100 dark:bg-slate-800 text-sage-800 dark:text-gold-400 px-1.5 py-0.5 rounded text-xs sm:text-sm"
                         {...props}
                       >
                         {children}
@@ -285,20 +286,20 @@ export default function BlogClient({ post }: BlogClientProps) {
                     )
                   }
                   return (
-                    <div className="relative group my-6">
-                      <div className="flex items-center justify-between bg-slate-800 dark:bg-slate-950 border border-sage-200 dark:border-slate-700 rounded-t-xl px-4 py-2">
-                        <span className="text-xs text-slate-400 uppercase tracking-wider">
+                    <div className="relative group my-4 sm:my-6">
+                      <div className="flex items-center justify-between bg-slate-800 dark:bg-slate-950 border border-sage-200 dark:border-slate-700 rounded-t-xl px-3 sm:px-4 py-2">
+                        <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider">
                           {className?.replace("language-", "") || "code"}
                         </span>
                         <button
                           onClick={() => navigator.clipboard.writeText(String(children).replace(/\n$/, ""))}
-                          className="text-xs text-slate-400 hover:text-white transition-colors"
+                          className="text-[10px] sm:text-xs text-slate-400 hover:text-white transition-colors"
                         >
                           Copy
                         </button>
                       </div>
-                      <pre className="!mt-0 !rounded-t-none bg-slate-900 dark:bg-slate-950 border border-t-0 border-sage-200 dark:border-slate-700 rounded-b-xl p-4 overflow-x-auto">
-                        <code className="text-sm text-slate-100" {...props}>{children}</code>
+                      <pre className="!mt-0 !rounded-t-none bg-slate-900 dark:bg-slate-950 border border-t-0 border-sage-200 dark:border-slate-700 rounded-b-xl p-3 sm:p-4 overflow-x-auto">
+                        <code className="text-xs sm:text-sm text-slate-100" {...props}>{children}</code>
                       </pre>
                     </div>
                   )
@@ -311,7 +312,7 @@ export default function BlogClient({ post }: BlogClientProps) {
         </article>
 
         {toc.length > 0 && (
-          <aside className="lg:col-span-4">
+          <aside className="hidden lg:block lg:col-span-4">
             <nav
               className="sticky top-24 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-lg border border-sage-200 dark:border-slate-700 shadow-sm overflow-hidden"
               style={{ maxHeight: "calc(100vh - 8rem)" }}

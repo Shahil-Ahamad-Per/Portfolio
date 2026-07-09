@@ -54,7 +54,7 @@ export default function NavBar({
       >
         <button
           onClick={() => handleNavClick("home")}
-          className="text-2xl font-serif font-bold transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-500 rounded-sm"
+          className="text-xl sm:text-2xl font-serif font-bold transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-500 rounded-sm"
         >
           <span className="text-charcoal-800 dark:text-white">Shahil</span>{" "}
           <span className="text-sage-600 dark:text-gold-400">Ahamad</span>

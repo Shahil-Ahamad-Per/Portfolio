@@ -42,13 +42,13 @@ export default function WelcomeScreen({ onExit }: WelcomeScreenProps) {
       >
         <div className="text-center">
           <h1
-            className={`text-7xl md:text-9xl font-serif font-bold text-charcoal-800 dark:text-slate-100 mb-4 transition-opacity duration-1000 ${
+            className={`text-6xl sm:text-7xl md:text-9xl font-serif font-bold text-charcoal-800 dark:text-slate-100 mb-4 transition-opacity duration-1000 ${
               welcomeTextAnimated ? "opacity-100" : "opacity-0"
             }`}
           >
             Welcome
           </h1>
-          <div className="w-48 h-1.5 bg-gradient-to-r from-sage-400 to-sage-600 dark:from-gold-400 dark:to-gold-600 mx-auto rounded-full animate-pulse mt-8" />
+          <div className="w-32 sm:w-48 h-1.5 bg-gradient-to-r from-sage-400 to-sage-600 dark:from-gold-400 dark:to-gold-600 mx-auto rounded-full animate-pulse mt-6 sm:mt-8" />
           {welcomeTextAnimated && (
             <div className="mt-12 flex flex-col items-center animate-fadeIn animation-delay-600">
               <ChevronDown className="h-10 w-10 text-sage-600 dark:text-gold-400 animate-bounceArrow" />

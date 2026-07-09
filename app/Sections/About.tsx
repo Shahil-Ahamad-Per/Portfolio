@@ -8,10 +8,10 @@ export function AboutSection() {
             About Me
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="group">
-              <div className="w-80 h-80 rounded-md bg-gradient-to-br from-sage-200 to-sage-400 dark:from-navy-600 dark:to-navy-800 mx-auto group-hover:scale-105 group-hover:rotate-2 transition-all duration-500 hover:shadow-2xl">
-                <img src="/profile.jpg" alt="Shahil Ahamad" className="rounded-lg" />
+              <div className="w-64 sm:w-72 md:w-80 h-64 sm:h-72 md:h-80 rounded-md bg-gradient-to-br from-sage-200 to-sage-400 dark:from-navy-600 dark:to-navy-800 mx-auto group-hover:scale-105 group-hover:rotate-2 transition-all duration-500 hover:shadow-2xl">
+                <img src="/profile.jpg" alt="Shahil Ahamad" className="rounded-lg w-full h-full object-cover" />
               </div>
             </div>
 
