@@ -46,7 +46,7 @@ GitHub is a web-based platform built on top of Git, acquired by Microsoft in 201
 
 ### Step 2: Configure Git
 
-\`\`\`
+\`\`\`bash
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
 \`\`\`
@@ -57,7 +57,7 @@ Sign up at [github.com](https://github.com)
 
 ### Step 4: Generate SSH Keys
 
-\`\`\`
+\`\`\`bash
 ssh-keygen -t ed25519 -C "your.email@example.com"
 \`\`\`
 

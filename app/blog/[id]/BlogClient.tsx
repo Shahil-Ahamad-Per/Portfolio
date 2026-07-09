@@ -248,12 +248,6 @@ export default function BlogClient({ post }: BlogClientProps) {
               prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-sage-700 dark:prose-h3:text-sage-300 prose-h3:scroll-mt-20
               prose-p:text-charcoal-700 dark:prose-p:text-slate-300 prose-p:leading-relaxed prose-p:mb-6
               prose-strong:text-charcoal-800 dark:prose-strong:text-slate-200
-              prose-code:bg-sage-100 dark:prose-code:bg-slate-800
-              prose-code:text-sage-800 dark:prose-code:text-gold-400
-              prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
-              prose-pre:bg-slate-900 dark:prose-pre:bg-slate-950
-              prose-pre:border prose-pre:border-sage-200 dark:prose-pre:border-slate-700
-              prose-pre:rounded-xl prose-pre:p-4
               prose-a:text-sage-600 dark:prose-a:text-gold-400
               prose-a:no-underline hover:prose-a:underline
               prose-li:text-charcoal-700 dark:prose-li:text-slate-300
@@ -277,6 +271,37 @@ export default function BlogClient({ post }: BlogClientProps) {
                   const text = extractText(children)
                   const id = slugify(text)
                   return <h3 id={id} {...props}>{children}</h3>
+                },
+                code: ({ className, children, ...props }) => {
+                  const isBlock = className?.startsWith("language-")
+                  if (!isBlock) {
+                    return (
+                      <code
+                        className="bg-sage-100 dark:bg-slate-800 text-sage-800 dark:text-gold-400 px-1.5 py-0.5 rounded text-sm"
+                        {...props}
+                      >
+                        {children}
+                      </code>
+                    )
+                  }
+                  return (
+                    <div className="relative group my-6">
+                      <div className="flex items-center justify-between bg-slate-800 dark:bg-slate-950 border border-sage-200 dark:border-slate-700 rounded-t-xl px-4 py-2">
+                        <span className="text-xs text-slate-400 uppercase tracking-wider">
+                          {className?.replace("language-", "") || "code"}
+                        </span>
+                        <button
+                          onClick={() => navigator.clipboard.writeText(String(children).replace(/\n$/, ""))}
+                          className="text-xs text-slate-400 hover:text-white transition-colors"
+                        >
+                          Copy
+                        </button>
+                      </div>
+                      <pre className="!mt-0 !rounded-t-none bg-slate-900 dark:bg-slate-950 border border-t-0 border-sage-200 dark:border-slate-700 rounded-b-xl p-4 overflow-x-auto">
+                        <code className="text-sm text-slate-100" {...props}>{children}</code>
+                      </pre>
+                    </div>
+                  )
                 },
               }}
             >
