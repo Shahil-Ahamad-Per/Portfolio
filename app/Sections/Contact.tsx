@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -13,92 +13,20 @@ import {
   Send,
   Clock,
 } from "lucide-react";
+import { useContactForm } from "@/hooks/use-contact-form";
 
 export default function ContactSection() {
   const form = useRef<HTMLFormElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [messageCount, setMessageCount] = useState(0);
-  const [isRateLimited, setIsRateLimited] = useState(false);
-  const [messageText, setMessageText] = useState("");
-
-  // Check rate limit on mount
-  useEffect(() => {
-    const storedData = localStorage.getItem("portfolio_contact_submissions");
-    if (storedData) {
-      const { count, date } = JSON.parse(storedData);
-      const today = new Date().toDateString();
-
-      // If same day, keep count. Else reset.
-      if (date === today) {
-        setMessageCount(count);
-        if (count >= 5) setIsRateLimited(true);
-      } else {
-        localStorage.removeItem("portfolio_contact_submissions");
-      }
-    }
-  }, []);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (isRateLimited) return;
-
-    setIsLoading(true);
-    setError(null);
-
-    const formData = new FormData(e.currentTarget);
-    // Using your specific Web3Forms access key
-    formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "");
-
-    // Optional Web3Forms Enhancements:
-    formData.append("subject", "New message from your Portfolio Contact Form!");
-    formData.append("from_name", "Portfolio Website");
-
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        // Update local submission count
-        const newCount = messageCount + 1;
-        setMessageCount(newCount);
-        localStorage.setItem(
-          "portfolio_contact_submissions",
-          JSON.stringify({
-            count: newCount,
-            date: new Date().toDateString(),
-          }),
-        );
-
-        if (newCount >= 5) {
-          setIsRateLimited(true);
-        }
-
-        setIsSuccess(true);
-        form.current?.reset();
-        setMessageText("");
-
-        // Hide success message after 5 seconds
-        setTimeout(() => {
-          setIsSuccess(false);
-        }, 5000);
-      } else {
-        setError(data.message || "Failed to send message.");
-      }
-    } catch (err) {
-      setError("Failed to send message. Please try again later.");
-      console.error("Email send error:", err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const {
+    isLoading,
+    isSuccess,
+    error,
+    isRateLimited,
+    messageText,
+    setMessageText,
+    handleSubmit,
+  } = useContactForm();
 
   return (
     <section
@@ -241,7 +169,7 @@ export default function ContactSection() {
 
               <form
                 ref={form}
-                onSubmit={handleSubmit}
+                onSubmit={(e) => handleSubmit(e, form)}
                 className="space-y-6 relative h-full flex flex-col justify-between"
               >
                 <div className="space-y-1">

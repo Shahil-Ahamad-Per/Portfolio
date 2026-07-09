@@ -3,7 +3,9 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tag, Calendar } from "lucide-react"
 import { useState } from "react"
-import { blogPosts } from "./Blogs"
+import { getAllPosts } from "@/lib/content-adapter"
+
+const blogPosts = getAllPosts()
 import Link from "next/link"  // ✅ Add this
 
 const categories = ["All", "Git & GitHub", "NX Workspace", "TypeScript", "JavaScript"]
