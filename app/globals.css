@@ -80,6 +80,23 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Better touch targets on mobile */
+@screen sm {
+  button, a, [role="button"] {
+    min-height: 44px;
+  }
+}
+
+/* Hide scrollbar for breadcrumb on mobile */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
 
 .font-serif {
