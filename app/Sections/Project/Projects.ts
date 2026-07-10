@@ -28,6 +28,13 @@ export const projects = [
     live: "https://sudoku.shahilahamad.com.np/",
   },
   {
+    title: "SA Web Paint",
+    description:
+      "Draw Freely in the SA Web Paint like the MS Paint in the Web.",
+    tech: ["Vite Js", "Tailwind CSS", "ShadCn/ui"],
+    live: "https://sawebpaint.shahilahamad.com.np/",
+  },
+  {
     title: "SA BagChal",
     description:
       "Experience Bagchal, the ancient strategy board game from Nepal. Play as the Tigers hunting goats, or the Goats trapping the tigers. High-fidelity visuals, AI engine, and local PVP.",
