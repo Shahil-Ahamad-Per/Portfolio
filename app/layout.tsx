@@ -70,6 +70,34 @@ export default function RootLayout({
           name="dmca-site-verification"
           content="U1luU3FJZTQ4eHFDUmZaaUdQRVZoa1BVdDNiUU9iamVRSy9BdUNDcm0yQT01"
         />
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              var sc_project=13339716;
+              var sc_invisible=0;
+              var sc_security="a30bafd6";
+              var scJsHost = "https://";
+              document.write("<sc"+"ript type='text/javascript' src='" + scJsHost+ "statcounter.com/counter/counter.js'></"+"script>");
+            `,
+          }}
+        />
+        <noscript>
+          <div className="statcounter">
+            <a
+              title="real time web analytics"
+              href="https://statcounter.com/"
+              target="_blank"
+            >
+              <img
+                className="statcounter"
+                src="https://c.statcounter.com/13339716/0/a30bafd6/0/"
+                alt="real time web analytics"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </a>
+          </div>
+        </noscript>
       </head>
       <body
         className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
