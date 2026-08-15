@@ -16,7 +16,15 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  icons: "/profile.jpg",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   title: "Shahil Ahamad",
   description:
     "Shahil Ahamad - A passionate Full Stack Developer specializing in modern web technologies",
