@@ -14,14 +14,14 @@ export default function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="py-20 px-6 bg-cream-100/50 dark:bg-slate-800/50"
+      className="py-16 sm:py-20 px-4 sm:px-6 bg-cream-100/50 dark:bg-slate-800/50"
     >
       <div className="container mx-auto max-w-6xl">
-        <h2 className="text-4xl md:text-5xl font-serif font-bold text-center text-charcoal-800 dark:text-slate-100 mb-16 hover:text-sage-600 dark:hover:text-gold-400 transition-colors duration-300">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-center text-charcoal-800 dark:text-slate-100 mb-10 sm:mb-16 hover:text-sage-600 dark:hover:text-gold-400 transition-colors duration-300">
           Featured Projects
         </h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {projects.map((project, index) => {
             const isComingSoon =
               project.status === "Coming Soon" ||
@@ -30,54 +30,54 @@ export default function ProjectsSection() {
             return (
               <Card
                 key={index}
-                className={`bg-cream-50 dark:bg-slate-800 border-sage-200 dark:border-slate-600 hover:shadow-2xl hover:scale-105 hover:-translate-y-2 hover:border-sage-400 dark:hover:border-gold-500 transition-all duration-500 group cursor-pointer ${
+                className={`bg-cream-50 dark:bg-slate-800 border-sage-200 dark:border-slate-600 hover:shadow-2xl hover:scale-[1.02] sm:hover:scale-105 sm:hover:-translate-y-2 hover:border-sage-400 dark:hover:border-gold-500 transition-all duration-500 group flex flex-col justify-between ${
                   isComingSoon ? "opacity-90" : ""
                 }`}
               >
-                <CardHeader>
-                  <div className="flex items-start justify-between gap-2">
-                    <CardTitle className="text-xl font-serif text-charcoal-800 dark:text-slate-100 group-hover:text-sage-600 dark:group-hover:text-gold-400 transition-colors duration-300">
+                <CardHeader className="p-5 sm:p-6">
+                  <div className="flex items-start justify-between gap-2 mb-1">
+                    <CardTitle className="text-lg sm:text-xl font-serif text-charcoal-800 dark:text-slate-100 group-hover:text-sage-600 dark:group-hover:text-gold-400 transition-colors duration-300 leading-snug">
                       {project.title}
                     </CardTitle>
                     {isComingSoon && (
-                      <Badge className="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-300 dark:border-amber-700 flex items-center gap-1 whitespace-nowrap pointer-events-none">
+                      <Badge className="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-300 dark:border-amber-700 flex items-center gap-1 whitespace-nowrap pointer-events-none text-[11px] shrink-0">
                         <Clock className="h-3 w-3" />
                         {project.status === "Work In Progress"
-                          ? "In Development"
+                          ? "In Dev"
                           : "Soon"}
                       </Badge>
                     )}
                   </div>
-                  <CardDescription className="text-charcoal-600 dark:text-slate-300 group-hover:text-charcoal-700 dark:group-hover:text-slate-200 transition-colors duration-300">
+                  <CardDescription className="text-xs sm:text-sm text-charcoal-600 dark:text-slate-300 group-hover:text-charcoal-700 dark:group-hover:text-slate-200 transition-colors duration-300">
                     {project.description}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2 mb-4">
+                <CardContent className="p-5 pt-0 sm:p-6 sm:pt-0">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
                     {project.tech.map((tech) => (
                       <Badge
                         key={tech}
                         variant="secondary"
-                        className="bg-sage-100 dark:bg-slate-700 text-sage-700 dark:text-gold-300 hover:bg-sage-200 dark:hover:bg-slate-600 hover:scale-110 transition-all duration-300"
+                        className="bg-sage-100 dark:bg-slate-700 text-sage-700 dark:text-gold-300 hover:bg-sage-200 dark:hover:bg-slate-600 text-[11px] sm:text-xs transition-colors"
                       >
                         {tech}
                       </Badge>
                     ))}
                   </div>
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2 border-t border-sage-100 dark:border-slate-700/50">
                     {project.github && (
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => window.open(project.github, "_blank")}
                         disabled={isComingSoon}
-                        className={`border-sage-600 text-sage-600 hover:bg-sage-50 dark:border-gold-400 dark:text-gold-400 dark:hover:bg-slate-800 bg-transparent transition-all duration-300 ${
+                        className={`border-sage-600 text-sage-600 hover:bg-sage-50 dark:border-gold-400 dark:text-gold-400 dark:hover:bg-slate-800 bg-transparent transition-all duration-300 text-xs sm:text-sm h-9 px-3 ${
                           !isComingSoon
-                            ? "hover:scale-110 hover:shadow-lg"
+                            ? "hover:scale-105 active:scale-95 shadow-sm"
                             : "opacity-50 cursor-not-allowed"
                         }`}
                       >
-                        <Github className="h-4 w-4 mr-2" />
+                        <Github className="h-3.5 w-3.5 mr-1.5" />
                         Code
                       </Button>
                     )}
@@ -87,13 +87,13 @@ export default function ProjectsSection() {
                         size="sm"
                         onClick={() => window.open(project.live, "_blank")}
                         disabled={project.status === "Coming Soon"}
-                        className={`border-sage-600 text-sage-600 hover:bg-sage-50 dark:border-gold-400 dark:text-gold-400 dark:hover:bg-slate-800 bg-transparent transition-all duration-300 ${
+                        className={`border-sage-600 text-sage-600 hover:bg-sage-50 dark:border-gold-400 dark:text-gold-400 dark:hover:bg-slate-800 bg-transparent transition-all duration-300 text-xs sm:text-sm h-9 px-3 ${
                           project.status !== "Coming Soon"
-                            ? "hover:scale-110 hover:shadow-lg"
+                            ? "hover:scale-105 active:scale-95 shadow-sm"
                             : "opacity-50 cursor-not-allowed"
                         }`}
                       >
-                        <ExternalLink className="h-4 w-4 mr-2" />
+                        <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
                         Live Demo
                       </Button>
                     )}
@@ -102,9 +102,9 @@ export default function ProjectsSection() {
                         variant="outline"
                         size="sm"
                         disabled
-                        className="border-sage-400 text-sage-600 dark:border-gold-600 dark:text-gold-400 bg-transparent opacity-60 cursor-not-allowed hover:opacity-75 hover:border-sage-500 dark:hover:border-gold-500 transition-all duration-300"
+                        className="border-sage-400 text-sage-600 dark:border-gold-600 dark:text-gold-400 bg-transparent opacity-60 cursor-not-allowed text-xs sm:text-sm h-9 px-3"
                       >
-                        <Clock className="h-4 w-4 mr-2" />
+                        <Clock className="h-3.5 w-3.5 mr-1.5" />
                         In Development
                       </Button>
                     )}
