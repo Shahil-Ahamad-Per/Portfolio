@@ -1,9 +1,9 @@
-import { defineConfig } from "vitest/config"
-import path from "path"
+import { defineConfig } from "vitest/config";
+import path from "path";
 
 export default defineConfig({
   test: {
-    environment: "node",
+    environment: "jsdom",
     globals: true,
   },
   resolve: {
@@ -11,4 +11,4 @@ export default defineConfig({
       "@": path.resolve(__dirname),
     },
   },
-})
+});

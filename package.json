@@ -75,9 +75,13 @@
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.13.0",
     "@tailwindcss/typography": "^0.5.20",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.5",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "jsdom": "^30.0.1",
     "postcss": "^8.5",
     "tailwindcss": "^3.4.17",
     "typescript": "^5",

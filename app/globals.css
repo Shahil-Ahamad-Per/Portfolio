@@ -85,7 +85,9 @@ html {
 
 /* Better touch targets on mobile */
 @screen sm {
-  button, a, [role="button"] {
+  button,
+  a,
+  [role="button"] {
     min-height: 44px;
   }
 }
@@ -176,7 +178,6 @@ html {
 .animation-delay-600 {
   animation-delay: 600ms;
 }
-
 
 #blog-content h2,
 #blog-content h3 {

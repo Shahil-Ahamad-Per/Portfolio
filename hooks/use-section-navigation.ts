@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-
-const SECTIONS = ["home", "about", "skills", "projects", "blog", "contact"];
+import { SECTIONS, type SectionId } from "@/lib/nav-config";
 
 export function useSectionNavigation(active: boolean) {
   const [activeSection, setActiveSection] = useState("home");

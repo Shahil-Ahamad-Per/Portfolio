@@ -12,6 +12,7 @@ import Footer from "./Sections/Footer";
 import WelcomeScreen from "./Sections/WelcomeScreen";
 import { useSectionNavigation } from "@/hooks/use-section-navigation";
 import { useWelcomeScreen } from "@/hooks/use-welcome-screen";
+import { SIDEBAR_WIDTH_PX } from "@/lib/nav-config";
 
 export default function Portfolio() {
   const { theme, setTheme } = useTheme();
@@ -33,6 +34,7 @@ export default function Portfolio() {
         activeSection={activeSection}
         scrollToSection={scrollToSection}
       />
+      {/* lg:pl-72 must match Navbar w-72 and SIDEBAR_WIDTH_PX in lib/nav-config.ts */}
       <div className="lg:pl-72 flex flex-col min-h-screen pt-16 lg:pt-0">
         <main className="flex-grow">
           <HeroSection scrollToSection={scrollToSection} />

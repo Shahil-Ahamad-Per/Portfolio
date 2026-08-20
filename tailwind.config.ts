@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
@@ -104,16 +104,16 @@ const config = {
           900: "#0A0A1A", // Very deep dark blue
         },
         gold: {
-          50: "#fffdf5",   // Soft cream gold
-          100: "#fff6d0",  // Light golden yellow
-          200: "#ffe89e",  // Pale gold
-          300: "#ffd066",  // Amber gold
-          400: "#e6b84d",  // Deep gold (used for text/icons)
-          500: "#cc9e30",  // Rich bronze gold
-          600: "#b68528",  // Deeper accent gold
-          700: "#996f1f",  // Muted gold, very close to your logo's triangle
-          800: "#805918",  // Warm dark bronze
-          900: "#664413",  // Very deep shadowed gold
+          50: "#fffdf5", // Soft cream gold
+          100: "#fff6d0", // Light golden yellow
+          200: "#ffe89e", // Pale gold
+          300: "#ffd066", // Amber gold
+          400: "#e6b84d", // Deep gold (used for text/icons)
+          500: "#cc9e30", // Rich bronze gold
+          600: "#b68528", // Deeper accent gold
+          700: "#996f1f", // Muted gold, very close to your logo's triangle
+          800: "#805918", // Warm dark bronze
+          900: "#664413", // Very deep shadowed gold
         },
 
         // New sophisticated dark colors (Dark Mode)
@@ -152,6 +152,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

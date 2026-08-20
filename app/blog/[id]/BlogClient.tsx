@@ -10,41 +10,25 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { Post } from "@/lib/content-adapter";
+import {
+  useTableOfContents,
+  type TocItem,
+} from "@/hooks/use-table-of-contents";
+import { useReadingProgress } from "@/hooks/use-reading-progress";
 
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+function extractText(children: React.ReactNode): string {
+  if (typeof children === "string") return children;
+  if (Array.isArray(children)) return children.map(extractText).join("");
+  if (isReactElement(children)) {
+    return extractText(
+      (children.props as { children?: React.ReactNode }).children,
+    );
+  }
+  return String(children);
 }
 
-interface TocItem {
-  id: string;
-  text: string;
-  level: number;
-  children?: TocItem[];
-}
-
-function buildTocHierarchy(flatToc: TocItem[]): TocItem[] {
-  const result: TocItem[] = [];
-  const stack: TocItem[] = [];
-
-  flatToc.forEach((item) => {
-    const newItem = { ...item, children: [] };
-    while (stack.length > 0 && stack[stack.length - 1].level >= newItem.level) {
-      stack.pop();
-    }
-    if (stack.length === 0) {
-      result.push(newItem);
-    } else {
-      const parent = stack[stack.length - 1];
-      if (!parent.children) parent.children = [];
-      parent.children.push(newItem);
-    }
-    stack.push(newItem);
-  });
-
-  return result;
+function isReactElement(node: React.ReactNode): node is React.ReactElement {
+  return !!(node && typeof node === "object" && "props" in node);
 }
 
 interface BlogClientProps {
@@ -53,48 +37,25 @@ interface BlogClientProps {
 
 export default function BlogClient({ post }: BlogClientProps) {
   const { theme, setTheme } = useTheme();
-  const [toc, setToc] = useState<TocItem[]>([]);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
     new Set(),
   );
   const [activeId, setActiveId] = useState<string>("");
-  const [readingProgress, setReadingProgress] = useState(0);
   const [mounted, setMounted] = useState(false);
+
+  const hasContent = !!post?.content;
+  const toc = useTableOfContents("#blog-content", hasContent);
+  const readingProgress = useReadingProgress(hasContent);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   useEffect(() => {
-    if (!post || !post.content) return;
-    const timer = setTimeout(() => {
-      const headings = Array.from(
-        document.querySelectorAll("#blog-content h2, #blog-content h3"),
-      ) as HTMLElement[];
-      const flatToc = headings.map((heading) => ({
-        id: heading.id,
-        text: heading.innerText,
-        level: Number(heading.tagName.replace("H", "")),
-      }));
-      setToc(buildTocHierarchy(flatToc));
-      setExpandedSections(new Set(flatToc.map((item) => item.id)));
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [post]);
-
-  useEffect(() => {
-    if (!post?.content) return;
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      setReadingProgress(
-        docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0,
-      );
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [post?.content]);
+    if (toc.length > 0) {
+      setExpandedSections(new Set(toc.flatMap((item) => flattenIds(item))));
+    }
+  }, [toc]);
 
   const handleTocClick = useCallback(
     (targetId: string, e: React.MouseEvent) => {
@@ -199,6 +160,7 @@ export default function BlogClient({ post }: BlogClientProps) {
     return (
       <div className="flex flex-col min-h-screen bg-gradient-to-br from-cream-50 to-sage-50 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900">
         <NavBar theme={theme} setTheme={setTheme} />
+        {/* lg:pl-72 must match Navbar w-72 and SIDEBAR_WIDTH_PX in lib/nav-config.ts */}
         <div className="lg:pl-72 flex flex-col min-h-screen pt-16 lg:pt-0">
           <main className="flex-grow flex flex-col justify-center items-center px-6 py-20">
             <div className="text-center max-w-2xl">
@@ -239,6 +201,7 @@ export default function BlogClient({ post }: BlogClientProps) {
     <div className="min-h-screen bg-gradient-to-br from-cream-50 to-sage-50 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900">
       <NavBar theme={theme} setTheme={setTheme} />
 
+      {/* lg:pl-72 must match Navbar w-72 and SIDEBAR_WIDTH_PX in lib/nav-config.ts */}
       <div className="lg:pl-72 flex flex-col min-h-screen pt-16 lg:pt-0">
         <header className="border-b border-sage-200 dark:border-slate-700 bg-cream-50/50 dark:bg-slate-800/50 backdrop-blur-sm">
           <div className="container mx-auto max-w-6xl px-6 py-8">
@@ -304,7 +267,10 @@ export default function BlogClient({ post }: BlogClientProps) {
                 components={{
                   h2: ({ children, ...props }) => {
                     const text = extractText(children);
-                    const id = slugify(text);
+                    const id = text
+                      .toLowerCase()
+                      .replace(/[^a-z0-9]+/g, "-")
+                      .replace(/(^-|-$)/g, "");
                     return (
                       <h2 id={id} {...props}>
                         {children}
@@ -313,7 +279,10 @@ export default function BlogClient({ post }: BlogClientProps) {
                   },
                   h3: ({ children, ...props }) => {
                     const text = extractText(children);
-                    const id = slugify(text);
+                    const id = text
+                      .toLowerCase()
+                      .replace(/[^a-z0-9]+/g, "-")
+                      .replace(/(^-|-$)/g, "");
                     return (
                       <h3 id={id} {...props}>
                         {children}
@@ -405,17 +374,12 @@ export default function BlogClient({ post }: BlogClientProps) {
   );
 }
 
-function extractText(children: React.ReactNode): string {
-  if (typeof children === "string") return children;
-  if (Array.isArray(children)) return children.map(extractText).join("");
-  if (isReactElement(children)) {
-    return extractText(
-      (children.props as { children?: React.ReactNode }).children,
-    );
+function flattenIds(item: TocItem): string[] {
+  const ids = [item.id];
+  if (item.children) {
+    for (const child of item.children) {
+      ids.push(...flattenIds(child));
+    }
   }
-  return String(children);
-}
-
-function isReactElement(node: React.ReactNode): node is React.ReactElement {
-  return !!(node && typeof node === "object" && "props" in node);
+  return ids;
 }

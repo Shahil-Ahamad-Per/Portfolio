@@ -1,10 +1,14 @@
-import BlogClient from "./BlogClient"
-import { getPostWithContent } from "@/lib/post-content"
+import BlogClient from "./BlogClient";
+import { getPostById } from "@/lib/content-adapter";
 
-export const runtime = "edge"
+export const runtime = "edge";
 
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
-  const post = getPostWithContent(Number(id))
-  return <BlogClient post={post} />
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const post = getPostById(Number(id));
+  return <BlogClient post={post} />;
 }

@@ -1,35 +1,35 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { ChevronDown } from "lucide-react"
+import { useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 interface WelcomeScreenProps {
-  onExit: () => void
+  onExit: () => void;
 }
 
 export default function WelcomeScreen({ onExit }: WelcomeScreenProps) {
-  const [welcomeTextAnimated, setWelcomeTextAnimated] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
+  const [welcomeTextAnimated, setWelcomeTextAnimated] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     // Animate "Welcome" text
-    const timer = setTimeout(() => setWelcomeTextAnimated(true), 500)
-    return () => clearTimeout(timer)
-  }, [])
+    const timer = setTimeout(() => setWelcomeTextAnimated(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      setScrollY(currentScrollY)
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
 
       if (currentScrollY > window.innerHeight * 0.5) {
-        onExit()
+        onExit();
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [onExit])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [onExit]);
 
   return (
     <div className="relative">
@@ -62,5 +62,5 @@ export default function WelcomeScreen({ onExit }: WelcomeScreenProps) {
       {/* Scrollable space */}
       <div className="h-[200vh]"></div>
     </div>
-  )
+  );
 }
