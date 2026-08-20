@@ -11,7 +11,7 @@ export const projects = [
     description:
       "A Browser Code Editor build using React.js, Tailwind CSS, and Piston API.",
     tech: ["React", "Tailwind CSS", "Piston API"],
-    live: "https://browser-code-editor-six.vercel.app/",
+    live: "https://code.shahilahamad.com.np/",
   },
   {
     title: "SA Docs Converter",
