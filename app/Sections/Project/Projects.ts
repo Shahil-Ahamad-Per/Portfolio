@@ -35,6 +35,13 @@ export const projects = [
     live: "https://sawebpaint.shahilahamad.com.np/",
   },
   {
+    title: "SA Type",
+    description:
+      "Experience Fun way to improve the typing speed of your keyboard with your music taste",
+    tech: ["Vite Js", "Tailwind CSS"],
+    live: "https://satype.shahilahamad.com.np/",
+  },
+  {
     title: "SA BagChal",
     description:
       "Experience Bagchal, the ancient strategy board game from Nepal. Play as the Tigers hunting goats, or the Goats trapping the tigers. High-fidelity visuals, AI engine, and local PVP.",
@@ -42,6 +49,7 @@ export const projects = [
     live: "https://bagchal.shahilahamad.com.np/",
     status: "Work In Progress",
   },
+
   {
     title: "Aditya Rana Portfolio",
     description: "A Portfolio Website build using Next.js, Tailwind CSS.",
