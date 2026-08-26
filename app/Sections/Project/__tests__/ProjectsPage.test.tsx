@@ -1,10 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ProjectsSection from "../ProjectsPage";
-import { projects } from "../Projects";
+import * as projectsModule from "../Projects";
 
 describe("ProjectsSection", () => {
   beforeEach(() => {
+    vi.restoreAllMocks();
     vi.spyOn(window, "open").mockImplementation(() => null);
   });
 
@@ -17,7 +18,7 @@ describe("ProjectsSection", () => {
 
   it("renders all projects from projects dataset", () => {
     render(<ProjectsSection />);
-    projects.forEach((proj) => {
+    projectsModule.projects.forEach((proj) => {
       expect(screen.getByText(proj.title)).toBeInTheDocument();
       expect(screen.getByText(proj.description)).toBeInTheDocument();
     });
@@ -44,5 +45,21 @@ describe("ProjectsSection", () => {
     render(<ProjectsSection />);
     const inDevBadges = screen.getAllByText("In Dev");
     expect(inDevBadges.length).toBeGreaterThan(0);
+  });
+
+  it("renders 'Soon' badge and 'In Development' button for Coming Soon project without links", () => {
+    vi.spyOn(projectsModule, "projects", "get").mockReturnValue([
+      {
+        title: "Future AI App",
+        description: "An upcoming AI project",
+        tech: ["Next.js", "OpenAI"],
+        status: "Coming Soon",
+      } as unknown as (typeof projectsModule.projects)[number],
+    ]);
+
+    render(<ProjectsSection />);
+
+    expect(screen.getByText("Soon")).toBeInTheDocument();
+    expect(screen.getByText("In Development")).toBeInTheDocument();
   });
 });

@@ -154,15 +154,27 @@ describe("use-contact-form", () => {
     expect(apiClient.submit).not.toHaveBeenCalled();
   });
 
-  it("setMessageText updates messageText", () => {
+  it("handles submission failure without custom message", async () => {
+    apiClient = createMockApiClient({
+      submit: vi.fn().mockResolvedValue({ success: false }),
+    });
+
     const { result } = renderHook(() =>
       useContactForm({ rateLimiter, apiClient })
     );
+    const formRef = { current: document.createElement("form") };
 
-    act(() => {
-      result.current.setMessageText("test message");
+    await act(async () => {
+      await result.current.handleSubmit(createFormEvent(), formRef);
     });
 
-    expect(result.current.messageText).toBe("test message");
+    expect(result.current.error).toBe("Failed to send message.");
+    expect(result.current.isSuccess).toBe(false);
+  });
+
+  it("works with default options when no args provided", () => {
+    const { result } = renderHook(() => useContactForm());
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.isSuccess).toBe(false);
   });
 });

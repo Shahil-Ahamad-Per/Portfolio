@@ -34,13 +34,22 @@ describe("use-section-navigation", () => {
     expect(result.current.activeSection).toBe("home");
   });
 
+  it("scrolls to section on mount when hash is present in URL", () => {
+    createSection("about", 600, 600);
+    window.location.hash = "#about";
+
+    const { result } = renderHook(() => useSectionNavigation(true));
+    expect(result.current.activeSection).toBe("about");
+  });
+
   it("does nothing when not active", () => {
     createSection("home", 0, 600);
     const { result } = renderHook(() => useSectionNavigation(false));
     expect(result.current.activeSection).toBe("home");
   });
 
-  it("scrollToSection scrolls to the element and updates activeSection", () => {
+  it("scrollToSection scrolls to the element and updates activeSection with mobile offset", () => {
+    window.innerWidth = 800;
     createSection("home", 0, 600);
     createSection("about", 600, 600);
     const scrollToSpy = vi.spyOn(window, "scrollTo");
@@ -82,5 +91,20 @@ describe("use-section-navigation", () => {
     });
 
     expect(result.current.activeSection).toBe("contact");
+  });
+
+  it("updates active section during scroll", () => {
+    createSection("home", 0, 600);
+    createSection("about", 600, 600);
+    createSection("skills", 1200, 600);
+
+    const { result } = renderHook(() => useSectionNavigation(true));
+
+    act(() => {
+      Object.defineProperty(window, "scrollY", { value: 650, writable: true });
+      window.dispatchEvent(new Event("scroll"));
+    });
+
+    expect(result.current.activeSection).toBe("about");
   });
 });

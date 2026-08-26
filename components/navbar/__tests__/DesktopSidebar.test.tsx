@@ -19,6 +19,10 @@ describe("DesktopSidebar", () => {
     expect(screen.getByText("Ahamad")).toBeInTheDocument();
     expect(screen.getByText("Full-Stack Dev")).toBeInTheDocument();
     expect(screen.getByAltText("Shahil Ahamad Logo")).toBeInTheDocument();
+
+    const homeBrandBtn = screen.getByRole("button", { name: "Go to Home" });
+    fireEvent.click(homeBrandBtn);
+    expect(defaultProps.handleNavClick).toHaveBeenCalledWith("home");
   });
 
   it("renders all navigation items", () => {

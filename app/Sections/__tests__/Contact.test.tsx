@@ -121,4 +121,15 @@ describe("ContactSection", () => {
       screen.getByText("Failed to send message. Please try again.")
     ).toBeInTheDocument();
   });
+
+  it("shows text-red-500 character counter when message reaches maximum length", () => {
+    vi.spyOn(contactFormHook, "useContactForm").mockReturnValue({
+      ...defaultHookState,
+      messageText: "a".repeat(300),
+    });
+
+    render(<ContactSection />);
+    const counter = screen.getByText("300/300");
+    expect(counter).toHaveClass("text-red-500");
+  });
 });

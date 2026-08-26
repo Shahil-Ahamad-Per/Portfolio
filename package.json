@@ -18,7 +18,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "sonar": "sonar-scanner"
+    "sonar": "sonar-scanner-npm"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

@@ -22,7 +22,6 @@ export default defineConfig({
         "**/*.d.ts",
         "**/*.test.{ts,tsx}",
         "**/__tests__/**",
-        "app/layout.tsx",
         "app/Sections/Skill/skillsIcons.ts",
         "app/Sections/Project/Projects.ts",
       ],

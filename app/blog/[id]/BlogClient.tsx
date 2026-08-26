@@ -186,6 +186,9 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
             <button
               type="button"
               onClick={() => toggleSection(item.id)}
+              aria-label={
+                isExpanded ? `Collapse ${item.text}` : `Expand ${item.text}`
+              }
               className="mr-1 flex-shrink-0 rounded p-1 transition-colors hover:bg-sage-100 dark:hover:bg-slate-700"
             >
               {isExpanded ? (

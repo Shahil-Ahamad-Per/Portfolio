@@ -66,4 +66,31 @@ describe("MobileDrawer", () => {
 
     expect(handleNavClick).toHaveBeenCalledWith("contact");
   });
+
+  it("handles clicking brand home button", () => {
+    const handleNavClick = vi.fn();
+    render(<MobileDrawer {...defaultProps} handleNavClick={handleNavClick} />);
+
+    const brandBtn = screen.getByText("Shahil").closest("button");
+    if (brandBtn) {
+      fireEvent.click(brandBtn);
+      expect(handleNavClick).toHaveBeenCalledWith("home");
+    }
+  });
+
+  it("renders and handles click on Back to Portfolio on blog detail page", () => {
+    const setMobileOpen = vi.fn();
+    render(
+      <MobileDrawer
+        {...defaultProps}
+        isBlogDetailPage={true}
+        setMobileOpen={setMobileOpen}
+      />
+    );
+
+    const backLink = screen.getByRole("link", { name: /Back to Portfolio/i });
+    expect(backLink).toBeInTheDocument();
+    fireEvent.click(backLink);
+    expect(setMobileOpen).toHaveBeenCalledWith(false);
+  });
 });

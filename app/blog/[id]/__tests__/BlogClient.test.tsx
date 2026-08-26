@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import BlogClient from "../BlogClient";
 import type { Post } from "@/lib/content-adapter";
 import * as tocHook from "@/hooks/use-table-of-contents";
@@ -76,13 +76,14 @@ describe("BlogClient component", () => {
     expect(screen.getByText("5 min read")).toBeInTheDocument();
     expect(screen.getAllByText("Home")[0]).toBeInTheDocument();
     expect(screen.getByText("Introduction")).toBeInTheDocument();
+    expect(screen.getByText("Advanced Concepts")).toBeInTheDocument();
 
     const copyBtn = screen.getByRole("button", { name: "Copy" });
     fireEvent.click(copyBtn);
-    expect(navigator.clipboard.writeText).toHaveBeenCalled();
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith("const a = 1;");
   });
 
-  it("renders Table of Contents and handles TOC navigation and toggling", () => {
+  it("renders Table of Contents and handles TOC navigation, expand and collapse", () => {
     vi.spyOn(tocHook, "useTableOfContents").mockReturnValue([
       {
         id: "introduction",
@@ -93,6 +94,13 @@ describe("BlogClient component", () => {
             id: "advanced-concepts",
             text: "Advanced Concepts",
             level: 3,
+            children: [
+              {
+                id: "deep-dive",
+                text: "Deep Dive",
+                level: 4,
+              },
+            ],
           },
         ],
       },
@@ -120,22 +128,42 @@ describe("BlogClient component", () => {
       screen.getByRole("heading", { name: "Table of Contents" })
     ).toBeInTheDocument();
 
-    // Click TOC item
+    // Click TOC item with target element
     const tocButtons = screen.getAllByRole("button", { name: "Introduction" });
     fireEvent.click(tocButtons[0]);
     expect(window.scrollTo).toHaveBeenCalled();
 
-    // Toggle collapsible section
-    const chevronButtons = screen.getAllByRole("button");
-    const toggleBtn = chevronButtons.find(
-      (btn) =>
-        btn.querySelector("svg.lucide-chevron-down") ||
-        btn.querySelector("svg.lucide-chevron-right")
-    );
-    if (toggleBtn) {
-      fireEvent.click(toggleBtn);
-    }
+    // Click TOC item with no target element
+    const advancedButtons = screen.getAllByRole("button", {
+      name: "Advanced Concepts",
+    });
+    fireEvent.click(advancedButtons[0]);
+
+    // Toggle collapsible section: collapse then expand
+    const collapseBtn = screen.getByRole("button", {
+      name: "Collapse Introduction",
+    });
+    fireEvent.click(collapseBtn);
+
+    const expandBtn = screen.getByRole("button", {
+      name: "Expand Introduction",
+    });
+    fireEvent.click(expandBtn);
+    expect(expandBtn).toBeInTheDocument();
 
     document.body.removeChild(headingElem);
+  });
+
+  it("renders complex headings with formatted children (strong, code)", () => {
+    const complexPost = {
+      ...samplePost,
+      content:
+        "## Heading with **Strong** and `Code`\n\n### Subheading with *Emphasis*\n\n```python\nprint('hello')\n```",
+    };
+
+    render(<BlogClient post={complexPost} />);
+
+    expect(screen.getByText("Strong")).toBeInTheDocument();
+    expect(screen.getByText("Emphasis")).toBeInTheDocument();
   });
 });

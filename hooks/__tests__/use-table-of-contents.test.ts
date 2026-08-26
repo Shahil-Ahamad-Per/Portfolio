@@ -85,4 +85,34 @@ describe("useTableOfContents hook", () => {
 
     expect(result.current[0].id).toBe("un-id-heading-test");
   });
+
+  it("handles deep hierarchy popping and building properly", () => {
+    document.body.innerHTML = `
+      <div id="blog-content">
+        <h2 id="h-1">Heading 1</h2>
+        <h3 id="h-1-1">Subheading 1.1</h3>
+        <h3 id="h-1-2">Subheading 1.2</h3>
+        <h2 id="h-2">Heading 2</h2>
+      </div>
+    `;
+    document.querySelectorAll("h2, h3").forEach((el) => {
+      Object.defineProperty(el, "innerText", {
+        get() {
+          return this.textContent;
+        },
+        configurable: true,
+      });
+    });
+
+    const { result } = renderHook(() =>
+      useTableOfContents("#blog-content", true)
+    );
+
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+
+    expect(result.current).toHaveLength(2);
+    expect(result.current[0].children).toHaveLength(2);
+  });
 });
