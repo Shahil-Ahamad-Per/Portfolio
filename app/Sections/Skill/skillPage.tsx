@@ -1,5 +1,36 @@
 import { skills } from "@/app/Sections/Skill/skillsIcons";
 
+function renderSkillIcon(skill: (typeof skills)[number]) {
+  if (!skill.image) {
+    return (
+      <span className="text-lg font-bold text-white">
+        {skill.name.charAt(0)}
+      </span>
+    );
+  }
+
+  if (
+    typeof skill.image === "string" &&
+    skill.image.trim().startsWith("<svg")
+  ) {
+    return (
+      <div
+        className="flex h-full w-full items-center justify-center"
+        dangerouslySetInnerHTML={{ __html: skill.image }}
+      />
+    );
+  }
+
+  return (
+    <img
+      src={skill.image || "/placeholder.svg"}
+      alt={skill.name}
+      className="h-full w-full object-contain"
+      loading="lazy"
+    />
+  );
+}
+
 export default function SkillsSection() {
   return (
     <section id="skills" className="px-4 py-16 sm:px-6 sm:py-20">
@@ -19,26 +50,7 @@ export default function SkillsSection() {
               style={{ animationDelay: `${index * 50}ms` }}
             >
               <div className="mb-2.5 flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 sm:mb-4 sm:h-12 sm:w-12 sm:group-hover:scale-125">
-                {skill.image ? (
-                  typeof skill.image === "string" &&
-                  skill.image.trim().startsWith("<svg") ? (
-                    <div
-                      className="flex h-full w-full items-center justify-center"
-                      dangerouslySetInnerHTML={{ __html: skill.image }}
-                    />
-                  ) : (
-                    <img
-                      src={skill.image || "/placeholder.svg"}
-                      alt={skill.name}
-                      className="h-full w-full object-contain"
-                      loading="lazy"
-                    />
-                  )
-                ) : (
-                  <span className="text-lg font-bold text-white">
-                    {skill.name.charAt(0)}
-                  </span>
-                )}
+                {renderSkillIcon(skill)}
               </div>
               <h3 className="mb-0.5 text-center text-xs font-semibold text-charcoal-800 transition-colors duration-300 group-hover:text-sage-600 dark:text-slate-100 dark:group-hover:text-gold-400 sm:text-sm">
                 {skill.name}

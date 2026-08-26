@@ -6,11 +6,11 @@ import { X, ArrowLeft, ChevronRight } from "lucide-react";
 import { NAV_ITEMS } from "@/lib/nav-config";
 
 interface MobileDrawerProps {
-  mobileOpen: boolean;
-  setMobileOpen: (open: boolean) => void;
-  isItemActive: (id: string) => boolean;
-  handleNavClick: (id: string) => void;
-  isBlogDetailPage: boolean;
+  readonly mobileOpen: boolean;
+  readonly setMobileOpen: (open: boolean) => void;
+  readonly isItemActive: (id: string) => boolean;
+  readonly handleNavClick: (id: string) => void;
+  readonly isBlogDetailPage: boolean;
 }
 
 export function MobileDrawer({
@@ -19,7 +19,7 @@ export function MobileDrawer({
   isItemActive,
   handleNavClick,
   isBlogDetailPage,
-}: MobileDrawerProps) {
+}: Readonly<MobileDrawerProps>) {
   return (
     <>
       {mobileOpen && (
@@ -30,17 +30,17 @@ export function MobileDrawer({
         />
       )}
 
-      <div
-        className={`fixed bottom-0 left-0 top-0 z-50 flex w-80 max-w-[85vw] flex-col justify-between border-r border-sage-200 bg-cream-50/95 p-6 shadow-2xl backdrop-blur-2xl transition-transform duration-300 ease-out dark:border-slate-800 dark:bg-slate-900/95 lg:hidden ${
+      <dialog
+        open={mobileOpen}
+        aria-label="Mobile navigation drawer"
+        className={`fixed bottom-0 left-0 top-0 z-50 m-0 flex h-full max-h-none w-80 max-w-[85vw] flex-col justify-between border-0 border-r border-sage-200 bg-cream-50/95 p-6 text-inherit shadow-2xl backdrop-blur-2xl transition-transform duration-300 ease-out dark:border-slate-800 dark:bg-slate-900/95 lg:hidden ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Mobile navigation drawer"
       >
         <div className="space-y-6">
           <div className="flex items-center justify-between border-b border-sage-200/80 pb-4 dark:border-slate-800">
             <button
+              type="button"
               onClick={() => handleNavClick("home")}
               className="flex items-center gap-3 text-left"
             >
@@ -93,6 +93,7 @@ export function MobileDrawer({
 
               return (
                 <button
+                  type="button"
                   key={`mobile-${item.id}`}
                   onClick={() => handleNavClick(item.id)}
                   aria-current={isActive ? "page" : undefined}
@@ -134,7 +135,7 @@ export function MobileDrawer({
             © {new Date().getFullYear()} Shahil Ahamad
           </div>
         </div>
-      </div>
+      </dialog>
     </>
   );
 }

@@ -9,10 +9,10 @@ import { MobileDrawer } from "./navbar/MobileDrawer";
 import { BackToTop } from "./navbar/BackToTop";
 
 interface HeaderProps {
-  theme: string | undefined;
-  setTheme: (theme: string) => void;
-  activeSection?: string;
-  scrollToSection?: (sectionId: string) => void;
+  readonly theme: string | undefined;
+  readonly setTheme: (theme: string) => void;
+  readonly activeSection?: string;
+  readonly scrollToSection?: (sectionId: string) => void;
 }
 
 export default function NavBar({
@@ -20,7 +20,7 @@ export default function NavBar({
   setTheme,
   activeSection = "home",
   scrollToSection,
-}: HeaderProps) {
+}: Readonly<HeaderProps>) {
   const pathname = usePathname() || "/";
   const [mobileOpen, setMobileOpen] = useState(false);
   const isMainPage = pathname === "/";
@@ -79,7 +79,6 @@ export default function NavBar({
       <DesktopSidebar
         theme={theme}
         toggleTheme={toggleTheme}
-        activeSection={activeSection}
         isItemActive={isItemActive}
         handleNavClick={handleNavClick}
         isBlogDetailPage={isBlogDetailPage}

@@ -56,7 +56,7 @@ describe("use-contact-form", () => {
     );
     expect(result.current.isLoading).toBe(false);
     expect(result.current.isSuccess).toBe(false);
-    expect(result.current.error).toBe(null);
+    expect(result.current.error).toBeNull();
     expect(result.current.isRateLimited).toBe(false);
     expect(result.current.messageText).toBe("");
   });
@@ -89,7 +89,7 @@ describe("use-contact-form", () => {
 
     expect(result.current.isSuccess).toBe(true);
     expect(result.current.isLoading).toBe(false);
-    expect(result.current.error).toBe(null);
+    expect(result.current.error).toBeNull();
     expect(apiClient.submit).toHaveBeenCalledWith({
       name: "John",
       email: "john@test.com",

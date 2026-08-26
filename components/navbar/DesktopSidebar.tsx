@@ -3,15 +3,14 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon, ArrowLeft, ChevronRight } from "lucide-react";
-import { NAV_ITEMS, type NavItemConfig } from "@/lib/nav-config";
+import { NAV_ITEMS } from "@/lib/nav-config";
 
 interface DesktopSidebarProps {
-  theme: string | undefined;
-  toggleTheme: () => void;
-  activeSection: string;
-  isItemActive: (id: string) => boolean;
-  handleNavClick: (id: string) => void;
-  isBlogDetailPage: boolean;
+  readonly theme: string | undefined;
+  readonly toggleTheme: () => void;
+  readonly isItemActive: (id: string) => boolean;
+  readonly handleNavClick: (id: string) => void;
+  readonly isBlogDetailPage: boolean;
 }
 
 export function DesktopSidebar({
@@ -20,7 +19,7 @@ export function DesktopSidebar({
   isItemActive,
   handleNavClick,
   isBlogDetailPage,
-}: DesktopSidebarProps) {
+}: Readonly<DesktopSidebarProps>) {
   return (
     /* w-72 must match lg:pl-72 in page.tsx and BlogClient.tsx. See SIDEBAR_WIDTH_PX in lib/nav-config.ts */
     <aside
@@ -30,6 +29,7 @@ export function DesktopSidebar({
       <div className="space-y-6">
         <div className="flex items-center justify-between gap-3 border-b border-sage-200/80 pb-6 dark:border-slate-800">
           <button
+            type="button"
             onClick={() => handleNavClick("home")}
             className="group flex items-center gap-3 rounded-xl text-left transition-transform duration-300 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-500 dark:focus-visible:ring-gold-400"
             aria-label="Go to Home"
@@ -87,6 +87,7 @@ export function DesktopSidebar({
 
             return (
               <button
+                type="button"
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
                 aria-current={isActive ? "page" : undefined}

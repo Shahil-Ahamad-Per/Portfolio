@@ -7,7 +7,8 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink, Clock } from "lucide-react";
+import { ExternalLink, Clock } from "lucide-react";
+import { Github } from "@/components/icons";
 import { projects } from "./Projects";
 
 export default function ProjectsSection() {
@@ -22,14 +23,14 @@ export default function ProjectsSection() {
         </h2>
 
         <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => {
+          {projects.map((project) => {
             const isComingSoon =
               project.status === "Coming Soon" ||
               project.status === "Work In Progress";
 
             return (
               <Card
-                key={index}
+                key={project.title}
                 className={`group flex flex-col justify-between border-sage-200 bg-cream-50 transition-all duration-500 hover:scale-[1.02] hover:border-sage-400 hover:shadow-2xl dark:border-slate-600 dark:bg-slate-800 dark:hover:border-gold-500 sm:hover:-translate-y-2 sm:hover:scale-105 ${
                   isComingSoon ? "opacity-90" : ""
                 }`}

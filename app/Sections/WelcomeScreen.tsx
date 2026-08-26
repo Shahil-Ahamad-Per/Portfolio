@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 interface WelcomeScreenProps {
-  onExit: () => void;
+  readonly onExit: () => void;
 }
 
-export default function WelcomeScreen({ onExit }: WelcomeScreenProps) {
+export default function WelcomeScreen({
+  onExit,
+}: Readonly<WelcomeScreenProps>) {
   const [welcomeTextAnimated, setWelcomeTextAnimated] = useState(false);
   const [scrollY, setScrollY] = useState(0);
 

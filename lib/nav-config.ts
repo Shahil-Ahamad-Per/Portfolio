@@ -5,10 +5,9 @@ import {
   FolderGit2,
   BookOpen,
   Send,
-  Github,
-  Linkedin,
   Mail,
 } from "lucide-react";
+import { Github, Linkedin } from "@/components/icons";
 
 export const SECTIONS = [
   "home",

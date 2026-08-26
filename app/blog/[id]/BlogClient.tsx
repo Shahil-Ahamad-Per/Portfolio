@@ -17,25 +17,119 @@ import {
 import { useReadingProgress } from "@/hooks/use-reading-progress";
 
 function extractText(children: React.ReactNode): string {
-  if (typeof children === "string") return children;
-  if (Array.isArray(children)) return children.map(extractText).join("");
+  if (
+    children === null ||
+    children === undefined ||
+    typeof children === "boolean"
+  ) {
+    return "";
+  }
+  if (typeof children === "string" || typeof children === "number") {
+    return String(children);
+  }
+  if (Array.isArray(children)) {
+    return children.map(extractText).join("");
+  }
   if (isReactElement(children)) {
     return extractText(
       (children.props as { children?: React.ReactNode }).children
     );
   }
-  return String(children);
+  return "";
 }
 
 function isReactElement(node: React.ReactNode): node is React.ReactElement {
-  return !!(node && typeof node === "object" && "props" in node);
+  return Boolean(node && typeof node === "object" && "props" in node);
 }
+
+function MarkdownH2({
+  children,
+  ...props
+}: Readonly<React.HTMLAttributes<HTMLHeadingElement>>) {
+  const text = extractText(children);
+  const id = text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+  return (
+    <h2 id={id} {...props}>
+      {children}
+    </h2>
+  );
+}
+
+function MarkdownH3({
+  children,
+  ...props
+}: Readonly<React.HTMLAttributes<HTMLHeadingElement>>) {
+  const text = extractText(children);
+  const id = text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+  return (
+    <h3 id={id} {...props}>
+      {children}
+    </h3>
+  );
+}
+
+function MarkdownCode({
+  className,
+  children,
+  ...props
+}: Readonly<React.HTMLAttributes<HTMLElement>>) {
+  const isBlock = className?.startsWith("language-");
+  if (!isBlock) {
+    return (
+      <code
+        className="rounded bg-sage-100 px-1.5 py-0.5 text-xs text-sage-800 dark:bg-slate-800 dark:text-gold-400 sm:text-sm"
+        {...props}
+      >
+        {children}
+      </code>
+    );
+  }
+
+  const handleCopy = () => {
+    const rawText = extractText(children).replace(/\n$/, "");
+    navigator.clipboard.writeText(rawText);
+  };
+
+  return (
+    <div className="group relative my-4 sm:my-6">
+      <div className="flex items-center justify-between rounded-t-xl border border-sage-200 bg-slate-800 px-3 py-2 dark:border-slate-700 dark:bg-slate-950 sm:px-4">
+        <span className="text-[10px] uppercase tracking-wider text-slate-400 sm:text-xs">
+          {className?.replace("language-", "") || "code"}
+        </span>
+        <button
+          type="button"
+          onClick={handleCopy}
+          className="text-[10px] text-slate-400 transition-colors hover:text-white sm:text-xs"
+        >
+          Copy
+        </button>
+      </div>
+      <pre className="!mt-0 overflow-x-auto !rounded-t-none rounded-b-xl border border-t-0 border-sage-200 bg-slate-900 p-3 dark:border-slate-700 dark:bg-slate-950 sm:p-4">
+        <code className="text-xs text-slate-100 sm:text-sm" {...props}>
+          {children}
+        </code>
+      </pre>
+    </div>
+  );
+}
+
+const markdownComponents = {
+  h2: MarkdownH2,
+  h3: MarkdownH3,
+  code: MarkdownCode,
+};
 
 interface BlogClientProps {
-  post: Post | undefined;
+  readonly post: Post | undefined;
 }
 
-export default function BlogClient({ post }: BlogClientProps) {
+export default function BlogClient({ post }: Readonly<BlogClientProps>) {
   const { theme, setTheme } = useTheme();
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
     new Set()
@@ -43,7 +137,7 @@ export default function BlogClient({ post }: BlogClientProps) {
   const [activeId, setActiveId] = useState<string>("");
   const [mounted, setMounted] = useState(false);
 
-  const hasContent = !!post?.content;
+  const hasContent = Boolean(post?.content);
   const toc = useTableOfContents("#blog-content", hasContent);
   const readingProgress = useReadingProgress(hasContent);
 
@@ -90,6 +184,7 @@ export default function BlogClient({ post }: BlogClientProps) {
         <div className="group flex items-center">
           {hasChildren ? (
             <button
+              type="button"
               onClick={() => toggleSection(item.id)}
               className="mr-1 flex-shrink-0 rounded p-1 transition-colors hover:bg-sage-100 dark:hover:bg-slate-700"
             >
@@ -103,6 +198,7 @@ export default function BlogClient({ post }: BlogClientProps) {
             <div className="w-5" />
           )}
           <button
+            type="button"
             onClick={(e) => handleTocClick(item.id, e)}
             className={`block flex-1 rounded-md px-3 py-2 text-left text-sm transition-all duration-200 hover:bg-sage-100 dark:hover:bg-slate-700 ${
               isActive
@@ -183,6 +279,7 @@ export default function BlogClient({ post }: BlogClientProps) {
                   ← Back to Home
                 </Link>
                 <button
+                  type="button"
                   onClick={() => window.history.back()}
                   className="inline-flex w-full items-center justify-center rounded-lg border border-sage-200 px-6 py-3 text-charcoal-700 transition-colors hover:bg-sage-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 sm:w-auto"
                 >
@@ -248,72 +345,7 @@ export default function BlogClient({ post }: BlogClientProps) {
             >
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
-                components={{
-                  h2: ({ children, ...props }) => {
-                    const text = extractText(children);
-                    const id = text
-                      .toLowerCase()
-                      .replace(/[^a-z0-9]+/g, "-")
-                      .replace(/(^-|-$)/g, "");
-                    return (
-                      <h2 id={id} {...props}>
-                        {children}
-                      </h2>
-                    );
-                  },
-                  h3: ({ children, ...props }) => {
-                    const text = extractText(children);
-                    const id = text
-                      .toLowerCase()
-                      .replace(/[^a-z0-9]+/g, "-")
-                      .replace(/(^-|-$)/g, "");
-                    return (
-                      <h3 id={id} {...props}>
-                        {children}
-                      </h3>
-                    );
-                  },
-                  code: ({ className, children, ...props }) => {
-                    const isBlock = className?.startsWith("language-");
-                    if (!isBlock) {
-                      return (
-                        <code
-                          className="rounded bg-sage-100 px-1.5 py-0.5 text-xs text-sage-800 dark:bg-slate-800 dark:text-gold-400 sm:text-sm"
-                          {...props}
-                        >
-                          {children}
-                        </code>
-                      );
-                    }
-                    return (
-                      <div className="group relative my-4 sm:my-6">
-                        <div className="flex items-center justify-between rounded-t-xl border border-sage-200 bg-slate-800 px-3 py-2 dark:border-slate-700 dark:bg-slate-950 sm:px-4">
-                          <span className="text-[10px] uppercase tracking-wider text-slate-400 sm:text-xs">
-                            {className?.replace("language-", "") || "code"}
-                          </span>
-                          <button
-                            onClick={() =>
-                              navigator.clipboard.writeText(
-                                String(children).replace(/\n$/, "")
-                              )
-                            }
-                            className="text-[10px] text-slate-400 transition-colors hover:text-white sm:text-xs"
-                          >
-                            Copy
-                          </button>
-                        </div>
-                        <pre className="!mt-0 overflow-x-auto !rounded-t-none rounded-b-xl border border-t-0 border-sage-200 bg-slate-900 p-3 dark:border-slate-700 dark:bg-slate-950 sm:p-4">
-                          <code
-                            className="text-xs text-slate-100 sm:text-sm"
-                            {...props}
-                          >
-                            {children}
-                          </code>
-                        </pre>
-                      </div>
-                    );
-                  },
-                }}
+                components={markdownComponents}
               >
                 {post.content}
               </ReactMarkdown>

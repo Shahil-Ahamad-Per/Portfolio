@@ -1,13 +1,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail, ArrowRight } from "lucide-react";
+import { Mail, ArrowRight } from "lucide-react";
+import { Github, Linkedin } from "@/components/icons";
 
 interface HeroSectionProps {
-  scrollToSection: (sectionId: string) => void;
+  readonly scrollToSection: (sectionId: string) => void;
 }
 
-export default function HeroSection({ scrollToSection }: HeroSectionProps) {
+export default function HeroSection({
+  scrollToSection,
+}: Readonly<HeroSectionProps>) {
   return (
     <section
       id="home"
@@ -16,14 +19,13 @@ export default function HeroSection({ scrollToSection }: HeroSectionProps) {
       <div className="container mx-auto max-w-5xl text-center">
         <div className="mb-8 sm:mb-10">
           {/* <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sage-100/80 dark:bg-slate-800/80 border border-sage-200 dark:border-slate-700 text-sage-800 dark:text-gold-400 text-xs sm:text-sm font-medium mb-6 animate-fadeInUp shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-sage-500 dark:bg-gold-400 animate-ping"></span>
+            <span className="w-2 h-2 rounded-full bg-sage-500 dark:gold-400 animate-ping"></span>
             Available for New Projects
           </div> */}
 
           <h1 className="animate-fadeInUp mb-4 font-serif text-4xl font-bold leading-[1.15] tracking-tight text-charcoal-900 dark:text-slate-100 sm:mb-6 sm:text-6xl md:text-7xl lg:text-8xl">
-            Shahil
+            Shahil{" "}
             <span className="font-serif text-sage-600 dark:text-gold-400">
-              {" "}
               Ahamad
             </span>
           </h1>

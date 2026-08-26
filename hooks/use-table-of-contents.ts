@@ -22,15 +22,17 @@ function buildTocHierarchy(flatToc: TocItem[]): TocItem[] {
 
   flatToc.forEach((item) => {
     const newItem = { ...item, children: [] };
-    while (stack.length > 0 && stack[stack.length - 1].level >= newItem.level) {
+    while (stack.length > 0 && (stack.at(-1)?.level ?? 0) >= newItem.level) {
       stack.pop();
     }
     if (stack.length === 0) {
       result.push(newItem);
     } else {
-      const parent = stack[stack.length - 1];
-      if (!parent.children) parent.children = [];
-      parent.children.push(newItem);
+      const parent = stack.at(-1);
+      if (parent) {
+        parent.children ??= [];
+        parent.children.push(newItem);
+      }
     }
     stack.push(newItem);
   });

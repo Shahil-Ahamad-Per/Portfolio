@@ -4,15 +4,8 @@ import type React from "react";
 import { useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Mail,
-  Github,
-  Linkedin,
-  CheckCircle,
-  Loader2,
-  Send,
-  Clock,
-} from "lucide-react";
+import { Mail, CheckCircle, Loader2, Send, Clock } from "lucide-react";
+import { Github, Linkedin } from "@/components/icons";
 import { useContactForm } from "@/hooks/use-contact-form";
 
 export default function ContactSection() {
@@ -41,8 +34,8 @@ export default function ContactSection() {
       <div className="container relative z-10 mx-auto max-w-6xl">
         <div className="mb-10 text-center sm:mb-16">
           <h2 className="group relative mb-3 inline-block font-serif text-3xl font-bold text-charcoal-900 dark:text-slate-100 sm:mb-4 sm:text-4xl md:text-5xl">
-            Let's Work Together
-            <span className="absolute -bottom-2 left-0 h-1 w-1/2 rounded-full bg-sage-500 transition-all duration-300 group-hover:w-full dark:bg-gold-500"></span>
+            {"Let's Work Together"}
+            <span className="absolute -bottom-2 left-0 h-1 w-1/2 rounded-full bg-sage-500 transition-all duration-300 group-hover:w-full dark:bg-gold-500" />
           </h2>
           <p className="mx-auto mt-4 max-w-2xl px-2 text-sm text-charcoal-600 dark:text-slate-400 sm:text-lg">
             Ready to bring your ideas to life? I'm currently available for
