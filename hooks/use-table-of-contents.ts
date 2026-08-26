@@ -40,7 +40,7 @@ function buildTocHierarchy(flatToc: TocItem[]): TocItem[] {
 
 export function useTableOfContents(
   containerSelector: string,
-  enabled: boolean = true,
+  enabled: boolean = true
 ) {
   const [toc, setToc] = useState<TocItem[]>([]);
 
@@ -50,8 +50,8 @@ export function useTableOfContents(
     const timer = setTimeout(() => {
       const headings = Array.from(
         document.querySelectorAll(
-          `${containerSelector} h2, ${containerSelector} h3`,
-        ),
+          `${containerSelector} h2, ${containerSelector} h3`
+        )
       ) as HTMLElement[];
       const flatToc = headings.map((heading) => ({
         id: heading.id || slugify(heading.innerText),

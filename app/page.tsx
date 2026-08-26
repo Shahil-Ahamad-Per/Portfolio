@@ -27,7 +27,7 @@ export default function Portfolio() {
   if (!mounted) return null;
   if (showWelcome) return <WelcomeScreen onExit={handleWelcomeExit} />;
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cream-50 to-sage-50 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900 transition-all duration-1000 animate-fadeIn">
+    <div className="animate-fadeIn min-h-screen bg-gradient-to-br from-cream-50 to-sage-50 transition-all duration-1000 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900">
       <NavBar
         theme={theme}
         setTheme={setTheme}
@@ -35,7 +35,7 @@ export default function Portfolio() {
         scrollToSection={scrollToSection}
       />
       {/* lg:pl-72 must match Navbar w-72 and SIDEBAR_WIDTH_PX in lib/nav-config.ts */}
-      <div className="lg:pl-72 flex flex-col min-h-screen pt-16 lg:pt-0">
+      <div className="flex min-h-screen flex-col pt-16 lg:pl-72 lg:pt-0">
         <main className="flex-grow">
           <HeroSection scrollToSection={scrollToSection} />
           <AboutSection />

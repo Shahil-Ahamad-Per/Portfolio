@@ -12,7 +12,7 @@ interface ApiResponse {
 }
 
 export async function submitToWeb3Forms(
-  data: ContactFormData,
+  data: ContactFormData
 ): Promise<ApiResponse> {
   const formData = new FormData();
   formData.append("name", data.name);

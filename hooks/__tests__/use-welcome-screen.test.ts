@@ -42,7 +42,7 @@ describe("use-welcome-screen", () => {
   it("returns false when sessionStorage throws", () => {
     const origGetItem = Object.getOwnPropertyDescriptor(
       Storage.prototype,
-      "getItem",
+      "getItem"
     );
     Object.defineProperty(Storage.prototype, "getItem", {
       value: () => {

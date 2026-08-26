@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Sun, Moon, Menu, X } from "lucide-react";
 
 interface MobileHeaderProps {
-  theme: string | undefined;
-  toggleTheme: () => void;
-  mobileOpen: boolean;
-  setMobileOpen: (open: boolean) => void;
-  onHomeClick: () => void;
+  readonly theme: string | undefined;
+  readonly toggleTheme: () => void;
+  readonly mobileOpen: boolean;
+  readonly setMobileOpen: (open: boolean) => void;
+  readonly onHomeClick: () => void;
 }
 
 export function MobileHeader({
@@ -19,20 +19,21 @@ export function MobileHeader({
   onHomeClick,
 }: MobileHeaderProps) {
   return (
-    <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-cream-50/90 dark:bg-slate-900/90 backdrop-blur-xl border-b border-sage-200/80 dark:border-slate-800/80 z-50 px-4 sm:px-6 flex items-center justify-between transition-colors duration-300 shadow-sm">
+    <header className="fixed left-0 right-0 top-0 z-50 flex h-16 items-center justify-between border-b border-sage-200/80 bg-cream-50/90 px-4 shadow-sm backdrop-blur-xl transition-colors duration-300 dark:border-slate-800/80 dark:bg-slate-900/90 sm:px-6 lg:hidden">
       <button
+        type="button"
         onClick={onHomeClick}
-        className="flex items-center gap-2.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-500 rounded-xl group"
+        className="group flex items-center gap-2.5 rounded-xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-500"
         aria-label="Shahil Ahamad Home"
       >
-        <div className="w-8 h-8 rounded-xl overflow-hidden bg-gradient-to-br from-sage-100 to-sage-200 dark:from-slate-800 dark:to-slate-700 p-0.5 border border-sage-300 dark:border-slate-700 shrink-0 shadow-sm group-active:scale-95 transition-transform">
+        <div className="h-8 w-8 shrink-0 overflow-hidden rounded-xl border border-sage-300 bg-gradient-to-br from-sage-100 to-sage-200 p-0.5 shadow-sm transition-transform group-active:scale-95 dark:border-slate-700 dark:from-slate-800 dark:to-slate-700">
           <img
             src="/profile.jpg"
             alt="Logo"
-            className="w-full h-full object-contain rounded-lg"
+            className="h-full w-full rounded-lg object-contain"
           />
         </div>
-        <span className="text-lg font-serif font-bold text-charcoal-900 dark:text-white">
+        <span className="font-serif text-lg font-bold text-charcoal-900 dark:text-white">
           Shahil{" "}
           <span className="text-sage-600 dark:text-gold-400">Ahamad</span>
         </span>
@@ -44,7 +45,7 @@ export function MobileHeader({
           size="icon"
           onClick={toggleTheme}
           aria-label={`Toggle theme (currently ${theme})`}
-          className="h-9 w-9 rounded-xl text-charcoal-700 dark:text-slate-200 hover:bg-sage-100 dark:hover:bg-slate-800 border border-sage-200/60 dark:border-slate-700/60 shadow-sm active:scale-95 transition-all"
+          className="h-9 w-9 rounded-xl border border-sage-200/60 text-charcoal-700 shadow-sm transition-all hover:bg-sage-100 active:scale-95 dark:border-slate-700/60 dark:text-slate-200 dark:hover:bg-slate-800"
         >
           {theme === "dark" ? (
             <Sun className="h-4 w-4 text-gold-400" />
@@ -56,15 +57,15 @@ export function MobileHeader({
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => setMobileOpen((prev) => !prev)}
+          onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={
             mobileOpen ? "Close navigation menu" : "Open navigation menu"
           }
           aria-expanded={mobileOpen}
-          className={`h-9 w-9 rounded-xl border border-sage-200/60 dark:border-slate-700/60 shadow-sm active:scale-95 transition-all ${
+          className={`h-9 w-9 rounded-xl border border-sage-200/60 shadow-sm transition-all active:scale-95 dark:border-slate-700/60 ${
             mobileOpen
-              ? "bg-sage-100 dark:bg-slate-800 text-sage-700 dark:text-gold-400"
-              : "text-charcoal-800 dark:text-slate-100 hover:bg-sage-100 dark:hover:bg-slate-800"
+              ? "bg-sage-100 text-sage-700 dark:bg-slate-800 dark:text-gold-400"
+              : "text-charcoal-800 hover:bg-sage-100 dark:text-slate-100 dark:hover:bg-slate-800"
           }`}
         >
           {mobileOpen ? (

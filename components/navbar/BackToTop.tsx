@@ -24,7 +24,7 @@ export function BackToTop({ onScrollToTop }: BackToTopProps) {
     <button
       onClick={onScrollToTop}
       aria-label="Back to top"
-      className="lg:hidden fixed bottom-6 right-5 z-40 p-3 rounded-full bg-sage-600/90 dark:bg-gold-500/90 text-white dark:text-slate-900 shadow-xl backdrop-blur-md border border-white/20 active:scale-90 transition-all duration-300 animate-fadeIn"
+      className="animate-fadeIn fixed bottom-6 right-5 z-40 rounded-full border border-white/20 bg-sage-600/90 p-3 text-white shadow-xl backdrop-blur-md transition-all duration-300 active:scale-90 dark:bg-gold-500/90 dark:text-slate-900 lg:hidden"
     >
       <ArrowUp className="h-5 w-5" />
     </button>

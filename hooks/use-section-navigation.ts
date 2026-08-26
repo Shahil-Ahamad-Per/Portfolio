@@ -28,7 +28,7 @@ export function useSectionNavigation(active: boolean) {
       }
       setActiveSection(sectionId);
     },
-    [getHeaderOffset],
+    [getHeaderOffset]
   );
 
   useEffect(() => {

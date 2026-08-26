@@ -3,7 +3,7 @@ import { renderHook, act } from "@testing-library/react";
 import { useContactForm, RateLimiter, ApiClient } from "../use-contact-form";
 
 function createMockRateLimiter(
-  overrides: Partial<RateLimiter> = {},
+  overrides: Partial<RateLimiter> = {}
 ): RateLimiter {
   return {
     check: vi.fn().mockReturnValue({ remaining: 5, isLimited: false }),
@@ -52,7 +52,7 @@ describe("use-contact-form", () => {
 
   it("initializes with default state", () => {
     const { result } = renderHook(() =>
-      useContactForm({ rateLimiter, apiClient }),
+      useContactForm({ rateLimiter, apiClient })
     );
     expect(result.current.isLoading).toBe(false);
     expect(result.current.isSuccess).toBe(false);
@@ -71,14 +71,14 @@ describe("use-contact-form", () => {
       check: vi.fn().mockReturnValue({ remaining: 0, isLimited: true }),
     });
     const { result } = renderHook(() =>
-      useContactForm({ rateLimiter, apiClient }),
+      useContactForm({ rateLimiter, apiClient })
     );
     expect(result.current.isRateLimited).toBe(true);
   });
 
   it("submits successfully and resets form", async () => {
     const { result } = renderHook(() =>
-      useContactForm({ rateLimiter, apiClient }),
+      useContactForm({ rateLimiter, apiClient })
     );
     const formRef = { current: document.createElement("form") };
     formRef.current.reset = vi.fn();
@@ -106,7 +106,7 @@ describe("use-contact-form", () => {
     });
 
     const { result } = renderHook(() =>
-      useContactForm({ rateLimiter, apiClient }),
+      useContactForm({ rateLimiter, apiClient })
     );
     const formRef = { current: document.createElement("form") };
 
@@ -124,7 +124,7 @@ describe("use-contact-form", () => {
     });
 
     const { result } = renderHook(() =>
-      useContactForm({ rateLimiter, apiClient }),
+      useContactForm({ rateLimiter, apiClient })
     );
     const formRef = { current: document.createElement("form") };
 
@@ -133,7 +133,7 @@ describe("use-contact-form", () => {
     });
 
     expect(result.current.error).toBe(
-      "Failed to send message. Please try again later.",
+      "Failed to send message. Please try again later."
     );
   });
 
@@ -143,7 +143,7 @@ describe("use-contact-form", () => {
     });
 
     const { result } = renderHook(() =>
-      useContactForm({ rateLimiter, apiClient }),
+      useContactForm({ rateLimiter, apiClient })
     );
     const formRef = { current: document.createElement("form") };
 
@@ -156,7 +156,7 @@ describe("use-contact-form", () => {
 
   it("setMessageText updates messageText", () => {
     const { result } = renderHook(() =>
-      useContactForm({ rateLimiter, apiClient }),
+      useContactForm({ rateLimiter, apiClient })
     );
 
     act(() => {

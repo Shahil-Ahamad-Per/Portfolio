@@ -2,48 +2,48 @@ import { skills } from "@/app/Sections/Skill/skillsIcons";
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="py-16 sm:py-20 px-4 sm:px-6">
+    <section id="skills" className="px-4 py-16 sm:px-6 sm:py-20">
       <div className="container mx-auto max-w-6xl">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-center text-charcoal-800 dark:text-slate-100 mb-10 sm:mb-16 hover:text-sage-600 dark:hover:text-gold-400 transition-colors duration-300">
+        <h2 className="mb-10 text-center font-serif text-3xl font-bold text-charcoal-800 transition-colors duration-300 hover:text-sage-600 dark:text-slate-100 dark:hover:text-gold-400 sm:mb-16 sm:text-4xl md:text-5xl">
           Skills & Technologies
         </h2>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-6 md:grid-cols-4 lg:grid-cols-6">
           {skills.map((skill, index) => (
             <a
               key={skill.name}
               href={skill.url || "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center p-3.5 sm:p-6 bg-cream-50 dark:bg-slate-800 rounded-2xl border border-sage-200 dark:border-slate-600 hover:shadow-xl hover:scale-105 sm:hover:scale-110 sm:hover:-translate-y-2 active:scale-95 transition-all duration-300 cursor-pointer hover:border-sage-400 dark:hover:border-gold-500 shadow-sm"
+              className="group flex cursor-pointer flex-col items-center rounded-2xl border border-sage-200 bg-cream-50 p-3.5 shadow-sm transition-all duration-300 hover:scale-105 hover:border-sage-400 hover:shadow-xl active:scale-95 dark:border-slate-600 dark:bg-slate-800 dark:hover:border-gold-500 sm:p-6 sm:hover:-translate-y-2 sm:hover:scale-110"
               style={{ animationDelay: `${index * 50}ms` }}
             >
-              <div className="w-10 h-10 sm:w-12 sm:h-12 mb-2.5 sm:mb-4 rounded-xl flex items-center justify-center group-hover:scale-110 sm:group-hover:scale-125 group-hover:rotate-6 transition-all duration-300">
+              <div className="mb-2.5 flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 sm:mb-4 sm:h-12 sm:w-12 sm:group-hover:scale-125">
                 {skill.image ? (
                   typeof skill.image === "string" &&
                   skill.image.trim().startsWith("<svg") ? (
                     <div
-                      className="w-full h-full flex items-center justify-center"
+                      className="flex h-full w-full items-center justify-center"
                       dangerouslySetInnerHTML={{ __html: skill.image }}
                     />
                   ) : (
                     <img
                       src={skill.image || "/placeholder.svg"}
                       alt={skill.name}
-                      className="w-full h-full object-contain"
+                      className="h-full w-full object-contain"
                       loading="lazy"
                     />
                   )
                 ) : (
-                  <span className="text-white font-bold text-lg">
+                  <span className="text-lg font-bold text-white">
                     {skill.name.charAt(0)}
                   </span>
                 )}
               </div>
-              <h3 className="text-xs sm:text-sm font-semibold text-charcoal-800 dark:text-slate-100 text-center mb-0.5 group-hover:text-sage-600 dark:group-hover:text-gold-400 transition-colors duration-300">
+              <h3 className="mb-0.5 text-center text-xs font-semibold text-charcoal-800 transition-colors duration-300 group-hover:text-sage-600 dark:text-slate-100 dark:group-hover:text-gold-400 sm:text-sm">
                 {skill.name}
               </h3>
-              <span className="text-[10px] sm:text-xs text-charcoal-600 dark:text-slate-400 text-center">
+              <span className="text-center text-[10px] text-charcoal-600 dark:text-slate-400 sm:text-xs">
                 {skill.category}
               </span>
             </a>
@@ -51,7 +51,7 @@ export default function SkillsSection() {
         </div>
 
         {/* Skills Categories */}
-        <div className="mt-10 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {[
             {
               category: "Frontend",
@@ -76,18 +76,18 @@ export default function SkillsSection() {
           ].map((group) => (
             <div
               key={group.category}
-              className="p-5 sm:p-6 bg-cream-100/50 dark:bg-slate-700/50 rounded-2xl border border-sage-200 dark:border-slate-600 hover:shadow-lg transition-all duration-300 group"
+              className="group rounded-2xl border border-sage-200 bg-cream-100/50 p-5 transition-all duration-300 hover:shadow-lg dark:border-slate-600 dark:bg-slate-700/50 sm:p-6"
             >
-              <h3 className="text-base sm:text-lg font-serif font-semibold text-charcoal-800 dark:text-slate-100 mb-3 sm:mb-4 group-hover:text-sage-600 dark:group-hover:text-gold-400 transition-colors duration-300">
+              <h3 className="mb-3 font-serif text-base font-semibold text-charcoal-800 transition-colors duration-300 group-hover:text-sage-600 dark:text-slate-100 dark:group-hover:text-gold-400 sm:mb-4 sm:text-lg">
                 {group.category}
               </h3>
               <div className="space-y-2">
                 {group.skills.map((skill) => (
                   <div
                     key={skill}
-                    className="text-xs sm:text-sm text-charcoal-700 dark:text-slate-300 flex items-center group-hover:text-charcoal-800 dark:group-hover:text-slate-200 transition-colors duration-300"
+                    className="flex items-center text-xs text-charcoal-700 transition-colors duration-300 group-hover:text-charcoal-800 dark:text-slate-300 dark:group-hover:text-slate-200 sm:text-sm"
                   >
-                    <div className="w-1.5 h-1.5 bg-sage-500 dark:bg-gold-500 rounded-full mr-2.5 group-hover:scale-125 transition-transform duration-300"></div>
+                    <div className="mr-2.5 h-1.5 w-1.5 rounded-full bg-sage-500 transition-transform duration-300 group-hover:scale-125 dark:bg-gold-500"></div>
                     {skill}
                   </div>
                 ))}

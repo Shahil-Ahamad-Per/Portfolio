@@ -27,5 +27,8 @@ yarn-error.log*
 next-env.d.ts
 .wrangler
 
+# test coverage
+/coverage/
+
 .agents/*
 skills-lock.json

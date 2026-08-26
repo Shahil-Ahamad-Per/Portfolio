@@ -34,7 +34,7 @@ describe("content-adapter", () => {
       expect(post).toBeDefined();
       expect(post!.id).toBe(1);
       expect(post!.title).toBe(
-        "Mastering Git Workflows for Team Collaboration",
+        "Mastering Git Workflows for Team Collaboration"
       );
     });
 

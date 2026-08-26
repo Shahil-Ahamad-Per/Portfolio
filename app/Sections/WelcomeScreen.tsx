@@ -34,7 +34,7 @@ export default function WelcomeScreen({ onExit }: WelcomeScreenProps) {
   return (
     <div className="relative">
       <div
-        className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-cream-50 to-sage-50 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900 transition-all duration-1000"
+        className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-cream-50 to-sage-50 transition-all duration-1000 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900"
         style={{
           transform: `translateY(-${scrollY * 0.5}px)`,
           opacity: Math.max(0, 1 - scrollY / (window.innerHeight * 0.5)),
@@ -42,17 +42,17 @@ export default function WelcomeScreen({ onExit }: WelcomeScreenProps) {
       >
         <div className="text-center">
           <h1
-            className={`text-6xl sm:text-7xl md:text-9xl font-serif font-bold text-charcoal-800 dark:text-slate-100 mb-4 transition-opacity duration-1000 ${
+            className={`mb-4 font-serif text-6xl font-bold text-charcoal-800 transition-opacity duration-1000 dark:text-slate-100 sm:text-7xl md:text-9xl ${
               welcomeTextAnimated ? "opacity-100" : "opacity-0"
             }`}
           >
             Welcome
           </h1>
-          <div className="w-32 sm:w-48 h-1.5 bg-gradient-to-r from-sage-400 to-sage-600 dark:from-gold-400 dark:to-gold-600 mx-auto rounded-full animate-pulse mt-6 sm:mt-8" />
+          <div className="mx-auto mt-6 h-1.5 w-32 animate-pulse rounded-full bg-gradient-to-r from-sage-400 to-sage-600 dark:from-gold-400 dark:to-gold-600 sm:mt-8 sm:w-48" />
           {welcomeTextAnimated && (
-            <div className="mt-12 flex flex-col items-center animate-fadeIn animation-delay-600">
-              <ChevronDown className="h-10 w-10 text-sage-600 dark:text-gold-400 animate-bounceArrow" />
-              <span className="text-lg font-medium text-charcoal-700 dark:text-slate-200 mt-2">
+            <div className="animate-fadeIn animation-delay-600 mt-12 flex flex-col items-center">
+              <ChevronDown className="animate-bounceArrow h-10 w-10 text-sage-600 dark:text-gold-400" />
+              <span className="mt-2 text-lg font-medium text-charcoal-700 dark:text-slate-200">
                 Scroll to explore
               </span>
             </div>

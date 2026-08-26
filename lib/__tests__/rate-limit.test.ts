@@ -10,7 +10,7 @@ function clearStorage() {
 function setRecord(count: number, date?: string) {
   localStorage.setItem(
     STORAGE_KEY,
-    JSON.stringify({ count, date: date ?? new Date().toDateString() }),
+    JSON.stringify({ count, date: date ?? new Date().toDateString() })
   );
 }
 

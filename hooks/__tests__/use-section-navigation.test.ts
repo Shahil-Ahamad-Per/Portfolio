@@ -53,7 +53,7 @@ describe("use-section-navigation", () => {
 
     expect(result.current.activeSection).toBe("about");
     expect(scrollToSpy).toHaveBeenCalledWith(
-      expect.objectContaining({ behavior: "smooth" }),
+      expect.objectContaining({ behavior: "smooth" })
     );
   });
 

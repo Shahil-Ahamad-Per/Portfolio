@@ -48,7 +48,7 @@ export function useContactForm(options: UseContactFormOptions = {}) {
   const handleSubmit = useCallback(
     async (
       e: React.FormEvent<HTMLFormElement>,
-      formRef: React.RefObject<HTMLFormElement | null>,
+      formRef: React.RefObject<HTMLFormElement | null>
     ) => {
       e.preventDefault();
 
@@ -84,7 +84,7 @@ export function useContactForm(options: UseContactFormOptions = {}) {
         setIsLoading(false);
       }
     },
-    [isRateLimited, rateLimiter, apiClient],
+    [isRateLimited, rateLimiter, apiClient]
   );
 
   return {
