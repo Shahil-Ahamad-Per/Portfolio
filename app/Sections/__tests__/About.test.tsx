@@ -14,7 +14,7 @@ describe("AboutSection", () => {
     render(<AboutSection />);
     const image = screen.getByRole("img", { name: /Shahil Ahamad/i });
     expect(image).toBeInTheDocument();
-    expect(image).toHaveAttribute("src", "/profile.jpg");
+    expect(image).toHaveAttribute("src", "/profile.gif");
   });
 
   it("renders descriptive paragraphs about experience and passion", () => {
