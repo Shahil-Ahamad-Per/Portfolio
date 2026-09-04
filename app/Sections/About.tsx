@@ -15,7 +15,7 @@ export function AboutSection() {
           <div className="group flex justify-center md:col-span-5">
             <div className="bg-linear-to-br aspect-square w-64 max-w-[380px] rounded-2xl from-sage-200 to-sage-400 p-2.5 shadow-xl transition-all duration-500 group-hover:rotate-1 group-hover:scale-105 dark:from-slate-700 dark:to-slate-800 sm:w-80 sm:rounded-3xl sm:p-3 md:w-full">
               <img
-                src="/profile.gif"
+                src="/profile.jpg"
                 alt="Shahil Ahamad"
                 className="h-full w-full rounded-xl object-cover shadow-inner sm:rounded-2xl"
               />
