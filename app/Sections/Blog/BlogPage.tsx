@@ -55,7 +55,18 @@ export default function BlogSection() {
 
         <div className="grid gap-6 sm:gap-8 md:grid-cols-2">
           {filteredPosts.map((post) => (
-            <Link key={post.id} href={`/blog/${post.id}`} passHref>
+            <Link
+              key={post.id}
+              href={`/blog/${post.id}`}
+              onClick={() => {
+                try {
+                  sessionStorage.setItem("returnToSection", "blog");
+                } catch {
+                  // ignore
+                }
+              }}
+              passHref
+            >
               <Card className="group flex h-full cursor-pointer flex-col justify-between border-sage-200 bg-cream-50 transition-all duration-500 hover:scale-[1.02] hover:border-sage-400 hover:shadow-2xl dark:border-slate-600 dark:bg-slate-800 dark:hover:border-gold-500 sm:hover:-translate-y-2 sm:hover:scale-105">
                 <CardHeader className="p-5 sm:p-6">
                   <div className="mb-2 flex items-center justify-between gap-2">

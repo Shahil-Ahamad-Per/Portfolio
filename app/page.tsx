@@ -17,7 +17,9 @@ export default function Portfolio() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const { showWelcome, handleWelcomeExit } = useWelcomeScreen();
-  const { activeSection, scrollToSection } = useSectionNavigation(!showWelcome);
+  const { activeSection, scrollToSection } = useSectionNavigation(
+    !showWelcome && mounted
+  );
 
   useEffect(() => {
     setMounted(true);

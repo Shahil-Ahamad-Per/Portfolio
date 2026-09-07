@@ -86,9 +86,8 @@ html {
 
 /* Better touch targets on mobile */
 @media (min-width: 640px) {
-  button,
-  a,
-  [role="button"] {
+  button:not(.min-h-0),
+  [role="button"]:not(.min-h-0) {
     min-height: 44px;
   }
 }

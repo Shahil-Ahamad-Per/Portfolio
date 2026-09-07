@@ -43,17 +43,35 @@ describe("content-adapter", () => {
       expect(post).toBeUndefined();
     });
 
-    it("returns post with markdown content for id 1", () => {
-      const post = getPostById(1);
-      expect(post).toBeDefined();
-      expect(post!.content).toContain("# Mastering Git and GitHub");
-      expect(post!.content).toContain("## What is Git?");
-    });
-
-    it("returns empty content for posts without markdown", () => {
-      const post = getPostById(2);
-      expect(post).toBeDefined();
-      expect(post!.content).toBe("");
-    });
+    it.each([
+      {
+        id: 1,
+        titleSnippet: "# Mastering Git and GitHub",
+        heading: "## What is Git?",
+      },
+      {
+        id: 2,
+        titleSnippet: "# Building Scalable Applications with Nx Workspace",
+        heading: "## Introduction: The Case for Monorepos",
+      },
+      {
+        id: 3,
+        titleSnippet: "# TypeScript Best Practices for Enterprise Applications",
+        heading: "## 1. Strict Compiler Foundations",
+      },
+      {
+        id: 4,
+        titleSnippet: "# Modern JavaScript: ES2026 Features You Should Know",
+        heading: "## 1. Native Base64 and Hex Encoding on `Uint8Array`",
+      },
+    ])(
+      "returns post with markdown content for id $id",
+      ({ id, titleSnippet, heading }) => {
+        const post = getPostById(id);
+        expect(post).toBeDefined();
+        expect(post!.content).toContain(titleSnippet);
+        expect(post!.content).toContain(heading);
+      }
+    );
   });
 });

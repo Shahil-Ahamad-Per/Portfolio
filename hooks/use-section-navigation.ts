@@ -24,7 +24,7 @@ export function useSectionNavigation(active: boolean) {
       });
 
       if (updateHash) {
-        window.history.pushState(null, "", `#${sectionId}`);
+        window.history.replaceState(null, "", `#${sectionId}`);
       }
       setActiveSection(sectionId);
     },
@@ -34,9 +34,33 @@ export function useSectionNavigation(active: boolean) {
   useEffect(() => {
     if (!active) return;
 
-    if (window.location.hash) {
-      const section = window.location.hash.slice(1);
-      scrollToSection(section, false);
+    let targetSection = "";
+    try {
+      const returnSection = sessionStorage.getItem("returnToSection");
+      if (returnSection) {
+        targetSection = returnSection;
+        sessionStorage.removeItem("returnToSection");
+      }
+    } catch {
+      // ignore
+    }
+
+    if (!targetSection && window.location.hash) {
+      targetSection = window.location.hash.slice(1);
+    }
+
+    if (targetSection) {
+      const performScroll = () => {
+        scrollToSection(targetSection, true);
+      };
+
+      performScroll();
+      const timer1 = setTimeout(performScroll, 50);
+      const timer2 = setTimeout(performScroll, 150);
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
     }
   }, [active, scrollToSection]);
 
@@ -58,7 +82,7 @@ export function useSectionNavigation(active: boolean) {
             setActiveSection(section);
             const currentHash = window.location.hash.slice(1);
             if (currentHash !== section) {
-              window.history.pushState(null, "", `#${section}`);
+              window.history.replaceState(null, "", `#${section}`);
             }
             break;
           }
@@ -74,13 +98,31 @@ export function useSectionNavigation(active: boolean) {
   useEffect(() => {
     if (!active) return;
 
-    const handleHashChange = () => {
-      const section = window.location.hash.slice(1) || "home";
-      scrollToSection(section, false);
+    const handleNavigationEvent = () => {
+      let target = "";
+      try {
+        const returnSection = sessionStorage.getItem("returnToSection");
+        if (returnSection) {
+          target = returnSection;
+          sessionStorage.removeItem("returnToSection");
+        }
+      } catch {
+        // ignore
+      }
+
+      if (!target) {
+        target = window.location.hash.slice(1) || "home";
+      }
+
+      scrollToSection(target, false);
     };
 
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
+    window.addEventListener("hashchange", handleNavigationEvent);
+    window.addEventListener("popstate", handleNavigationEvent);
+    return () => {
+      window.removeEventListener("hashchange", handleNavigationEvent);
+      window.removeEventListener("popstate", handleNavigationEvent);
+    };
   }, [active, scrollToSection]);
 
   return { activeSection, scrollToSection };

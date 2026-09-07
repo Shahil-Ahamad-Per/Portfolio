@@ -79,11 +79,14 @@ function MarkdownCode({
   children,
   ...props
 }: Readonly<React.HTMLAttributes<HTMLElement>>) {
-  const isBlock = className?.startsWith("language-");
+  const rawText = extractText(children);
+  const isBlock = Boolean(
+    className?.startsWith("language-") || rawText.includes("\n")
+  );
   if (!isBlock) {
     return (
       <code
-        className="rounded bg-sage-100 px-1.5 py-0.5 text-xs text-sage-800 dark:bg-slate-800 dark:text-gold-400 sm:text-sm"
+        className="rounded bg-sage-100 px-1.5 py-0.5 font-mono text-xs text-sage-800 dark:bg-slate-800 dark:text-gold-400 sm:text-sm"
         {...props}
       >
         {children}
@@ -92,15 +95,17 @@ function MarkdownCode({
   }
 
   const handleCopy = () => {
-    const rawText = extractText(children).replace(/\n$/, "");
-    navigator.clipboard.writeText(rawText);
+    const textToCopy = rawText.replace(/\n$/, "");
+    navigator.clipboard.writeText(textToCopy);
   };
+
+  const language = className?.replace("language-", "") || "text";
 
   return (
     <div className="group relative my-4 sm:my-6">
       <div className="flex items-center justify-between rounded-t-xl border border-sage-200 bg-slate-800 px-3 py-2 dark:border-slate-700 dark:bg-slate-950 sm:px-4">
         <span className="text-[10px] uppercase tracking-wider text-slate-400 sm:text-xs">
-          {className?.replace("language-", "") || "code"}
+          {language}
         </span>
         <button
           type="button"
@@ -111,7 +116,10 @@ function MarkdownCode({
         </button>
       </div>
       <pre className="!mt-0 overflow-x-auto !rounded-t-none rounded-b-xl border border-t-0 border-sage-200 bg-slate-900 p-3 dark:border-slate-700 dark:bg-slate-950 sm:p-4">
-        <code className="text-xs text-slate-100 sm:text-sm" {...props}>
+        <code
+          className="font-mono text-xs text-slate-100 sm:text-sm"
+          {...props}
+        >
           {children}
         </code>
       </pre>
@@ -119,10 +127,47 @@ function MarkdownCode({
   );
 }
 
+function MarkdownPre({
+  children,
+}: Readonly<React.HTMLAttributes<HTMLPreElement>>) {
+  return <>{children}</>;
+}
+
+function MarkdownA({
+  href,
+  children,
+  target: userTarget,
+  rel: userRel,
+  className,
+  ...props
+}: Readonly<
+  React.AnchorHTMLAttributes<HTMLAnchorElement> & { node?: unknown }
+>) {
+  const { node: _node, ...domProps } = props;
+  const isExternal =
+    href?.startsWith("http://") ||
+    href?.startsWith("https://") ||
+    href?.startsWith("//");
+
+  return (
+    <a
+      href={href}
+      {...domProps}
+      target={isExternal ? "_blank" : userTarget}
+      rel={isExternal ? "noopener noreferrer" : userRel}
+      className={`text-sage-600 underline underline-offset-2 transition-colors hover:text-sage-800 dark:text-gold-400 dark:hover:text-gold-300 ${className || ""}`}
+    >
+      {children}
+    </a>
+  );
+}
+
 const markdownComponents = {
   h2: MarkdownH2,
   h3: MarkdownH3,
+  pre: MarkdownPre,
   code: MarkdownCode,
+  a: MarkdownA,
 };
 
 interface BlogClientProps {
@@ -143,6 +188,11 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
 
   useEffect(() => {
     setMounted(true);
+    try {
+      sessionStorage.setItem("returnToSection", "blog");
+    } catch {
+      // ignore
+    }
   }, []);
 
   useEffect(() => {
@@ -245,7 +295,7 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
             The article you&apos;re looking for doesn&apos;t exist.
           </p>
           <Link
-            href="/"
+            href="/#blog"
             className="inline-flex items-center rounded-lg bg-sage-600 px-6 py-3 text-white transition-colors hover:bg-sage-700 dark:bg-gold-500 dark:hover:bg-gold-600"
           >
             ← Back to Home
@@ -276,14 +326,21 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
               </p>
               <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:gap-4">
                 <Link
-                  href="/"
+                  href="/#blog"
                   className="inline-flex w-full items-center justify-center rounded-lg bg-sage-600 px-6 py-3 text-white transition-colors hover:bg-sage-700 dark:bg-gold-500 dark:hover:bg-gold-600 sm:w-auto"
                 >
                   ← Back to Home
                 </Link>
                 <button
                   type="button"
-                  onClick={() => window.history.back()}
+                  onClick={() => {
+                    try {
+                      sessionStorage.setItem("returnToSection", "blog");
+                    } catch {
+                      // ignore
+                    }
+                    window.history.back();
+                  }}
                   className="inline-flex w-full items-center justify-center rounded-lg border border-sage-200 px-6 py-3 text-charcoal-700 transition-colors hover:bg-sage-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 sm:w-auto"
                 >
                   Go Back
@@ -305,25 +362,44 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
       <div className="flex min-h-screen flex-col pt-16 lg:pl-72 lg:pt-0">
         <header className="border-b border-sage-200 bg-cream-50/50 backdrop-blur-sm dark:border-slate-700 dark:bg-slate-800/50">
           <div className="container mx-auto max-w-6xl px-6 py-8">
-            <div className="scrollbar-none mb-4 flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-1 text-sm text-charcoal-600 dark:text-slate-400">
-              <Link
-                href="/"
-                className="shrink-0 transition-colors hover:text-sage-600 dark:hover:text-gold-400"
-              >
-                Home
-              </Link>
-              <span className="shrink-0">/</span>
-              <Link
-                href="/#blog"
-                className="shrink-0 transition-colors hover:text-sage-600 dark:hover:text-gold-400"
-              >
-                Blog
-              </Link>
-              <span className="shrink-0">/</span>
-              <span className="min-w-0 truncate text-charcoal-800 dark:text-slate-200">
-                {post.title}
-              </span>
-            </div>
+            <nav aria-label="Breadcrumb" className="mb-4">
+              <ol className="scrollbar-none flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-1 text-sm text-charcoal-600 dark:text-slate-400">
+                <li className="inline-flex items-center gap-2">
+                  <Link
+                    href="/#blog"
+                    className="inline-flex h-auto min-h-0 shrink-0 items-center transition-colors hover:text-sage-600 dark:hover:text-gold-400"
+                  >
+                    Home
+                  </Link>
+                  <span
+                    className="shrink-0 select-none text-charcoal-400 dark:text-slate-500"
+                    aria-hidden="true"
+                  >
+                    /
+                  </span>
+                </li>
+                <li className="inline-flex items-center gap-2">
+                  <Link
+                    href="/#blog"
+                    className="inline-flex h-auto min-h-0 shrink-0 items-center transition-colors hover:text-sage-600 dark:hover:text-gold-400"
+                  >
+                    Blog
+                  </Link>
+                  <span
+                    className="shrink-0 select-none text-charcoal-400 dark:text-slate-500"
+                    aria-hidden="true"
+                  >
+                    /
+                  </span>
+                </li>
+                <li
+                  className="min-w-0 truncate font-medium text-charcoal-800 dark:text-slate-200"
+                  aria-current="page"
+                >
+                  {post.title}
+                </li>
+              </ol>
+            </nav>
             <h1 className="mb-4 text-3xl font-bold leading-tight text-charcoal-800 dark:text-slate-100 sm:text-4xl lg:text-5xl">
               {post.title}
             </h1>
@@ -350,7 +426,7 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
                 remarkPlugins={[remarkGfm]}
                 components={markdownComponents}
               >
-                {post.content}
+                {post.content.replace(/\{:[^}]+\}/g, "")}
               </ReactMarkdown>
             </div>
           </article>

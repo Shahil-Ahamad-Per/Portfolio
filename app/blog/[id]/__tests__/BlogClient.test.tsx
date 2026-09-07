@@ -166,4 +166,31 @@ describe("BlogClient component", () => {
     expect(screen.getByText("Strong")).toBeInTheDocument();
     expect(screen.getByText("Emphasis")).toBeInTheDocument();
   });
+
+  it("renders breadcrumb navigation and external markdown links with target _blank", () => {
+    const postWithLink = {
+      ...samplePost,
+      content: "Check out [Google](https://google.com) and [Internal](/about).",
+    };
+
+    render(<BlogClient post={postWithLink} />);
+
+    const breadcrumb = screen.getByRole("navigation", { name: "Breadcrumb" });
+    expect(breadcrumb).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute(
+      "href",
+      "/#blog"
+    );
+    expect(screen.getByRole("link", { name: "Blog" })).toHaveAttribute(
+      "href",
+      "/#blog"
+    );
+
+    const extLink = screen.getByRole("link", { name: "Google" });
+    expect(extLink).toHaveAttribute("target", "_blank");
+    expect(extLink).toHaveAttribute("rel", "noopener noreferrer");
+
+    const intLink = screen.getByRole("link", { name: "Internal" });
+    expect(intLink).not.toHaveAttribute("target");
+  });
 });

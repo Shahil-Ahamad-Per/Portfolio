@@ -107,4 +107,28 @@ describe("use-section-navigation", () => {
 
     expect(result.current.activeSection).toBe("about");
   });
+
+  it("scrolls to returnToSection from sessionStorage on mount and clears it", () => {
+    createSection("blog", 1800, 600);
+    sessionStorage.setItem("returnToSection", "blog");
+
+    const { result } = renderHook(() => useSectionNavigation(true));
+
+    expect(result.current.activeSection).toBe("blog");
+    expect(sessionStorage.getItem("returnToSection")).toBeNull();
+  });
+
+  it("handles popstate event and scrolls to target section", () => {
+    createSection("home", 0, 600);
+    createSection("projects", 1200, 600);
+
+    const { result } = renderHook(() => useSectionNavigation(true));
+
+    act(() => {
+      window.location.hash = "#projects";
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    });
+
+    expect(result.current.activeSection).toBe("projects");
+  });
 });
