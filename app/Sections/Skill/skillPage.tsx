@@ -1,6 +1,17 @@
 import { skills } from "@/app/Sections/Skill/skillsIcons";
 
 function renderSkillIcon(skill: (typeof skills)[number]) {
+  if (skill.icon) {
+    const Icon = skill.icon;
+    return (
+      <Icon
+        className={`h-full w-full object-contain transition-transform duration-300 ${
+          skill.invertDark ? "dark:brightness-0 dark:invert" : ""
+        }`}
+      />
+    );
+  }
+
   if (!skill.image) {
     return (
       <span className="text-lg font-bold text-white">
@@ -25,7 +36,9 @@ function renderSkillIcon(skill: (typeof skills)[number]) {
     <img
       src={skill.image || "/placeholder.svg"}
       alt={skill.name}
-      className="h-full w-full object-contain"
+      className={`h-full w-full object-contain ${
+        skill.invertDark ? "dark:brightness-0 dark:invert" : ""
+      }`}
       loading="lazy"
     />
   );
@@ -75,7 +88,7 @@ export default function SkillsSection() {
             },
             {
               category: "Database",
-              skills: ["MongoDB", "MySQL", "PostgressSQL"],
+              skills: ["MongoDB", "MySQL", "PostgreSQL"],
             },
             {
               category: "DevOps & Tools",
@@ -86,7 +99,7 @@ export default function SkillsSection() {
                 "Linux",
                 "Vercel",
                 "Cloudflare",
-                "Nx Monorepo",
+                "NX Workspace",
               ],
             },
           ].map((group) => (
