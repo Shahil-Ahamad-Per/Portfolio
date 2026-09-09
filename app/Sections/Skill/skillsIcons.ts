@@ -134,7 +134,6 @@ export const skills = [
     name: "NX Workspace",
     category: "Workspace",
     url: "https://nx.dev/getting-started/intro",
-    image:
-      "https://images.seeklogo.com/logo-png/42/1/nx-logo-png_seeklogo-428035.png",
+    image: "https://devicons.io/devicons/icons/nx.svg",
   },
 ];
