@@ -67,13 +67,16 @@ export default function SkillsSection() {
           {[
             {
               category: "Frontend",
-              skills: ["React.js", "Next.js", "HTML", "CSS", "Tailwind CSS"],
+              skills: ["React.js", "Next.js", "Tailwind CSS"],
             },
             {
               category: "Backend",
               skills: ["Node.js", "Express.js", "GraphQL", "Prisma"],
             },
-            { category: "Database", skills: ["MongoDB", "MySQL"] },
+            {
+              category: "Database",
+              skills: ["MongoDB", "MySQL", "PostgressSQL"],
+            },
             {
               category: "DevOps & Tools",
               skills: [
@@ -83,6 +86,7 @@ export default function SkillsSection() {
                 "Linux",
                 "Vercel",
                 "Cloudflare",
+                "Nx Monorepo",
               ],
             },
           ].map((group) => (
