@@ -62,7 +62,7 @@ export default function HeroSection({
 
             <div className="ml-auto flex items-center gap-space-sm pt-space-xs sm:pt-0">
               <span className="hidden font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant sm:inline">
-                Connect —
+                Connect -
               </span>
               <a
                 className="rounded-lg bg-surface-container p-2 text-on-surface transition-colors hover:bg-surface-container-high hover:text-primary"

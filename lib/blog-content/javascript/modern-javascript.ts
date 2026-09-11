@@ -14,7 +14,7 @@ export const javascriptBlogContent = `# Modern JavaScript: ES2026 Features You S
 
 ## Introduction: The ECMAScript 2026 Specification
 
-JavaScript continues its rapid evolution with the official approval of **ECMAScript 2026 (ES2026)**—the 17th edition of the language specification approved by Ecma International on June 30, 2026.
+JavaScript continues its rapid evolution with the official approval of **ECMAScript 2026 (ES2026)**-the 17th edition of the language specification approved by Ecma International on June 30, 2026.
 
 Following TC39's strict stage progression, ES2026 delivers seven finalized Stage 4 features designed to replace common external utility libraries (such as Node's \`Buffer\`, manual base64 decoders, precision math workarounds, and cross-realm helper routines) with native, high-performance engine primitives.
 

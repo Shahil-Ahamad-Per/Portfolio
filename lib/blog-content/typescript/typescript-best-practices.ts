@@ -14,7 +14,7 @@ export const typescriptBlogContent = `# TypeScript Best Practices for Enterprise
 
 ## Introduction: Beyond "JavaScript with Types"
 
-In enterprise-scale development, TypeScript is far more than a syntax layer for static analysis—it is a **domain modeling tool**, an architectural contract, and your first line of defense against production outages.
+In enterprise-scale development, TypeScript is far more than a syntax layer for static analysis-it is a **domain modeling tool**, an architectural contract, and your first line of defense against production outages.
 
 When projects grow beyond dozens of developers and hundreds of thousands of lines of code, weak type discipline quickly turns into technical debt. Loose types provide a false sense of security while letting subtle bugs slip through to production.
 
@@ -166,7 +166,7 @@ cancelOrder(oId, uId);    // ✅ Type-safe and validated!
 
 ## 4. Runtime Validation at Application Boundaries
 
-TypeScript types only exist at compile time—they are completely erased in the output JavaScript. If external data (REST responses, WebSockets, LocalStorage, or form inputs) does not match your interface, TypeScript cannot protect you at runtime.
+TypeScript types only exist at compile time-they are completely erased in the output JavaScript. If external data (REST responses, WebSockets, LocalStorage, or form inputs) does not match your interface, TypeScript cannot protect you at runtime.
 
 **Rule**: Never cast external data with \`as SomeType\`. Always validate using schemas like **Zod** or **Valibot**.
 

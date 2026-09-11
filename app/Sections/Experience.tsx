@@ -46,7 +46,7 @@ export function ExperienceSection() {
                 </span>
               </div>
               <div className="shadow-xs inline-flex items-center gap-space-xs self-start rounded bg-surface px-2.5 py-1 font-label-sm text-label-sm text-on-surface sm:self-auto">
-                <span>2024 — Present</span>
+                <span>2024 - Present</span>
                 <span className="h-1.5 w-1.5 rounded-full bg-primary" />
               </div>
             </div>

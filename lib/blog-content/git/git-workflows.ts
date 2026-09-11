@@ -72,13 +72,13 @@ ssh-keygen -t ed25519 -C "your.email@example.com"
 
 ## Essential Git Commands
 
-- \`git init\` — Initializes a repo
-- \`git clone <url>\` — Clones a repo
-- \`git status\` — Checks status
-- \`git add .\` — Stages changes
-- \`git commit -m "Message"\` — Commits changes
-- \`git push origin main\` — Pushes changes
-- \`git pull origin main\` — Pulls updates
+- \`git init\` - Initializes a repo
+- \`git clone <url>\` - Clones a repo
+- \`git status\` - Checks status
+- \`git add .\` - Stages changes
+- \`git commit -m "Message"\` - Commits changes
+- \`git push origin main\` - Pushes changes
+- \`git pull origin main\` - Pulls updates
 
 ## Best Practices
 

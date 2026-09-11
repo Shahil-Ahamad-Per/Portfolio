@@ -16,7 +16,7 @@ export const nxBlogContent = `# Building Scalable Applications with Nx Workspace
 
 As software organizations grow, managing multiple isolated repositories (polyrepos) inevitably introduces severe friction: dependency version drift, duplicated configuration across projects, cumbersome cross-repository pull requests, and fragmented CI/CD pipelines.
 
-A **monorepo** solves these coordination problems by housing multiple projects—both applications and shared libraries—within a single, cohesive Git repository. However, without the right tooling, large monorepos can quickly degrade into slow builds, chaotic dependency tangles, and bloated developer setups.
+A **monorepo** solves these coordination problems by housing multiple projects-both applications and shared libraries-within a single, cohesive Git repository. However, without the right tooling, large monorepos can quickly degrade into slow builds, chaotic dependency tangles, and bloated developer setups.
 
 This is where **Nx Workspace** shines. Developed by Nrwl, Nx is a smart, extensible build system with first-class monorepo support designed specifically for modern full-stack development.
 
@@ -34,7 +34,7 @@ This is where **Nx Workspace** shines. Developed by Nrwl, Nx is a smart, extensi
 
 The foundational philosophy of an Nx monorepo is simple yet powerful: **keep applications thin and encapsulate business logic inside modular libraries**.
 
-Applications serve primarily as entry points and deployment targets—responsible for bootstrapping, routing configuration, and bundling. Libraries contain the actual implementation: UI components, data services, state management, and utility helpers.
+Applications serve primarily as entry points and deployment targets-responsible for bootstrapping, routing configuration, and bundling. Libraries contain the actual implementation: UI components, data services, state management, and utility helpers.
 
 ### The 4-Layer Library Taxonomy
 
@@ -120,7 +120,7 @@ The \`dependsOn: ["^build"]\` declaration instructs Nx to build all internal dep
 
 ## Enforcing Architectural Boundaries with ESLint
 
-In a large team, developers can inadvertently introduce spaghetti dependencies—such as a general utility library importing a checkout feature, or an administrative dashboard importing client-facing secrets.
+In a large team, developers can inadvertently introduce spaghetti dependencies-such as a general utility library importing a checkout feature, or an administrative dashboard importing client-facing secrets.
 
 Nx prevents this at the linter level using the \`@nx/enforce-module-boundaries\` rule.
 
