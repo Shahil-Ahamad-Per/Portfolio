@@ -12,8 +12,10 @@ import { Github, Linkedin } from "@/components/icons";
 export const SECTIONS = [
   "home",
   "about",
-  "skills",
   "projects",
+  "experience",
+  "skills",
+  "tech-stack",
   "blog",
   "contact",
 ] as const;
@@ -33,6 +35,8 @@ export const NAV_ITEMS: NavItemConfig[] = [
   { id: "about", label: "About", icon: User },
   { id: "skills", label: "Skills", icon: Code2 },
   { id: "projects", label: "Projects", icon: FolderGit2 },
+  { id: "experience", label: "Experience", icon: FolderGit2 },
+  { id: "tech-stack", label: "Tech Stack", icon: Code2 },
   { id: "blog", label: "Blog", icon: BookOpen },
   { id: "contact", label: "Contact", icon: Send },
 ];

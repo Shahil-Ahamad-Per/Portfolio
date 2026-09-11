@@ -3,6 +3,9 @@ import { render, screen } from "@testing-library/react";
 import RootLayout, { metadata } from "../layout";
 
 vi.mock("next/font/google", () => ({
+  Newsreader: () => ({ variable: "font-display" }),
+  Plus_Jakarta_Sans: () => ({ variable: "font-sans" }),
+  JetBrains_Mono: () => ({ variable: "font-mono" }),
   Inter: () => ({ variable: "font-sans" }),
   Playfair_Display: () => ({ variable: "font-serif" }),
 }));

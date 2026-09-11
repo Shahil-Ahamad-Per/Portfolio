@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import SkillsSection from "../skillPage";
 import * as iconsModule from "../skillsIcons";
 
@@ -15,8 +15,8 @@ describe("SkillsSection", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders all skill items from skills configuration", () => {
-    render(<SkillsSection />);
+  it("renders all skill items from skills configuration when dropdown is open", () => {
+    render(<SkillsSection defaultOpen={true} />);
     expect(screen.getAllByText("React.js")[0]).toBeInTheDocument();
     expect(screen.getAllByText("Next.js")[0]).toBeInTheDocument();
     expect(screen.getAllByText("JavaScript")[0]).toBeInTheDocument();
@@ -53,6 +53,29 @@ describe("SkillsSection", () => {
     expect(screen.getAllByText("Cloudflare")[0]).toBeInTheDocument();
   });
 
+  it("toggles the Detailed Ecosystem dropdown when clicked", () => {
+    render(<SkillsSection />);
+
+    const toggleBtn = screen.getByRole("button", {
+      name: /Detailed Ecosystem/i,
+    });
+    expect(toggleBtn).toHaveAttribute("aria-expanded", "false");
+
+    // Click to open
+    fireEvent.click(toggleBtn);
+    expect(toggleBtn).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getAllByRole("link").length).toBeGreaterThan(0);
+
+    // Filter by Frontend
+    const frontendFilter = screen.getByRole("button", { name: "Frontend" });
+    fireEvent.click(frontendFilter);
+    expect(screen.getByText(/Showing/i)).toBeInTheDocument();
+
+    // Click to close
+    fireEvent.click(toggleBtn);
+    expect(toggleBtn).toHaveAttribute("aria-expanded", "false");
+  });
+
   it("renders skill fallback letter when image is missing and image tag when image is url", () => {
     vi.spyOn(iconsModule, "skills", "get").mockReturnValue([
       { name: "Rust", category: "Backend", url: "", image: "" },
@@ -64,7 +87,7 @@ describe("SkillsSection", () => {
       },
     ]);
 
-    render(<SkillsSection />);
+    render(<SkillsSection defaultOpen={true} />);
     expect(screen.getByText("R")).toBeInTheDocument();
     const pythonImg = screen.getByAltText("Python");
     expect(pythonImg).toHaveAttribute("src", "https://example.com/python.png");

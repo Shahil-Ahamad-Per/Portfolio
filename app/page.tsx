@@ -1,11 +1,13 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import NavBar from "@/components/Navbar";
 import HeroSection from "./Sections/MainPage";
 import { AboutSection } from "./Sections/About";
-import SkillsSection from "@/app/Sections/Skill/skillPage";
 import ProjectsSection from "@/app/Sections/Project/ProjectsPage";
+import SkillsSection from "@/app/Sections/Skill/skillPage";
+import ExperienceSection from "./Sections/Experience";
 import BlogSection from "./Sections/Blog/BlogPage";
 import ContactSection from "./Sections/Contact";
 import Footer from "./Sections/Footer";
@@ -27,21 +29,22 @@ export default function Portfolio() {
 
   if (!mounted) return null;
   if (showWelcome) return <WelcomeScreen onExit={handleWelcomeExit} />;
+
   return (
-    <div className="animate-fadeIn min-h-screen bg-gradient-to-br from-cream-50 to-sage-50 transition-all duration-1000 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900">
+    <div className="min-h-screen bg-surface text-on-surface transition-colors duration-500 selection:bg-primary-fixed selection:text-on-primary-fixed">
       <NavBar
         theme={theme}
         setTheme={setTheme}
         activeSection={activeSection}
         scrollToSection={scrollToSection}
       />
-      {/* lg:pl-72 must match Navbar w-72 and SIDEBAR_WIDTH_PX in lib/nav-config.ts */}
-      <div className="flex min-h-screen flex-col pt-16 lg:pl-72 lg:pt-0">
-        <main className="flex-grow">
+      <div className="flex min-h-screen flex-col pt-20">
+        <main className="w-full flex-grow">
           <HeroSection scrollToSection={scrollToSection} />
           <AboutSection />
-          <SkillsSection />
           <ProjectsSection />
+          <SkillsSection />
+          <ExperienceSection />
           <BlogSection />
           <ContactSection />
         </main>
