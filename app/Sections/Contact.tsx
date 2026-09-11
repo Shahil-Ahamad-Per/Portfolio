@@ -4,13 +4,22 @@ import type React from "react";
 import { useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, CheckCircle, Loader2, Send, Clock } from "lucide-react";
+import {
+  Mail,
+  CheckCircle,
+  Loader2,
+  Send,
+  Clock,
+  Lock,
+  Globe,
+  AlertCircle,
+  Heart,
+} from "lucide-react";
 import { Github, Linkedin } from "@/components/icons";
 import { useContactForm } from "@/hooks/use-contact-form";
 
 export default function ContactSection() {
   const form = useRef<HTMLFormElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const {
     isLoading,
     isSuccess,
@@ -24,250 +33,264 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-cream-50 px-4 py-16 dark:bg-slate-900 sm:px-6 sm:py-24"
+      className="mx-auto max-w-[1360px] px-margin py-space-3xl md:px-margin-tablet lg:px-margin-desktop"
     >
-      {/* Decorative background elements */}
-      <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-sage-200 to-transparent dark:via-slate-700"></div>
-      <div className="pointer-events-none absolute -right-24 -top-24 hidden h-96 w-96 rounded-full bg-sage-200/20 blur-3xl dark:bg-amber-900/10 sm:block"></div>
-      <div className="pointer-events-none absolute -bottom-24 -left-24 hidden h-96 w-96 rounded-full bg-sage-300/20 blur-3xl dark:bg-slate-800/50 sm:block"></div>
+      <div className="border-surface-container-high/70 overflow-hidden rounded-2xl border bg-surface-container-low p-space-lg shadow-md md:p-space-2xl">
+        <div className="grid grid-cols-1 items-start gap-gutter-desktop lg:grid-cols-12">
+          {/* Left Column: Dialogue & Channels */}
+          <div className="flex flex-col gap-space-md lg:col-span-5">
+            <div className="flex items-center gap-space-xs">
+              <span className="font-label-sm text-label-sm font-semibold uppercase tracking-widest text-secondary">
+                06 // Dialogue
+              </span>
+            </div>
 
-      <div className="container relative z-10 mx-auto max-w-6xl">
-        <div className="mb-10 text-center sm:mb-16">
-          <h2 className="group relative mb-3 inline-block font-serif text-3xl font-bold text-charcoal-900 dark:text-slate-100 sm:mb-4 sm:text-4xl md:text-5xl">
-            {"Let's Work Together"}
-            <span className="absolute -bottom-2 left-0 h-1 w-1/2 rounded-full bg-sage-500 transition-all duration-300 group-hover:w-full dark:bg-gold-500" />
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl px-2 text-sm text-charcoal-600 dark:text-slate-400 sm:text-lg">
-            Ready to bring your ideas to life? I'm currently available for
-            freelance work and full-time opportunities.
-          </p>
-        </div>
+            <h2 className="font-headline-lg text-headline-lg leading-tight text-primary">
+              <span className="sr-only">Let's Work Together: </span>
+              Have a project in mind, or need a developer who cares deeply about
+              execution?
+            </h2>
 
-        <div className="grid items-start gap-6 sm:gap-8 md:grid-cols-2 lg:gap-12">
-          {/* LEFT SIDE CONTACT INFO */}
-          <div className="space-y-6 sm:space-y-8">
-            <div className="h-full rounded-2xl border border-sage-100 bg-white/60 p-5 shadow-sm backdrop-blur-sm dark:border-slate-700 dark:bg-slate-800/60 sm:p-8">
-              <h3 className="mb-5 font-serif text-xl font-semibold text-charcoal-900 dark:text-slate-100 sm:mb-6 sm:text-2xl">
-                Contact Information
-              </h3>
+            <p className="font-body-md text-body-md leading-relaxed text-on-surface-variant">
+              Whether you need a complete full-stack web application from
+              scratch, performance consulting, or dedicated architectural
+              reinforcement for your team, my inbox is open.
+            </p>
 
-              <div className="space-y-4 sm:space-y-6">
-                <a
-                  href="mailto:contact@shahilahamad.com.np"
-                  target="_blank"
-                  className="group -m-2.5 flex cursor-pointer items-start space-x-3.5 rounded-xl p-2.5 transition-colors duration-300 hover:bg-sage-50 dark:hover:bg-slate-700/50 sm:-m-3 sm:space-x-4 sm:p-3"
-                  rel="noreferrer"
-                >
-                  <div className="shrink-0 rounded-xl bg-sage-100 p-2.5 text-sage-600 transition-transform duration-300 group-hover:scale-110 dark:bg-slate-700 dark:text-gold-400 sm:p-3">
-                    <Mail className="h-4 w-4 sm:h-5 sm:w-5" />
-                  </div>
-                  <div>
-                    <p className="mb-0.5 text-xs font-medium text-charcoal-500 dark:text-slate-400 sm:text-sm">
-                      Email
-                    </p>
-                    <p className="break-all text-sm font-medium text-charcoal-800 transition-colors group-hover:text-sage-600 dark:text-slate-200 dark:group-hover:text-gold-400 sm:text-base">
-                      contact@shahilahamad.com.np
-                    </p>
-                  </div>
-                </a>
+            <div className="flex flex-col gap-space-sm pt-space-sm">
+              {/* Direct Email */}
+              <div className="shadow-xs border-surface-container-high/60 flex items-center gap-space-sm rounded-xl border bg-surface p-space-md">
+                <div className="rounded-lg bg-surface-container p-2 text-primary">
+                  <Mail className="h-5 w-5" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
+                    Direct Email Channel
+                  </span>
+                  <a
+                    href="mailto:contact@shahilahamad.com.np"
+                    className="font-body-md text-body-md font-semibold text-primary hover:underline"
+                  >
+                    contact@shahilahamad.com.np
+                  </a>
+                </div>
+              </div>
 
+              {/* Availability */}
+              <div className="shadow-xs border-surface-container-high/60 flex items-center gap-space-sm rounded-xl border bg-surface p-space-md">
+                <div className="rounded-lg bg-surface-container p-2 text-primary">
+                  <Globe className="h-5 w-5" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
+                    Availability
+                  </span>
+                  <span className="font-body-md text-body-md font-semibold text-on-surface">
+                    Open for Full-Stack Engagements
+                  </span>
+                </div>
+              </div>
+
+              {/* Response Cadence */}
+              <div className="shadow-xs border-surface-container-high/60 flex items-center gap-space-sm rounded-xl border bg-surface p-space-md">
+                <div className="rounded-lg bg-surface-container p-2 text-primary">
+                  <Clock className="h-5 w-5" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
+                    Typical Response Cadence
+                  </span>
+                  <span className="font-body-md text-body-md font-semibold text-on-surface">
+                    Within 12 to 24 hours
+                  </span>
+                </div>
+              </div>
+
+              {/* Direct Social Links */}
+              <div className="flex flex-wrap gap-space-xs pt-space-xs">
                 <a
                   href="https://github.com/Shahil-Ahamad-Per"
                   target="_blank"
-                  className="group -m-2.5 flex cursor-pointer items-start space-x-3.5 rounded-xl p-2.5 transition-colors duration-300 hover:bg-sage-50 dark:hover:bg-slate-700/50 sm:-m-3 sm:space-x-4 sm:p-3"
                   rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-surface-container-high bg-surface px-3 py-1.5 font-label-sm text-label-sm text-on-surface transition-colors hover:bg-surface-container hover:text-primary"
                 >
-                  <div className="shrink-0 rounded-xl bg-sage-100 p-2.5 text-sage-600 transition-transform duration-300 group-hover:scale-110 dark:bg-slate-700 dark:text-gold-400 sm:p-3">
-                    <Github className="h-4 w-4 sm:h-5 sm:w-5" />
-                  </div>
-                  <div>
-                    <p className="mb-0.5 text-xs font-medium text-charcoal-500 dark:text-slate-400 sm:text-sm">
-                      GitHub
-                    </p>
-                    <p className="break-all text-sm font-medium text-charcoal-800 transition-colors group-hover:text-sage-600 dark:text-slate-200 dark:group-hover:text-gold-400 sm:text-base">
-                      github.com/Shahil-Ahamad-Per
-                    </p>
-                  </div>
+                  <Github className="h-3.5 w-3.5" />
+                  <span>github.com/Shahil-Ahamad-Per</span>
                 </a>
-
                 <a
-                  href="https://linkedin.com/in/shahil-ahamad"
+                  href="https://www.linkedin.com/in/shahil-ahamad"
                   target="_blank"
-                  className="group -m-2.5 flex cursor-pointer items-start space-x-3.5 rounded-xl p-2.5 transition-colors duration-300 hover:bg-sage-50 dark:hover:bg-slate-700/50 sm:-m-3 sm:space-x-4 sm:p-3"
                   rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-surface-container-high bg-surface px-3 py-1.5 font-label-sm text-label-sm text-on-surface transition-colors hover:bg-surface-container hover:text-primary"
                 >
-                  <div className="shrink-0 rounded-xl bg-sage-100 p-2.5 text-sage-600 transition-transform duration-300 group-hover:scale-110 dark:bg-slate-700 dark:text-gold-400 sm:p-3">
-                    <Linkedin className="h-4 w-4 sm:h-5 sm:w-5" />
-                  </div>
-                  <div>
-                    <p className="mb-0.5 text-xs font-medium text-charcoal-500 dark:text-slate-400 sm:text-sm">
-                      LinkedIn
-                    </p>
-                    <p className="break-all text-sm font-medium text-charcoal-800 transition-colors group-hover:text-sage-600 dark:text-slate-200 dark:group-hover:text-gold-400 sm:text-base">
-                      linkedin.com/in/shahil-ahamad
-                    </p>
-                  </div>
+                  <Linkedin className="h-3.5 w-3.5" />
+                  <span>linkedin.com/in/shahil-ahamad</span>
                 </a>
               </div>
             </div>
           </div>
 
-          {/* RIGHT SIDE FORM */}
-          <div className="relative">
-            <div
-              className={`relative h-full overflow-hidden rounded-2xl border border-sage-100 bg-white p-5 shadow-xl transition-all duration-500 dark:border-slate-700 dark:bg-slate-800 sm:p-8 md:p-10 ${isSuccess ? "scale-[1.02] shadow-2xl" : ""}`}
+          {/* Right Column: Dispatch Form & Overlays */}
+          <div className="border-surface-container-high/70 relative rounded-xl border bg-surface p-space-lg shadow-sm lg:col-span-7">
+            {/* Success Overlay */}
+            {isSuccess && (
+              <div className="bg-surface/95 animate-fadeIn absolute inset-0 z-20 flex flex-col items-center justify-center rounded-xl p-6 text-center backdrop-blur-sm">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary-fixed text-on-primary-fixed">
+                  <CheckCircle className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="mb-2 font-headline-sm text-headline-sm text-primary">
+                  Message Sent!
+                </h3>
+                <p className="max-w-md font-body-md text-body-md text-on-surface-variant">
+                  Thank you for reaching out! I've received your message and
+                  will get back to you as soon as possible.
+                </p>
+              </div>
+            )}
+
+            {/* Rate Limit Overlay */}
+            {isRateLimited && (
+              <div className="bg-surface/95 animate-fadeIn absolute inset-0 z-20 flex flex-col items-center justify-center rounded-xl p-6 text-center backdrop-blur-sm">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-secondary-container text-on-secondary-container">
+                  <Heart className="h-8 w-8 text-secondary" />
+                </div>
+                <h3 className="mb-2 font-headline-sm text-headline-sm text-primary">
+                  Wow, you're awesome!
+                </h3>
+                <p className="max-w-md font-body-md text-body-md text-on-surface-variant">
+                  I see you've sent me 5 messages today! Thank you so much for
+                  your enthusiasm. Please feel free to reach out again tomorrow.
+                </p>
+              </div>
+            )}
+
+            <form
+              ref={form}
+              onSubmit={(e) => handleSubmit(e, form)}
+              className="flex flex-col gap-space-md"
+              id="portfolio-contact-form"
             >
-              {/* SUCCESS OVERLAY */}
-              {isSuccess && (
-                <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/95 backdrop-blur-xl duration-500 animate-in fade-in dark:bg-slate-800/95">
-                  <div className="max-w-sm transform p-6 text-center transition-all delay-100 duration-500 animate-in zoom-in-95 sm:p-8">
-                    <div className="relative mx-auto mb-6 h-20 w-20 sm:mb-8 sm:h-24 sm:w-24">
-                      <div className="absolute inset-0 animate-ping rounded-full bg-green-200 opacity-75 duration-1000 dark:bg-green-900/50"></div>
-                      <div className="relative flex h-20 w-20 items-center justify-center rounded-full border-4 border-white bg-green-100 shadow-xl dark:border-slate-700 dark:bg-green-800/80 sm:h-24 sm:w-24">
-                        <CheckCircle className="h-10 w-10 text-green-600 dark:text-green-400 sm:h-12 sm:w-12" />
-                      </div>
-                    </div>
-                    <h3 className="mb-3 font-serif text-2xl font-bold tracking-tight text-charcoal-900 dark:text-slate-100 sm:text-3xl">
-                      Message Sent!
-                    </h3>
-                    <p className="text-sm leading-relaxed text-charcoal-600 dark:text-slate-300 sm:text-base">
-                      Thank you for reaching out. I've received your message and
-                      will get back to you as soon as possible.
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* RATE LIMIT OVERLAY */}
-              {isRateLimited && !isSuccess && (
-                <div className="absolute inset-0 z-20 flex items-center justify-center bg-sage-50/95 backdrop-blur-xl duration-500 animate-in fade-in dark:bg-slate-800/95">
-                  <div className="max-w-sm transform p-6 text-center transition-all sm:p-8">
-                    <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-sage-100 shadow-inner dark:bg-slate-700 sm:mb-6 sm:h-20 sm:w-20">
-                      <Clock className="h-8 w-8 text-sage-600 dark:text-gold-400 sm:h-10 sm:w-10" />
-                    </div>
-                    <h3 className="mb-3 font-serif text-xl font-bold text-charcoal-900 dark:text-slate-100 sm:text-2xl">
-                      Wow, you're awesome!
-                    </h3>
-                    <p className="mb-4 text-xs leading-relaxed text-charcoal-600 dark:text-slate-300 sm:text-sm">
-                      I see you've sent me 5 messages today! I have safely
-                      received all of them.
-                      <br />
-                      <br />
-                      Please be patient; I am looking forward to reading them
-                      and I will contact you shortly!
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              <form
-                ref={form}
-                onSubmit={(e) => handleSubmit(e, form)}
-                className="relative flex h-full flex-col justify-between space-y-4 sm:space-y-6"
-              >
-                <div className="space-y-1">
+              <div className="grid grid-cols-1 gap-space-md sm:grid-cols-2">
+                <div className="flex flex-col gap-1.5">
                   <label
-                    htmlFor="name"
-                    className="ml-1 text-xs font-medium text-charcoal-700 dark:text-slate-300 sm:text-sm"
+                    htmlFor="contact-name"
+                    className="font-label-md text-label-md font-semibold text-on-surface"
                   >
-                    Full Name
+                    Full Name <span className="text-error">*</span>
                   </label>
                   <Input
-                    id="name"
-                    name="name"
-                    placeholder="John Doe"
+                    id="contact-name"
+                    name="from_name"
+                    type="text"
                     required
                     disabled={isLoading || isRateLimited}
-                    className="h-11 rounded-xl border-sage-200 bg-cream-50/50 text-sm text-charcoal-900 transition-all duration-300 focus:border-sage-400 focus:ring-2 focus:ring-sage-400/20 disabled:opacity-50 dark:border-slate-600 dark:bg-slate-900/50 dark:text-slate-100 dark:focus:border-gold-500 dark:focus:ring-gold-500/20 sm:h-12"
+                    placeholder="e.g. Elena Rostova"
+                    className="shadow-xs rounded-lg border-surface-container-high bg-surface-container-low px-space-md py-2.5 font-body-md text-body-md text-on-surface transition-all focus:bg-surface focus:outline-none"
                   />
                 </div>
 
-                <div className="space-y-1">
+                <div className="flex flex-col gap-1.5">
                   <label
-                    htmlFor="email"
-                    className="ml-1 text-xs font-medium text-charcoal-700 dark:text-slate-300 sm:text-sm"
+                    htmlFor="contact-email"
+                    className="font-label-md text-label-md font-semibold text-on-surface"
                   >
-                    Email Address
+                    Email Address <span className="text-error">*</span>
                   </label>
                   <Input
-                    id="email"
+                    id="contact-email"
+                    name="reply_to"
                     type="email"
-                    name="email"
-                    placeholder="john@example.com"
                     required
                     disabled={isLoading || isRateLimited}
-                    className="h-11 rounded-xl border-sage-200 bg-cream-50/50 text-sm text-charcoal-900 transition-all duration-300 focus:border-sage-400 focus:ring-2 focus:ring-sage-400/20 disabled:opacity-50 dark:border-slate-600 dark:bg-slate-900/50 dark:text-slate-100 dark:focus:border-gold-500 dark:focus:ring-gold-500/20 sm:h-12"
+                    placeholder="e.g. elena@company.com"
+                    className="shadow-xs rounded-lg border-surface-container-high bg-surface-container-low px-space-md py-2.5 font-body-md text-body-md text-on-surface transition-all focus:bg-surface focus:outline-none"
                   />
                 </div>
+              </div>
 
-                <div className="flex flex-grow flex-col space-y-1">
-                  <label
-                    htmlFor="message"
-                    className="mb-1 ml-1 block text-xs font-medium text-charcoal-700 dark:text-slate-300 sm:text-sm"
-                  >
-                    Your Message
-                  </label>
-                  <div className="relative flex flex-grow flex-col">
-                    <Textarea
-                      id="message"
-                      name="message"
-                      placeholder="How can we help you?"
-                      rows={4}
-                      required
-                      maxLength={300}
-                      value={messageText}
-                      onChange={(e) => setMessageText(e.target.value)}
-                      ref={textareaRef}
-                      disabled={isLoading || isRateLimited}
-                      className="max-h-[250px] min-h-[110px] flex-grow resize-y rounded-xl border-sage-200 bg-cream-50/50 py-3 pb-8 text-sm text-charcoal-900 transition-all duration-300 focus:border-sage-400 focus:ring-2 focus:ring-sage-400/20 disabled:opacity-50 dark:border-slate-600 dark:bg-slate-900/50 dark:text-slate-100 dark:focus:border-gold-500 dark:focus:ring-gold-500/20"
-                    />
-                    <div className="pointer-events-none absolute bottom-2.5 right-3 flex items-center opacity-60">
-                      <span
-                        className={`text-[11px] font-medium ${
-                          messageText.length >= 300
-                            ? "text-red-500"
-                            : "text-charcoal-600 dark:text-slate-400"
-                        }`}
-                      >
-                        {messageText.length}/300
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Web3Forms required fields for better functionality (optional) */}
-                <input
-                  type="checkbox"
-                  name="botcheck"
-                  className="hidden"
-                  style={{ display: "none" }}
+              <div className="flex flex-col gap-1.5">
+                <label
+                  htmlFor="contact-subject"
+                  className="font-label-md text-label-md font-semibold text-on-surface"
+                >
+                  Subject / Project Scope <span className="text-error">*</span>
+                </label>
+                <Input
+                  id="contact-subject"
+                  name="subject"
+                  type="text"
+                  required
+                  disabled={isLoading || isRateLimited}
+                  placeholder="e.g. Full-Stack Web Platform Development"
+                  className="shadow-xs rounded-lg border-surface-container-high bg-surface-container-low px-space-md py-2.5 font-body-md text-body-md text-on-surface transition-all focus:bg-surface focus:outline-none"
                 />
+              </div>
 
-                {error && (
-                  <div className="mt-3 rounded-lg border border-red-100 bg-red-50 p-3 text-center text-xs text-red-600 dark:border-red-800/30 dark:bg-red-900/20 dark:text-red-400 sm:text-sm">
-                    {error}
-                  </div>
-                )}
+              <div className="flex flex-col gap-1.5">
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="contact-message"
+                    className="font-label-md text-label-md font-semibold text-on-surface"
+                  >
+                    Your Message <span className="text-error">*</span>
+                  </label>
+                  <span
+                    className={`font-label-sm text-label-sm ${
+                      messageText.length >= 300
+                        ? "font-bold text-red-500"
+                        : "text-on-surface-variant"
+                    }`}
+                  >
+                    {messageText.length}/300
+                  </span>
+                </div>
+                <Textarea
+                  id="contact-message"
+                  name="message"
+                  required
+                  maxLength={300}
+                  rows={4}
+                  disabled={isLoading || isRateLimited}
+                  value={messageText}
+                  onChange={(e) => setMessageText(e.target.value)}
+                  placeholder="Tell me about your product, timeline, current constraints, and goals..."
+                  className="shadow-xs resize-none rounded-lg border-surface-container-high bg-surface-container-low px-space-md py-2.5 font-body-md text-body-md text-on-surface transition-all focus:bg-surface focus:outline-none"
+                />
+              </div>
+
+              {error && (
+                <div className="shadow-xs animate-fadeIn flex items-center gap-space-sm rounded-lg bg-error-container p-space-md text-on-error-container">
+                  <AlertCircle className="h-5 w-5 shrink-0 text-error" />
+                  <span className="font-body-md text-body-md">{error}</span>
+                </div>
+              )}
+
+              <div className="flex flex-col items-center justify-between gap-space-md pt-space-xs sm:flex-row">
+                <div className="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+                  <Lock className="h-3.5 w-3.5 text-primary" />
+                  <span>Direct, confidential dispatch to Shahil.</span>
+                </div>
 
                 <button
                   type="submit"
                   disabled={isLoading || isRateLimited}
-                  className="active:scale-98 mt-4 flex h-12 w-full items-center justify-center space-x-2 rounded-xl bg-sage-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:bg-sage-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sage-500 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-500 sm:mt-6 sm:h-14 sm:py-4 sm:text-base"
+                  aria-label="Send Message"
+                  className="inline-flex w-full items-center justify-center gap-space-xs rounded-lg bg-primary px-space-xl py-3 font-label-lg text-label-lg text-on-primary shadow-sm transition-all hover:bg-primary-container hover:text-on-primary-container disabled:opacity-50 sm:w-auto"
                 >
                   {isLoading ? (
                     <>
-                      <Loader2 className="h-4 w-4 animate-spin sm:h-5 sm:w-5" />
+                      <Loader2 className="h-4 w-4 animate-spin" />
                       <span>Sending Message...</span>
                     </>
                   ) : (
                     <>
-                      <Send className="h-4 w-4 sm:h-5 sm:w-5" />
-                      <span>Send Message</span>
+                      <span>Dispatch Message</span>
+                      <Send className="h-4 w-4" />
                     </>
                   )}
                 </button>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>

@@ -22,16 +22,15 @@ describe("NavBar component", () => {
     Object.defineProperty(window, "scrollY", { value: 0, writable: true });
   });
 
-  it("renders desktop sidebar, mobile header, social dock, and nav items", () => {
+  it("renders header banner, brand identity, theme toggle, and nav items", () => {
     render(<NavBar {...defaultProps} />);
 
-    expect(
-      screen.getByRole("complementary", { name: "Main sidebar navigation" })
-    ).toBeInTheDocument();
     expect(screen.getByRole("banner")).toBeInTheDocument();
     expect(
-      screen.getByRole("complementary", { name: "Social profiles quick dock" })
+      screen.getByRole("navigation", { name: "Main navigation" })
     ).toBeInTheDocument();
+    expect(screen.getByText("Shahil Ahamad")).toBeInTheDocument();
+    expect(screen.getByText("Web Developer")).toBeInTheDocument();
   });
 
   it("toggles theme when theme button is clicked", () => {

@@ -1,4 +1,51 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import {
+  Monitor,
+  Terminal,
+  Database,
+  ShieldCheck,
+  ChevronDown,
+} from "lucide-react";
 import { skills } from "@/app/Sections/Skill/skillsIcons";
+
+const CATEGORY_FILTERS = [
+  "All",
+  "Frontend",
+  "Backend",
+  "Database",
+  "DevOps & Tools",
+] as const;
+
+type CategoryFilter = (typeof CATEGORY_FILTERS)[number];
+
+function getSkillGroup(
+  category: string
+): "Frontend" | "Backend" | "Database" | "DevOps & Tools" {
+  switch (category) {
+    case "Frontend":
+    case "Framework":
+      return "Frontend";
+    case "Backend":
+    case "API":
+    case "ORM":
+      return "Backend";
+    case "Database":
+      return "Database";
+    case "DevOps":
+    case "Version Control":
+    case "System":
+    case "Infrastructure":
+    case "Deployment":
+    case "Workspace":
+      return "DevOps & Tools";
+    case "Language":
+      return "Frontend";
+    default:
+      return "DevOps & Tools";
+  }
+}
 
 function renderSkillIcon(skill: (typeof skills)[number]) {
   if (skill.icon) {
@@ -14,7 +61,7 @@ function renderSkillIcon(skill: (typeof skills)[number]) {
 
   if (!skill.image) {
     return (
-      <span className="text-lg font-bold text-white">
+      <span className="text-base font-bold text-primary dark:text-primary-fixed">
         {skill.name.charAt(0)}
       </span>
     );
@@ -44,55 +91,170 @@ function renderSkillIcon(skill: (typeof skills)[number]) {
   );
 }
 
-export default function SkillsSection() {
-  return (
-    <section id="skills" className="px-4 py-16 sm:px-6 sm:py-20">
-      <div className="container mx-auto max-w-6xl">
-        <h2 className="mb-10 text-center font-serif text-3xl font-bold text-charcoal-800 transition-colors duration-300 hover:text-sage-600 dark:text-slate-100 dark:hover:text-gold-400 sm:mb-16 sm:text-4xl md:text-5xl">
-          Skills & Technologies
-        </h2>
+interface SkillsSectionProps {
+  readonly defaultOpen?: boolean;
+}
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-6 md:grid-cols-4 lg:grid-cols-6">
-          {skills.map((skill, index) => (
-            <a
-              key={skill.name}
-              href={skill.url || "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex cursor-pointer flex-col items-center rounded-2xl border border-sage-200 bg-cream-50 p-3.5 shadow-sm transition-all duration-300 hover:scale-105 hover:border-sage-400 hover:shadow-xl active:scale-95 dark:border-slate-600 dark:bg-slate-800 dark:hover:border-gold-500 sm:p-6 sm:hover:-translate-y-2 sm:hover:scale-110"
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              <div className="mb-2.5 flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 sm:mb-4 sm:h-12 sm:w-12 sm:group-hover:scale-125">
-                {renderSkillIcon(skill)}
-              </div>
-              <h3 className="mb-0.5 text-center text-xs font-semibold text-charcoal-800 transition-colors duration-300 group-hover:text-sage-600 dark:text-slate-100 dark:group-hover:text-gold-400 sm:text-sm">
-                {skill.name}
-              </h3>
-              <span className="text-center text-[10px] text-charcoal-600 dark:text-slate-400 sm:text-xs">
-                {skill.category}
-              </span>
-            </a>
-          ))}
+export default function SkillsSection({
+  defaultOpen = false,
+}: Readonly<SkillsSectionProps> = {}) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategoryFilter>("All");
+
+  const filteredSkills = useMemo(() => {
+    if (selectedCategory === "All") return skills;
+    return skills.filter(
+      (skill) => getSkillGroup(skill.category) === selectedCategory
+    );
+  }, [selectedCategory]);
+
+  return (
+    <section
+      id="tech-stack"
+      className="w-full bg-surface-container-low py-space-3xl shadow-inner transition-colors duration-300"
+    >
+      <div className="mx-auto max-w-[1360px] px-margin md:px-margin-tablet lg:px-margin-desktop">
+        {/* Section Header */}
+        <div className="mb-space-2xl flex flex-col justify-between gap-space-md md:flex-row md:items-end">
+          <div className="flex max-w-xl flex-col gap-space-xs">
+            <span className="font-label-sm text-label-sm font-semibold uppercase tracking-widest text-secondary">
+              03 // Technical Arsenal
+            </span>
+            <h2 className="font-headline-lg text-headline-lg text-primary">
+              <span className="sr-only">Skills &amp; Technologies: </span>
+              Capabilities &amp; Stack Matrix
+            </h2>
+            <p className="font-body-md text-body-md text-on-surface-variant">
+              Disciplined selection of languages, frameworks, and deployment
+              runtimes validated in production scale applications.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-space-xs">
+            <span className="h-2 w-2 rounded-full bg-secondary"></span>
+            <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
+              Continuous Mastery Track
+            </span>
+          </div>
         </div>
 
-        {/* Skills Categories */}
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-          {[
-            {
-              category: "Frontend",
-              skills: ["React.js", "Next.js", "Tailwind CSS"],
-            },
-            {
-              category: "Backend",
-              skills: ["Node.js", "Express.js", "GraphQL", "Prisma"],
-            },
-            {
-              category: "Database",
-              skills: ["MongoDB", "MySQL", "PostgreSQL"],
-            },
-            {
-              category: "DevOps & Tools",
-              skills: [
+        {/* 4 Pillars Grid Matching Portfolio Design */}
+        <div className="grid grid-cols-1 gap-space-md md:grid-cols-2 lg:grid-cols-4">
+          {/* Pillar 1: Frontend */}
+          <div className="border-surface-container-high/60 flex flex-col gap-space-md rounded-xl border bg-surface p-space-lg shadow-sm">
+            <div className="flex items-center justify-between">
+              <h3 className="font-headline-sm text-headline-sm text-primary">
+                Frontend
+              </h3>
+              <Monitor className="h-5 w-5 text-secondary" />
+            </div>
+            <div className="flex flex-wrap gap-space-xs">
+              {[
+                "React.js",
+                "Next.js",
+                "TypeScript",
+                "Tailwind CSS",
+                "Vue.js",
+                "JavaScript",
+              ].map((tech) => (
+                <span
+                  key={tech}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-surface-container px-space-sm py-1 font-label-sm text-label-sm text-on-surface"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-secondary"></span>{" "}
+                  {tech}
+                </span>
+              ))}
+            </div>
+            <div className="mt-auto flex flex-col gap-1 pt-space-sm font-body-sm text-body-sm text-on-surface-variant">
+              <span className="font-label-sm text-label-sm font-semibold uppercase text-on-surface">
+                Proficiency
+              </span>
+              <span>
+                SSR / SSG paradigms, state reconciliation, declarative layout
+                systems.
+              </span>
+            </div>
+          </div>
+
+          {/* Pillar 2: Backend */}
+          <div className="border-surface-container-high/60 flex flex-col gap-space-md rounded-xl border bg-surface p-space-lg shadow-sm">
+            <div className="flex items-center justify-between">
+              <h3 className="font-headline-sm text-headline-sm text-primary">
+                Backend
+              </h3>
+              <Terminal className="h-5 w-5 text-secondary" />
+            </div>
+            <div className="flex flex-wrap gap-space-xs">
+              {[
+                "Node.js",
+                "Express.js",
+                "GraphQL",
+                "Prisma",
+                "Python",
+                "RESTful APIs",
+              ].map((tech) => (
+                <span
+                  key={tech}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-surface-container px-space-sm py-1 font-label-sm text-label-sm text-on-surface"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-secondary"></span>{" "}
+                  {tech}
+                </span>
+              ))}
+            </div>
+            <div className="mt-auto flex flex-col gap-1 pt-space-sm font-body-sm text-body-sm text-on-surface-variant">
+              <span className="font-label-sm text-label-sm font-semibold uppercase text-on-surface">
+                Proficiency
+              </span>
+              <span>
+                REST/RPC design, asynchronous workers, auth flows (JWT/OAuth2).
+              </span>
+            </div>
+          </div>
+
+          {/* Pillar 3: Database */}
+          <div className="border-surface-container-high/60 flex flex-col gap-space-md rounded-xl border bg-surface p-space-lg shadow-sm">
+            <div className="flex items-center justify-between">
+              <h3 className="font-headline-sm text-headline-sm text-primary">
+                Database
+              </h3>
+              <Database className="h-5 w-5 text-secondary" />
+            </div>
+            <div className="flex flex-wrap gap-space-xs">
+              {["PostgreSQL", "MongoDB", "MySQL", "Supabase", "Redis"].map(
+                (tech) => (
+                  <span
+                    key={tech}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-surface-container px-space-sm py-1 font-label-sm text-label-sm text-on-surface"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-secondary"></span>{" "}
+                    {tech}
+                  </span>
+                )
+              )}
+            </div>
+            <div className="mt-auto flex flex-col gap-1 pt-space-sm font-body-sm text-body-sm text-on-surface-variant">
+              <span className="font-label-sm text-label-sm font-semibold uppercase text-on-surface">
+                Proficiency
+              </span>
+              <span>
+                Relational schema modeling, index optimization, caching tiers.
+              </span>
+            </div>
+          </div>
+
+          {/* Pillar 4: DevOps & Tools */}
+          <div className="border-surface-container-high/60 flex flex-col gap-space-md rounded-xl border bg-surface p-space-lg shadow-sm">
+            <div className="flex items-center justify-between">
+              <h3 className="font-headline-sm text-headline-sm text-primary">
+                DevOps &amp; Tools
+              </h3>
+              <ShieldCheck className="h-5 w-5 text-secondary" />
+            </div>
+            <div className="flex flex-wrap gap-space-xs">
+              {[
                 "Docker",
                 "Git",
                 "GitHub",
@@ -100,29 +262,128 @@ export default function SkillsSection() {
                 "Vercel",
                 "Cloudflare",
                 "NX Workspace",
-              ],
-            },
-          ].map((group) => (
-            <div
-              key={group.category}
-              className="group rounded-2xl border border-sage-200 bg-cream-100/50 p-5 transition-all duration-300 hover:shadow-lg dark:border-slate-600 dark:bg-slate-700/50 sm:p-6"
-            >
-              <h3 className="mb-3 font-serif text-base font-semibold text-charcoal-800 transition-colors duration-300 group-hover:text-sage-600 dark:text-slate-100 dark:group-hover:text-gold-400 sm:mb-4 sm:text-lg">
-                {group.category}
-              </h3>
-              <div className="space-y-2">
-                {group.skills.map((skill) => (
-                  <div
-                    key={skill}
-                    className="flex items-center text-xs text-charcoal-700 transition-colors duration-300 group-hover:text-charcoal-800 dark:text-slate-300 dark:group-hover:text-slate-200 sm:text-sm"
-                  >
-                    <div className="mr-2.5 h-1.5 w-1.5 rounded-full bg-sage-500 transition-transform duration-300 group-hover:scale-125 dark:bg-gold-500"></div>
-                    {skill}
-                  </div>
-                ))}
-              </div>
+              ].map((tech) => (
+                <span
+                  key={tech}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-surface-container px-space-sm py-1 font-label-sm text-label-sm text-on-surface"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-secondary"></span>{" "}
+                  {tech}
+                </span>
+              ))}
             </div>
-          ))}
+            <div className="mt-auto flex flex-col gap-1 pt-space-sm font-body-sm text-body-sm text-on-surface-variant">
+              <span className="font-label-sm text-label-sm font-semibold uppercase text-on-surface">
+                Proficiency
+              </span>
+              <span>
+                Strict semantic standards, defensive error boundaries,
+                continuous CI/CD.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Detailed Ecosystem Dropdown / Accordion Section */}
+        <div className="mt-space-2xl pt-space-md">
+          <div className="border-surface-container-high/80 overflow-hidden rounded-2xl border bg-surface shadow-sm transition-all duration-300">
+            {/* Interactive Dropdown Header Button */}
+            <button
+              type="button"
+              onClick={() => setIsOpen((prev) => !prev)}
+              aria-expanded={isOpen}
+              aria-controls="detailed-ecosystem-content"
+              className="hover:bg-surface-container/40 flex w-full items-center justify-between p-space-md text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:p-space-lg"
+            >
+              <div className="flex flex-col gap-1 pr-4">
+                <div className="flex flex-wrap items-center gap-space-sm">
+                  <span className="font-headline-sm text-headline-sm text-primary">
+                    Detailed Ecosystem
+                  </span>
+                  <span className="inline-flex items-center rounded-full bg-surface-container px-2.5 py-0.5 font-label-sm text-label-sm font-medium text-secondary">
+                    {skills.length} Validated Technologies
+                  </span>
+                </div>
+                <p className="font-body-sm text-body-sm text-on-surface-variant">
+                  Explore full granular stack matrix across libraries,
+                  frameworks, databases, and deployment runtimes.
+                </p>
+              </div>
+
+              <div className="flex shrink-0 items-center gap-2">
+                <span className="hidden font-label-sm text-label-sm font-semibold uppercase tracking-wider text-on-surface-variant sm:inline">
+                  {isOpen ? "Collapse Details" : "Expand Details"}
+                </span>
+                <div
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg bg-surface-container text-on-surface transition-transform duration-300 ${
+                    isOpen
+                      ? "rotate-180 bg-surface-container-high text-primary"
+                      : ""
+                  }`}
+                >
+                  <ChevronDown className="h-4 w-4" />
+                </div>
+              </div>
+            </button>
+
+            {/* Dropdown Content Area */}
+            {isOpen && (
+              <div
+                id="detailed-ecosystem-content"
+                className="border-surface-container-high/60 bg-surface-container-low/20 border-t p-space-md transition-all duration-300 sm:p-space-lg"
+              >
+                {/* Category Filters */}
+                <div className="mb-space-md flex flex-col gap-space-sm sm:flex-row sm:items-center sm:justify-between">
+                  <div className="scrollbar-none flex flex-wrap items-center gap-1.5 sm:gap-2">
+                    {CATEGORY_FILTERS.map((cat) => {
+                      const isSelected = selectedCategory === cat;
+                      return (
+                        <button
+                          key={cat}
+                          type="button"
+                          onClick={() => setSelectedCategory(cat)}
+                          className={`rounded-full px-3 py-1 font-label-sm text-label-sm font-medium transition-all duration-200 ${
+                            isSelected
+                              ? "shadow-xs bg-primary text-on-primary"
+                              : "border border-surface-container-high bg-surface text-on-surface-variant hover:bg-surface-container hover:text-primary"
+                          }`}
+                        >
+                          {cat}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <span className="font-label-sm text-label-sm text-on-surface-variant">
+                    Showing {filteredSkills.length} of {skills.length} items
+                  </span>
+                </div>
+
+                {/* Skill Cards Grid */}
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+                  {filteredSkills.map((skill) => (
+                    <a
+                      key={skill.name}
+                      href={skill.url || "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="border-surface-container-high/70 shadow-xs group flex flex-col items-center justify-center rounded-xl border bg-surface p-3 transition-all duration-300 hover:border-surface-container-highest hover:bg-surface-container hover:shadow-sm"
+                    >
+                      <div className="mb-1.5 flex h-8 w-8 items-center justify-center rounded-lg p-1 transition-transform duration-300 group-hover:scale-110">
+                        {renderSkillIcon(skill)}
+                      </div>
+                      <span className="text-center font-label-sm text-label-sm font-medium text-on-surface transition-colors group-hover:text-primary">
+                        {skill.name}
+                      </span>
+                      <span className="text-on-surface-variant/75 text-[10px]">
+                        {skill.category}
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>

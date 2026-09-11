@@ -1,120 +1,144 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+"use client";
+
+import { ExternalLink, Code2, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Clock } from "lucide-react";
-import { Github } from "@/components/icons";
 import { projects } from "./Projects";
+
+const PROJECT_CATEGORIES: Record<string, string> = {
+  "Express Js Weather API": "Backend API",
+  "Browser Code Editor": "Web Utility",
+  "SA Docs Converter": "Productivity Tool",
+  "SA Sudoku": "Web Gaming",
+  "SA Web Paint": "Canvas Creative",
+  "SA Type": "Interactive Audio",
+  "SA BagChal": "Board Game",
+  "Aditya Rana Portfolio": "Client Monograph",
+};
 
 export default function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="bg-cream-100/50 px-4 py-16 dark:bg-slate-800/50 sm:px-6 sm:py-20"
+      className="mx-auto max-w-[1360px] px-margin py-space-3xl md:px-margin-tablet lg:px-margin-desktop"
     >
-      <div className="container mx-auto max-w-6xl">
-        <h2 className="mb-10 text-center font-serif text-3xl font-bold text-charcoal-800 transition-colors duration-300 hover:text-sage-600 dark:text-slate-100 dark:hover:text-gold-400 sm:mb-16 sm:text-4xl md:text-5xl">
-          Featured Projects
-        </h2>
-
-        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => {
-            const isComingSoon =
-              project.status === "Coming Soon" ||
-              project.status === "Work In Progress";
-
-            return (
-              <Card
-                key={project.title}
-                className={`group flex flex-col justify-between border-sage-200 bg-cream-50 transition-all duration-500 hover:scale-[1.02] hover:border-sage-400 hover:shadow-2xl dark:border-slate-600 dark:bg-slate-800 dark:hover:border-gold-500 sm:hover:-translate-y-2 sm:hover:scale-105 ${
-                  isComingSoon ? "opacity-90" : ""
-                }`}
-              >
-                <CardHeader className="p-5 sm:p-6">
-                  <div className="mb-1 flex items-start justify-between gap-2">
-                    <CardTitle className="font-serif text-lg leading-snug text-charcoal-800 transition-colors duration-300 group-hover:text-sage-600 dark:text-slate-100 dark:group-hover:text-gold-400 sm:text-xl">
-                      {project.title}
-                    </CardTitle>
-                    {isComingSoon && (
-                      <Badge className="pointer-events-none flex shrink-0 items-center gap-1 whitespace-nowrap border-amber-300 bg-amber-100 text-[11px] text-amber-700 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
-                        <Clock className="h-3 w-3" />
-                        {project.status === "Work In Progress"
-                          ? "In Dev"
-                          : "Soon"}
-                      </Badge>
-                    )}
-                  </div>
-                  <CardDescription className="text-xs text-charcoal-600 transition-colors duration-300 group-hover:text-charcoal-700 dark:text-slate-300 dark:group-hover:text-slate-200 sm:text-sm">
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="p-5 pt-0 sm:p-6 sm:pt-0">
-                  <div className="mb-4 flex flex-wrap gap-1.5 sm:gap-2">
-                    {project.tech.map((tech) => (
-                      <Badge
-                        key={tech}
-                        variant="secondary"
-                        className="bg-sage-100 text-[11px] text-sage-700 transition-colors hover:bg-sage-200 dark:bg-slate-700 dark:text-gold-300 dark:hover:bg-slate-600 sm:text-xs"
-                      >
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                  <div className="flex flex-wrap gap-2.5 border-t border-sage-100 pt-2 dark:border-slate-700/50 sm:gap-3">
-                    {project.github && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => window.open(project.github, "_blank")}
-                        disabled={isComingSoon}
-                        className={`h-9 border-sage-600 bg-transparent px-3 text-xs text-sage-600 transition-all duration-300 hover:bg-sage-50 dark:border-gold-400 dark:text-gold-400 dark:hover:bg-slate-800 sm:text-sm ${
-                          !isComingSoon
-                            ? "shadow-sm hover:scale-105 active:scale-95"
-                            : "cursor-not-allowed opacity-50"
-                        }`}
-                      >
-                        <Github className="mr-1.5 h-3.5 w-3.5" />
-                        Code
-                      </Button>
-                    )}
-                    {project.live && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => window.open(project.live, "_blank")}
-                        disabled={project.status === "Coming Soon"}
-                        className={`h-9 border-sage-600 bg-transparent px-3 text-xs text-sage-600 transition-all duration-300 hover:bg-sage-50 dark:border-gold-400 dark:text-gold-400 dark:hover:bg-slate-800 sm:text-sm ${
-                          project.status !== "Coming Soon"
-                            ? "shadow-sm hover:scale-105 active:scale-95"
-                            : "cursor-not-allowed opacity-50"
-                        }`}
-                      >
-                        <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
-                        Live Demo
-                      </Button>
-                    )}
-                    {isComingSoon && !project.github && !project.live && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        disabled
-                        className="h-9 cursor-not-allowed border-sage-400 bg-transparent px-3 text-xs text-sage-600 opacity-60 dark:border-gold-600 dark:text-gold-400 sm:text-sm"
-                      >
-                        <Clock className="mr-1.5 h-3.5 w-3.5" />
-                        In Development
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+      {/* Section Header */}
+      <div className="mb-space-2xl flex flex-col justify-between gap-space-md md:flex-row md:items-end">
+        <div className="flex max-w-xl flex-col gap-space-xs">
+          <span className="font-label-sm text-label-sm font-semibold uppercase tracking-widest text-secondary">
+            02 // Selected Works
+          </span>
+          <h2 className="font-headline-lg text-headline-lg text-primary">
+            Featured Projects: Engineered with Purpose
+          </h2>
+          <p className="font-body-md text-body-md text-on-surface-variant">
+            A curated chronicle of full-stack platforms, production SaaS suites,
+            and editorial design systems delivered for commercial viability and
+            end-user delight.
+          </p>
         </div>
+
+        <div className="flex items-center gap-space-xs text-on-surface-variant">
+          <span className="font-label-sm text-label-sm uppercase tracking-widest">
+            Archive Status:
+          </span>
+          <span className="rounded-full bg-surface-container px-2.5 py-0.5 font-label-sm text-label-sm font-medium text-primary">
+            {projects.length} Featured Projects
+          </span>
+        </div>
+      </div>
+
+      {/* Projects Grid */}
+      <div className="grid grid-cols-1 gap-space-lg md:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project, index) => {
+          const isComingSoon =
+            project.status === "Coming Soon" ||
+            project.status === "Work In Progress";
+          const categoryTag =
+            PROJECT_CATEGORIES[project.title] || "Full-Stack System";
+          const indexNum = String(index + 1).padStart(2, "0");
+
+          return (
+            <article
+              key={project.title}
+              className={`border-surface-container-high/70 group relative flex flex-col justify-between rounded-xl border bg-surface-container-low p-space-lg transition-all duration-300 hover:border-surface-container-highest hover:bg-surface-container hover:shadow-md ${
+                isComingSoon ? "opacity-95" : ""
+              }`}
+            >
+              <div className="flex flex-col gap-space-sm">
+                {/* Header Tag & Status */}
+                <div className="flex items-center justify-between gap-space-xs">
+                  <span className="font-label-sm text-label-sm font-semibold uppercase tracking-widest text-secondary">
+                    {indexNum} // {categoryTag}
+                  </span>
+                  {isComingSoon && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-secondary-container px-2 py-0.5 font-label-sm text-label-sm font-medium text-on-secondary-container">
+                      <Clock className="h-3 w-3" />
+                      {project.status === "Work In Progress"
+                        ? "In Dev"
+                        : "Soon"}
+                    </span>
+                  )}
+                </div>
+
+                {/* Title */}
+                <h3 className="font-headline-sm text-headline-sm text-primary transition-colors group-hover:text-primary-container">
+                  {project.title}
+                </h3>
+
+                {/* Description */}
+                <p className="font-body-sm text-body-sm leading-relaxed text-on-surface-variant">
+                  {project.description}
+                </p>
+
+                {/* Tech Pills */}
+                <div className="flex flex-wrap gap-1.5 pt-space-xs">
+                  {project.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="shadow-xs rounded-full bg-surface px-2.5 py-0.5 font-label-sm text-label-sm text-on-surface-variant"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="mt-auto flex items-center gap-space-sm pt-space-md">
+                {project.github && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => window.open(project.github, "_blank")}
+                    className="shadow-xs inline-flex items-center gap-1.5 rounded-lg border-surface-container-high bg-surface px-space-sm py-1.5 font-label-sm text-label-sm text-on-surface transition-colors hover:bg-surface-container-high hover:text-primary"
+                  >
+                    <Code2 className="h-3.5 w-3.5" />
+                    <span>Code</span>
+                  </Button>
+                )}
+
+                {project.live ? (
+                  <Button
+                    size="sm"
+                    onClick={() => window.open(project.live, "_blank")}
+                    className="shadow-xs inline-flex items-center gap-1.5 rounded-lg bg-primary px-space-md py-1.5 font-label-sm text-label-sm text-on-primary transition-colors hover:bg-primary-container hover:text-on-primary-container"
+                  >
+                    <span>Live Demo</span>
+                    <ExternalLink className="h-3.5 w-3.5" />
+                  </Button>
+                ) : (
+                  <Button
+                    size="sm"
+                    disabled
+                    className="cursor-not-allowed rounded-lg bg-surface-container-high px-space-md py-1.5 font-label-sm text-label-sm text-on-surface-variant opacity-70"
+                  >
+                    <span>In Development</span>
+                  </Button>
+                )}
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

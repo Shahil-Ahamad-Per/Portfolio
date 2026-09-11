@@ -1,16 +1,10 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Tag, Calendar } from "lucide-react";
+"use client";
+
 import { useState } from "react";
-import { getAllPosts } from "@/lib/content-adapter";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { getAllPosts } from "@/lib/content-adapter";
 
 const blogPosts = getAllPosts();
 const categories = [
@@ -29,82 +23,94 @@ export default function BlogSection() {
       : blogPosts.filter((post) => post.category === selectedCategory);
 
   return (
-    <section id="blog" className="px-4 py-16 sm:px-6 sm:py-20">
-      <div className="container mx-auto max-w-6xl">
-        <h2 className="mb-8 text-center font-serif text-3xl font-bold text-charcoal-800 transition-colors duration-300 hover:text-sage-600 dark:text-slate-100 dark:hover:text-gold-400 sm:mb-12 sm:text-4xl md:text-5xl">
-          Latest Articles
-        </h2>
+    <section
+      id="blog"
+      className="w-full bg-surface-container-low py-space-3xl shadow-inner transition-colors duration-300"
+    >
+      <div className="mx-auto max-w-[1360px] px-margin md:px-margin-tablet lg:px-margin-desktop">
+        {/* Section Header */}
+        <div className="mb-space-2xl flex flex-col justify-between gap-space-md md:flex-row md:items-end">
+          <div className="flex max-w-xl flex-col gap-space-xs">
+            <span className="font-label-sm text-label-sm font-semibold uppercase tracking-widest text-secondary">
+              05 // Perspectives &amp; Writing
+            </span>
+            <h2 className="font-headline-lg text-headline-lg text-primary">
+              <span className="sr-only">Latest Articles: </span>
+              Reflections &amp; Technical Insights
+            </h2>
+            <p className="font-body-md text-body-md text-on-surface-variant">
+              Essays and technical write-ups on full-stack architecture,
+              frontend precision, and software design.
+            </p>
+          </div>
 
-        {/* Mobile Scrollable / Desktop Centered Category Filter */}
-        <div className="scrollbar-none -mx-4 mb-8 flex items-center justify-start gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:mb-12 sm:justify-center sm:gap-3 sm:px-0">
-          {categories.map((category) => (
-            <Button
-              key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
-              onClick={() => setSelectedCategory(category)}
-              className={`shrink-0 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 active:scale-95 sm:text-sm ${
-                selectedCategory === category
-                  ? "bg-sage-600 text-white shadow-md shadow-sage-600/20 hover:bg-sage-700 dark:bg-gold-600 dark:hover:bg-gold-700"
-                  : "border-sage-300 text-charcoal-700 hover:bg-sage-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-              }`}
-            >
-              {category}
-            </Button>
-          ))}
+          <div className="flex items-center gap-space-xs text-on-surface-variant">
+            <span className="font-label-sm text-label-sm uppercase tracking-widest">
+              Articles Published:
+            </span>
+            <span className="shadow-xs rounded-full bg-surface px-2.5 py-0.5 font-label-sm text-label-sm font-medium text-primary">
+              {filteredPosts.length} Monographs
+            </span>
+          </div>
         </div>
 
-        <div className="grid gap-6 sm:gap-8 md:grid-cols-2">
+        {/* Category Filters */}
+        <div className="scrollbar-none -mx-4 mb-space-xl flex items-center justify-start gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:gap-3 sm:px-0">
+          {categories.map((category) => {
+            const isSelected = selectedCategory === category;
+            return (
+              <Button
+                key={category}
+                variant={isSelected ? "default" : "outline"}
+                onClick={() => setSelectedCategory(category)}
+                className={`shrink-0 rounded-full px-4 py-2 font-label-sm text-label-sm transition-all duration-300 ${
+                  isSelected
+                    ? "shadow-xs bg-primary text-on-primary hover:bg-primary-container"
+                    : "border-surface-container-high bg-surface text-on-surface hover:bg-surface-container hover:text-primary"
+                }`}
+              >
+                {category}
+              </Button>
+            );
+          })}
+        </div>
+
+        {/* Monographs Grid */}
+        <div className="grid grid-cols-1 gap-space-lg md:grid-cols-2">
           {filteredPosts.map((post) => (
-            <Link
+            <article
               key={post.id}
-              href={`/blog/${post.id}`}
-              onClick={() => {
-                try {
-                  sessionStorage.setItem("returnToSection", "blog");
-                } catch {
-                  // ignore
-                }
-              }}
-              passHref
+              className="border-surface-container-high/70 group relative flex flex-col justify-between rounded-xl border bg-surface p-space-lg shadow-sm transition-all duration-300 hover:border-surface-container-highest hover:bg-surface-container hover:shadow-md"
             >
-              <Card className="group flex h-full cursor-pointer flex-col justify-between border-sage-200 bg-cream-50 transition-all duration-500 hover:scale-[1.02] hover:border-sage-400 hover:shadow-2xl dark:border-slate-600 dark:bg-slate-800 dark:hover:border-gold-500 sm:hover:-translate-y-2 sm:hover:scale-105">
-                <CardHeader className="p-5 sm:p-6">
-                  <div className="mb-2 flex items-center justify-between gap-2">
-                    <Badge
-                      variant="secondary"
-                      className="bg-sage-100 text-sage-700 transition-colors group-hover:bg-sage-200 dark:bg-slate-700 dark:text-gold-300 dark:group-hover:bg-slate-600"
-                    >
-                      <Tag className="mr-1 h-3 w-3" />
-                      {post.category}
-                    </Badge>
-                    <div className="flex items-center text-xs text-charcoal-500 dark:text-slate-400 sm:text-sm">
-                      <Calendar className="mr-1 h-3.5 w-3.5" />
-                      {new Date(post.date).toLocaleDateString()}
-                    </div>
-                  </div>
-                  <CardTitle className="font-serif text-lg leading-snug text-charcoal-800 transition-colors duration-300 group-hover:text-sage-600 dark:text-slate-100 dark:group-hover:text-gold-400 sm:text-xl">
-                    {post.title}
-                  </CardTitle>
-                  <CardDescription className="line-clamp-3 text-xs text-charcoal-600 dark:text-slate-300 sm:text-sm">
-                    {post.excerpt}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="p-5 pt-0 sm:p-6 sm:pt-0">
-                  <div className="flex items-center justify-between border-t border-sage-100 pt-2 dark:border-slate-700/50">
-                    <span className="text-xs text-charcoal-500 dark:text-slate-400 sm:text-sm">
-                      {post.readTime}
-                    </span>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="px-2 text-xs text-sage-600 hover:bg-sage-50 dark:text-gold-400 dark:hover:bg-slate-700 sm:text-sm"
-                    >
-                      Read More →
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
+              <div className="flex flex-col gap-space-sm">
+                <div className="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+                  <span className="font-semibold uppercase tracking-wider text-secondary">
+                    {post.category}
+                  </span>
+                  <span>
+                    {post.date} • {post.readTime}
+                  </span>
+                </div>
+
+                <h3 className="font-headline-sm text-headline-sm text-primary transition-colors group-hover:text-primary-container">
+                  {post.title}
+                </h3>
+
+                <p className="font-body-sm text-body-sm leading-relaxed text-on-surface-variant">
+                  {post.excerpt}
+                </p>
+              </div>
+
+              <div className="mt-auto pt-space-md">
+                <Link
+                  href={`/blog/${post.id}`}
+                  className="inline-flex items-center gap-1 font-label-sm text-label-sm font-semibold text-primary transition-colors group-hover:text-primary-container"
+                >
+                  <span>Read Article</span>
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </Link>
+              </div>
+            </article>
           ))}
         </div>
       </div>

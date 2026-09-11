@@ -5,7 +5,14 @@ import Link from "next/link";
 import NavBar from "@/components/Navbar";
 import Footer from "@/app/Sections/Footer";
 import { useTheme } from "next-themes";
-import { ChevronDown, ChevronRight, FileText, Clock } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  FileText,
+  Clock,
+  Check,
+  Copy,
+} from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -52,7 +59,11 @@ function MarkdownH2({
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
   return (
-    <h2 id={id} {...props}>
+    <h2
+      id={id}
+      className="border-surface-container-high/60 mb-4 mt-12 scroll-mt-24 border-b pb-2 font-serif text-2xl font-bold tracking-tight text-primary sm:text-3xl"
+      {...props}
+    >
       {children}
     </h2>
   );
@@ -68,7 +79,11 @@ function MarkdownH3({
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
   return (
-    <h3 id={id} {...props}>
+    <h3
+      id={id}
+      className="text-primary/95 mb-3 mt-8 scroll-mt-24 font-serif text-xl font-semibold sm:text-2xl"
+      {...props}
+    >
       {children}
     </h3>
   );
@@ -79,6 +94,7 @@ function MarkdownCode({
   children,
   ...props
 }: Readonly<React.HTMLAttributes<HTMLElement>>) {
+  const [copied, setCopied] = useState(false);
   const rawText = extractText(children);
   const isBlock = Boolean(
     className?.startsWith("language-") || rawText.includes("\n")
@@ -86,7 +102,7 @@ function MarkdownCode({
   if (!isBlock) {
     return (
       <code
-        className="rounded bg-sage-100 px-1.5 py-0.5 font-mono text-xs text-sage-800 dark:bg-slate-800 dark:text-gold-400 sm:text-sm"
+        className="border-surface-container-high/70 rounded-md border bg-surface-container px-1.5 py-0.5 font-mono text-xs text-primary sm:text-sm"
         {...props}
       >
         {children}
@@ -97,29 +113,39 @@ function MarkdownCode({
   const handleCopy = () => {
     const textToCopy = rawText.replace(/\n$/, "");
     navigator.clipboard.writeText(textToCopy);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const language = className?.replace("language-", "") || "text";
+  const language = className?.replace("language-", "") || "code";
 
   return (
-    <div className="group relative my-4 sm:my-6">
-      <div className="flex items-center justify-between rounded-t-xl border border-sage-200 bg-slate-800 px-3 py-2 dark:border-slate-700 dark:bg-slate-950 sm:px-4">
-        <span className="text-[10px] uppercase tracking-wider text-slate-400 sm:text-xs">
+    <div className="border-surface-container-high/80 group relative my-6 overflow-hidden rounded-xl border bg-surface shadow-sm">
+      <div className="border-surface-container-high/80 flex items-center justify-between border-b bg-surface-container px-4 py-2.5">
+        <span className="font-label-sm text-label-sm font-semibold uppercase tracking-wider text-on-surface-variant">
           {language}
         </span>
         <button
           type="button"
           onClick={handleCopy}
-          className="text-[10px] text-slate-400 transition-colors hover:text-white sm:text-xs"
+          aria-label={copied ? "Copied code" : "Copy"}
+          className="flex items-center gap-1.5 rounded-md px-2.5 py-1 font-label-sm text-label-sm text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-primary"
         >
-          Copy
+          {copied ? (
+            <>
+              <Check className="h-3.5 w-3.5 text-primary" />
+              <span>Copied!</span>
+            </>
+          ) : (
+            <>
+              <Copy className="h-3.5 w-3.5" />
+              <span>Copy</span>
+            </>
+          )}
         </button>
       </div>
-      <pre className="!mt-0 overflow-x-auto !rounded-t-none rounded-b-xl border border-t-0 border-sage-200 bg-slate-900 p-3 dark:border-slate-700 dark:bg-slate-950 sm:p-4">
-        <code
-          className="font-mono text-xs text-slate-100 sm:text-sm"
-          {...props}
-        >
+      <pre className="bg-surface-container-lowest/80 !mt-0 overflow-x-auto !rounded-none p-4 font-mono text-xs leading-relaxed text-on-surface dark:bg-surface-container-lowest sm:text-sm">
+        <code className="font-mono text-on-surface" {...props}>
           {children}
         </code>
       </pre>
@@ -155,7 +181,7 @@ function MarkdownA({
       {...domProps}
       target={isExternal ? "_blank" : userTarget}
       rel={isExternal ? "noopener noreferrer" : userRel}
-      className={`text-sage-600 underline underline-offset-2 transition-colors hover:text-sage-800 dark:text-gold-400 dark:hover:text-gold-300 ${className || ""}`}
+      className={`decoration-secondary/50 font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary-container hover:decoration-secondary ${className || ""}`}
     >
       {children}
     </a>
@@ -239,12 +265,12 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
               aria-label={
                 isExpanded ? `Collapse ${item.text}` : `Expand ${item.text}`
               }
-              className="mr-1 flex-shrink-0 rounded p-1 transition-colors hover:bg-sage-100 dark:hover:bg-slate-700"
+              className="mr-1 flex-shrink-0 rounded-md p-1 text-on-surface-variant transition-colors hover:bg-surface-container hover:text-primary"
             >
               {isExpanded ? (
-                <ChevronDown className="h-3 w-3 text-charcoal-500 dark:text-slate-400" />
+                <ChevronDown className="h-3.5 w-3.5" />
               ) : (
-                <ChevronRight className="h-3 w-3 text-charcoal-500 dark:text-slate-400" />
+                <ChevronRight className="h-3.5 w-3.5" />
               )}
             </button>
           ) : (
@@ -253,17 +279,17 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
           <button
             type="button"
             onClick={(e) => handleTocClick(item.id, e)}
-            className={`block flex-1 rounded-md px-3 py-2 text-left text-sm transition-all duration-200 hover:bg-sage-100 dark:hover:bg-slate-700 ${
+            className={`block flex-1 rounded-md px-3 py-1.5 text-left text-sm transition-all duration-200 ${
               isActive
-                ? "border-l-2 border-sage-500 bg-sage-100 font-medium text-sage-700 dark:border-gold-400 dark:bg-slate-700 dark:text-gold-400"
-                : "text-charcoal-700 hover:text-sage-600 dark:text-slate-300 dark:hover:text-gold-400"
+                ? "border-l-2 border-primary bg-surface-container font-semibold text-primary"
+                : "text-on-surface-variant hover:bg-surface-container-low hover:text-primary"
             } ${item.level === 2 ? "font-medium" : "font-normal"}`}
           >
             {item.text}
           </button>
         </div>
         {hasChildren && isExpanded && (
-          <ul className="ml-4 mt-1 space-y-1 border-l border-sage-200 pl-2 dark:border-slate-600">
+          <ul className="border-surface-container-high/60 ml-4 mt-1 space-y-0.5 border-l pl-2">
             {item.children!.map((child) => renderTocItem(child))}
           </ul>
         )}
@@ -273,11 +299,11 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-cream-50 to-sage-50 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900">
-        <div className="mx-auto max-w-6xl space-y-6 p-6">
-          <Skeleton className="h-12 w-64" />
-          <Skeleton className="h-6 w-96" />
-          <Skeleton className="h-64 w-full" />
+      <div className="min-h-screen bg-surface text-on-surface">
+        <div className="mx-auto max-w-[1360px] space-y-6 px-margin py-space-xl pt-28 md:px-margin-tablet lg:px-margin-desktop">
+          <Skeleton className="h-12 w-64 bg-surface-container-high" />
+          <Skeleton className="h-6 w-96 bg-surface-container-high" />
+          <Skeleton className="h-64 w-full bg-surface-container-high" />
         </div>
       </div>
     );
@@ -285,21 +311,28 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
 
   if (!post) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-cream-50 to-sage-50 px-6 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900">
-        <div className="text-center">
-          <div className="mb-6 text-6xl">😢</div>
-          <h1 className="mb-4 text-2xl font-bold text-charcoal-800 dark:text-slate-100 sm:text-3xl">
-            Article not found
-          </h1>
-          <p className="mb-6 text-charcoal-600 dark:text-slate-300">
-            The article you&apos;re looking for doesn&apos;t exist.
-          </p>
-          <Link
-            href="/#blog"
-            className="inline-flex items-center rounded-lg bg-sage-600 px-6 py-3 text-white transition-colors hover:bg-sage-700 dark:bg-gold-500 dark:hover:bg-gold-600"
-          >
-            ← Back to Home
-          </Link>
+      <div className="flex min-h-screen flex-col bg-surface text-on-surface">
+        <NavBar theme={theme} setTheme={setTheme} />
+        <div className="flex min-h-screen flex-col pt-20">
+          <main className="flex flex-grow flex-col items-center justify-center px-6 py-20">
+            <div className="max-w-md text-center">
+              <div className="mb-6 text-6xl">😢</div>
+              <h1 className="mb-4 font-headline-lg text-headline-lg text-primary">
+                Article not found
+              </h1>
+              <p className="mb-6 font-body-md text-body-md text-on-surface-variant">
+                The article you&apos;re looking for doesn&apos;t exist or has
+                been relocated.
+              </p>
+              <Link
+                href="/#blog"
+                className="inline-flex items-center rounded-lg bg-primary px-6 py-3 font-label-lg text-label-lg text-on-primary shadow-sm transition-all hover:bg-primary-container hover:text-on-primary-container"
+              >
+                ← Back to Home
+              </Link>
+            </div>
+          </main>
+          <Footer />
         </div>
       </div>
     );
@@ -307,27 +340,26 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
 
   if (!post.content) {
     return (
-      <div className="flex min-h-screen flex-col bg-gradient-to-br from-cream-50 to-sage-50 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900">
+      <div className="flex min-h-screen flex-col bg-surface text-on-surface">
         <NavBar theme={theme} setTheme={setTheme} />
-        {/* lg:pl-72 must match Navbar w-72 and SIDEBAR_WIDTH_PX in lib/nav-config.ts */}
-        <div className="flex min-h-screen flex-col pt-16 lg:pl-72 lg:pt-0">
+        <div className="flex min-h-screen flex-col pt-20">
           <main className="flex flex-grow flex-col items-center justify-center px-6 py-20">
             <div className="max-w-2xl text-center">
               <div className="mb-6 text-6xl sm:mb-8 sm:text-8xl">🚀</div>
-              <h1 className="mb-4 text-2xl font-bold text-charcoal-800 dark:text-slate-100 sm:mb-6 sm:text-4xl">
+              <h1 className="mb-4 font-headline-lg text-headline-lg text-primary sm:text-4xl">
                 {post.title}
               </h1>
-              <div className="mb-4 bg-gradient-to-r from-sage-500 to-gold-500 bg-clip-text text-xl font-semibold text-transparent sm:mb-6 sm:text-2xl">
+              <div className="mb-4 font-headline-sm text-headline-sm font-semibold text-secondary sm:text-2xl">
                 Coming Soon!
               </div>
-              <p className="mb-6 text-base leading-relaxed text-charcoal-600 dark:text-slate-300 sm:mb-8 sm:text-lg">
-                This blog post is currently being crafted with care. Stay tuned
-                for amazing content that&apos;s worth the wait!
+              <p className="mb-6 font-body-md text-body-md leading-relaxed text-on-surface-variant sm:mb-8 sm:text-body-lg">
+                This blog post is currently being crafted with deliberate
+                architectural care. Stay tuned for insights worth the wait!
               </p>
               <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:gap-4">
                 <Link
                   href="/#blog"
-                  className="inline-flex w-full items-center justify-center rounded-lg bg-sage-600 px-6 py-3 text-white transition-colors hover:bg-sage-700 dark:bg-gold-500 dark:hover:bg-gold-600 sm:w-auto"
+                  className="inline-flex w-full items-center justify-center rounded-lg bg-primary px-6 py-3 font-label-lg text-label-lg text-on-primary shadow-sm transition-all hover:bg-primary-container hover:text-on-primary-container sm:w-auto"
                 >
                   ← Back to Home
                 </Link>
@@ -341,7 +373,7 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
                     }
                     window.history.back();
                   }}
-                  className="inline-flex w-full items-center justify-center rounded-lg border border-sage-200 px-6 py-3 text-charcoal-700 transition-colors hover:bg-sage-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 sm:w-auto"
+                  className="inline-flex w-full items-center justify-center rounded-lg border border-surface-container-high bg-surface-container px-6 py-3 font-label-lg text-label-lg text-on-surface transition-all hover:bg-surface-container-high hover:text-primary sm:w-auto"
                 >
                   Go Back
                 </button>
@@ -355,24 +387,26 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cream-50 to-sage-50 dark:from-slate-900 dark:via-slate-800 dark:to-navy-900">
+    <div className="min-h-screen bg-surface text-on-surface transition-colors duration-500 selection:bg-primary-fixed selection:text-on-primary-fixed">
       <NavBar theme={theme} setTheme={setTheme} />
 
-      {/* lg:pl-72 must match Navbar w-72 and SIDEBAR_WIDTH_PX in lib/nav-config.ts */}
-      <div className="flex min-h-screen flex-col pt-16 lg:pl-72 lg:pt-0">
-        <header className="border-b border-sage-200 bg-cream-50/50 backdrop-blur-sm dark:border-slate-700 dark:bg-slate-800/50">
-          <div className="container mx-auto max-w-6xl px-6 py-8">
-            <nav aria-label="Breadcrumb" className="mb-4">
-              <ol className="scrollbar-none flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-1 text-sm text-charcoal-600 dark:text-slate-400">
+      <div className="flex min-h-screen flex-col pt-20">
+        <header className="border-surface-container-high/70 bg-surface-container-low/40 relative overflow-hidden border-b backdrop-blur-sm">
+          {/* Top Ambient Glow matching portfolio aesthetic */}
+          <div className="from-primary-fixed/20 via-secondary-fixed/10 pointer-events-none absolute -top-24 left-1/2 -z-10 h-[300px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-b to-transparent blur-3xl" />
+
+          <div className="mx-auto max-w-[1360px] px-margin py-space-xl md:px-margin-tablet lg:px-margin-desktop">
+            <nav aria-label="Breadcrumb" className="mb-space-md">
+              <ol className="scrollbar-none flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-1 font-label-sm text-label-sm">
                 <li className="inline-flex items-center gap-2">
                   <Link
                     href="/#blog"
-                    className="inline-flex h-auto min-h-0 shrink-0 items-center transition-colors hover:text-sage-600 dark:hover:text-gold-400"
+                    className="inline-flex h-auto min-h-0 shrink-0 items-center uppercase tracking-wider text-on-surface-variant transition-colors hover:text-primary"
                   >
                     Home
                   </Link>
                   <span
-                    className="shrink-0 select-none text-charcoal-400 dark:text-slate-500"
+                    className="text-on-surface-variant/40 shrink-0 select-none"
                     aria-hidden="true"
                   >
                     /
@@ -381,46 +415,60 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
                 <li className="inline-flex items-center gap-2">
                   <Link
                     href="/#blog"
-                    className="inline-flex h-auto min-h-0 shrink-0 items-center transition-colors hover:text-sage-600 dark:hover:text-gold-400"
+                    className="inline-flex h-auto min-h-0 shrink-0 items-center uppercase tracking-wider text-on-surface-variant transition-colors hover:text-primary"
                   >
                     Blog
                   </Link>
                   <span
-                    className="shrink-0 select-none text-charcoal-400 dark:text-slate-500"
+                    className="text-on-surface-variant/40 shrink-0 select-none"
                     aria-hidden="true"
                   >
                     /
                   </span>
                 </li>
                 <li
-                  className="min-w-0 truncate font-medium text-charcoal-800 dark:text-slate-200"
+                  className="min-w-0 truncate font-semibold text-primary"
                   aria-current="page"
                 >
                   {post.title}
                 </li>
               </ol>
             </nav>
-            <h1 className="mb-4 text-3xl font-bold leading-tight text-charcoal-800 dark:text-slate-100 sm:text-4xl lg:text-5xl">
+
+            <div className="mb-space-xs flex items-center gap-space-xs">
+              <span className="font-label-sm text-label-sm font-semibold uppercase tracking-widest text-secondary">
+                {post.category || "Perspective & Research"} // Technical Guide
+              </span>
+            </div>
+
+            <h1 className="mb-space-md text-balance font-headline-lg text-headline-lg leading-tight text-primary sm:text-4xl lg:text-5xl">
               {post.title}
             </h1>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-charcoal-600 dark:text-slate-400">
-              <div className="flex items-center gap-2">
-                <FileText className="h-4 w-4" />
+
+            <div className="flex flex-wrap items-center gap-x-space-md gap-y-space-xs pt-space-xs text-sm">
+              <div className="border-surface-container-high/60 inline-flex items-center gap-1.5 rounded-full border bg-surface-container px-3 py-1 font-label-sm text-label-sm text-on-surface">
+                <FileText className="h-3.5 w-3.5 text-secondary" />
                 <span>Technical Guide</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
+              <div className="border-surface-container-high/60 inline-flex items-center gap-1.5 rounded-full border bg-surface-container px-3 py-1 font-label-sm text-label-sm text-on-surface">
+                <Clock className="h-3.5 w-3.5 text-secondary" />
                 <span>{post.readTime}</span>
               </div>
+              {post.category && (
+                <div className="border-surface-container-high/60 inline-flex items-center gap-1.5 rounded-full border bg-surface-container px-3 py-1 font-label-sm text-label-sm text-on-surface">
+                  <span className="h-1.5 w-1.5 rounded-full bg-secondary" />
+                  <span>{post.category}</span>
+                </div>
+              )}
             </div>
           </div>
         </header>
 
-        <main className="container mx-auto grid max-w-6xl flex-grow grid-cols-1 gap-8 px-6 py-8 sm:py-12 lg:grid-cols-12 lg:gap-12">
+        <main className="mx-auto grid w-full max-w-[1360px] flex-grow grid-cols-1 gap-space-xl px-margin py-space-xl md:px-margin-tablet lg:grid-cols-12 lg:px-margin-desktop">
           <article className="lg:col-span-8">
             <div
               id="blog-content"
-              className="prose prose-sm max-w-none dark:prose-invert sm:prose-lg prose-headings:font-serif prose-headings:font-bold prose-headings:text-charcoal-800 prose-h2:mb-3 prose-h2:mt-8 prose-h2:scroll-mt-20 prose-h2:text-2xl prose-h2:text-sage-800 prose-h3:mb-2 prose-h3:mt-6 prose-h3:scroll-mt-20 prose-h3:text-xl prose-h3:text-sage-700 prose-p:mb-4 prose-p:leading-relaxed prose-p:text-charcoal-700 prose-a:text-sage-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-charcoal-800 prose-li:my-1 prose-li:text-charcoal-700 prose-table:w-full prose-table:border-collapse prose-th:border prose-th:border-sage-200 prose-th:bg-sage-50 prose-th:px-3 prose-th:py-2 prose-th:text-left prose-th:font-semibold prose-td:border prose-td:border-sage-200 prose-td:px-3 prose-td:py-1 dark:prose-headings:text-slate-100 dark:prose-h2:text-sage-400 dark:prose-h3:text-sage-300 dark:prose-p:text-slate-300 dark:prose-a:text-gold-400 dark:prose-strong:text-slate-200 dark:prose-li:text-slate-300 dark:prose-th:border-slate-600 dark:prose-th:bg-slate-800 dark:prose-td:border-slate-600 sm:prose-h2:mb-4 sm:prose-h2:mt-12 sm:prose-h2:text-3xl sm:prose-h3:mb-3 sm:prose-h3:mt-8 sm:prose-h3:text-2xl sm:prose-p:mb-6 sm:prose-th:px-6 sm:prose-th:py-3 sm:prose-td:px-6 sm:prose-td:py-2"
+              className="prose-p:text-on-surface/90 prose-blockquote:bg-surface-container/40 prose-li:text-on-surface/90 prose-table:border-surface-container-high/80 prose-td:border-surface-container-high/50 prose prose-sm max-w-none font-sans dark:prose-invert sm:prose-lg marker:text-secondary prose-headings:font-serif prose-headings:text-primary prose-p:mb-6 prose-p:font-body-md prose-p:text-body-md prose-p:leading-relaxed prose-blockquote:my-6 prose-blockquote:rounded-r-xl prose-blockquote:border-l-4 prose-blockquote:border-secondary prose-blockquote:px-4 prose-blockquote:py-2 prose-blockquote:italic prose-blockquote:text-on-surface-variant prose-strong:font-semibold prose-strong:text-on-surface prose-li:my-1.5 prose-table:my-6 prose-table:w-full prose-table:border-collapse prose-table:overflow-hidden prose-table:rounded-xl prose-table:border prose-th:border-b prose-th:border-surface-container-high prose-th:bg-surface-container prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:font-label-md prose-th:text-label-md prose-th:font-semibold prose-th:text-primary prose-td:border-b prose-td:px-4 prose-td:py-2.5 prose-td:font-body-sm prose-td:text-body-sm prose-td:text-on-surface"
             >
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
@@ -429,32 +477,57 @@ export default function BlogClient({ post }: Readonly<BlogClientProps>) {
                 {post.content.replace(/\{:[^}]+\}/g, "")}
               </ReactMarkdown>
             </div>
+
+            {/* End of article callout & navigation */}
+            <div className="border-surface-container-high/80 bg-surface-container-low/60 mt-space-2xl flex flex-col items-start justify-between gap-space-md rounded-2xl border p-space-lg shadow-sm sm:flex-row sm:items-center">
+              <div className="flex flex-col gap-1">
+                <span className="font-label-sm text-label-sm font-semibold uppercase tracking-widest text-secondary">
+                  Perspectives &amp; Technical Insights
+                </span>
+                <h3 className="font-headline-sm text-headline-sm text-primary">
+                  Explore More Articles
+                </h3>
+                <p className="font-body-sm text-body-sm text-on-surface-variant">
+                  Delve into monographs covering frontend architecture,
+                  monorepos, and distributed web services.
+                </p>
+              </div>
+              <Link
+                href="/#blog"
+                className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-primary px-space-lg py-2.5 font-label-lg text-label-lg text-on-primary shadow-sm transition-all hover:bg-primary-container hover:text-on-primary-container"
+              >
+                <span>← Back to All Articles</span>
+              </Link>
+            </div>
           </article>
 
           {toc.length > 0 && (
             <aside className="hidden lg:col-span-4 lg:block">
               <nav
-                className="sticky top-24 overflow-hidden rounded-lg border border-sage-200 bg-white/80 shadow-sm backdrop-blur-sm dark:border-slate-700 dark:bg-slate-800/80"
-                style={{ maxHeight: "calc(100vh - 8rem)" }}
+                className="border-surface-container-high/80 sticky top-28 overflow-hidden rounded-2xl border bg-surface shadow-sm transition-all"
+                style={{ maxHeight: "calc(100vh - 9rem)" }}
                 aria-label="Table of contents"
               >
-                <div className="border-b border-sage-200 bg-sage-50 p-4 dark:border-slate-700 dark:bg-slate-700">
-                  <h2 className="flex items-center gap-2 font-semibold text-charcoal-800 dark:text-slate-200">
-                    <FileText className="h-4 w-4" />
+                <div className="border-surface-container-high/60 bg-surface-container-low/60 flex items-center justify-between border-b p-space-md">
+                  <h2 className="flex items-center gap-2 font-headline-sm text-[16px] font-semibold text-primary">
+                    <FileText className="h-4 w-4 text-secondary" />
                     Table of Contents
                   </h2>
+                  <span className="font-label-sm text-label-sm font-semibold text-secondary">
+                    {Math.round(readingProgress)}% read
+                  </span>
                 </div>
                 <div
-                  className="overflow-y-auto p-4"
-                  style={{ maxHeight: "calc(100vh - 12rem)" }}
+                  className="overflow-y-auto p-space-sm"
+                  style={{ maxHeight: "calc(100vh - 14rem)" }}
                 >
-                  <ul className="space-y-1">
+                  <ul className="space-y-0.5">
                     {toc.map((item) => renderTocItem(item))}
                   </ul>
                 </div>
-                <div className="h-1 bg-sage-100 dark:bg-slate-700">
+                <div className="h-1.5 w-full bg-surface-container">
                   <div
-                    className="h-full bg-gradient-to-r from-sage-500 to-gold-500 transition-all duration-300"
+                    className="h-full bg-gradient-to-r from-primary via-secondary to-primary-container transition-all duration-300"
                     style={{ width: `${readingProgress}%` }}
                   />
                 </div>

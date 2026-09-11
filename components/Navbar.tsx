@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { DesktopSidebar } from "./navbar/DesktopSidebar";
-import { SocialDock } from "./navbar/SocialDock";
-import { MobileHeader } from "./navbar/MobileHeader";
-import { MobileDrawer } from "./navbar/MobileDrawer";
+import Link from "next/link";
+import { Sun, Moon, Menu, X, ArrowUp } from "lucide-react";
 import { BackToTop } from "./navbar/BackToTop";
 
 interface HeaderProps {
@@ -14,6 +12,15 @@ interface HeaderProps {
   readonly activeSection?: string;
   readonly scrollToSection?: (sectionId: string) => void;
 }
+
+const NAV_LINKS = [
+  { id: "about", label: "About" },
+  { id: "projects", label: "Projects" },
+  { id: "tech-stack", label: "Tech Stack" },
+  { id: "experience", label: "Experience" },
+  { id: "blog", label: "Blog" },
+  { id: "contact", label: "Contact" },
+] as const;
 
 export default function NavBar({
   theme,
@@ -56,8 +63,6 @@ export default function NavBar({
     }
   };
 
-  const handleHomeClick = () => handleNavClick("home");
-
   const scrollToTop = () => {
     if (isMainPage && scrollToSection) {
       scrollToSection("home");
@@ -68,7 +73,9 @@ export default function NavBar({
 
   const isItemActive = (item: string) =>
     isMainPage &&
-    (activeSection === item || (item === "home" && !activeSection));
+    (activeSection === item ||
+      (item === "home" && !activeSection) ||
+      (item === "tech-stack" && activeSection === "skills"));
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -76,28 +83,172 @@ export default function NavBar({
 
   return (
     <>
-      <DesktopSidebar
-        theme={theme}
-        toggleTheme={toggleTheme}
-        isItemActive={isItemActive}
-        handleNavClick={handleNavClick}
-        isBlogDetailPage={isBlogDetailPage}
-      />
-      <SocialDock />
-      <MobileHeader
-        theme={theme}
-        toggleTheme={toggleTheme}
-        mobileOpen={mobileOpen}
-        setMobileOpen={setMobileOpen}
-        onHomeClick={handleHomeClick}
-      />
-      <MobileDrawer
-        mobileOpen={mobileOpen}
-        setMobileOpen={setMobileOpen}
-        isItemActive={isItemActive}
-        handleNavClick={handleNavClick}
-        isBlogDetailPage={isBlogDetailPage}
-      />
+      <header
+        role="banner"
+        className="border-surface-container-high/60 bg-surface/85 fixed inset-x-0 top-0 z-50 border-b shadow-[0_1px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-colors duration-300"
+      >
+        <div className="mx-auto flex h-20 max-w-[1360px] items-center justify-between gap-space-md px-margin md:px-margin-tablet lg:px-margin-desktop">
+          {/* Brand Identity */}
+          <div className="flex items-center gap-space-lg">
+            {isBlogDetailPage ? (
+              <Link
+                href="/"
+                className="group flex items-center gap-space-sm"
+                aria-label="Back to Portfolio"
+              >
+                <div className="relative flex items-center justify-center rounded-full bg-surface-container p-0.5 shadow-sm transition-transform duration-300 group-hover:scale-105">
+                  <img
+                    alt="Profile"
+                    className="h-8 w-8 rounded-full object-cover"
+                    src="/profile.jpg"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-headline-sm text-headline-sm leading-none tracking-tight text-primary transition-colors group-hover:text-primary-container">
+                    Shahil Ahamad
+                  </span>
+                  <span className="mt-0.5 font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">
+                    ← Back to Portfolio
+                  </span>
+                </div>
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={() => handleNavClick("home")}
+                className="group flex items-center gap-space-sm text-left focus:outline-none"
+                aria-label="Go to Home"
+              >
+                <div className="relative flex items-center justify-center rounded-full bg-surface-container p-0.5 shadow-sm transition-transform duration-300 group-hover:scale-105">
+                  <img
+                    alt="Shahil Ahamad Profile"
+                    className="h-8 w-8 rounded-full object-cover"
+                    src="/profile.jpg"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-headline-sm text-headline-sm leading-none tracking-tight text-primary transition-colors group-hover:text-primary-container">
+                    Shahil Ahamad
+                  </span>
+                  <span className="mt-0.5 font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">
+                    Web Developer
+                  </span>
+                </div>
+              </button>
+            )}
+          </div>
+
+          {/* Desktop Navigation Links */}
+          <nav
+            aria-label="Main navigation"
+            className="hidden items-center gap-space-lg lg:flex"
+          >
+            {NAV_LINKS.map((link) => {
+              const active = isItemActive(link.id);
+              return (
+                <button
+                  key={link.id}
+                  type="button"
+                  onClick={() => handleNavClick(link.id)}
+                  className={`font-label-lg text-label-lg transition-colors duration-200 ${
+                    active
+                      ? "font-semibold text-primary"
+                      : "text-on-surface-variant hover:text-primary"
+                  }`}
+                  aria-current={active ? "page" : undefined}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Action CTAs */}
+          <div className="flex items-center gap-space-sm sm:gap-space-md">
+            {/* Dark / Light Mode Toggle */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="flex h-10 w-10 items-center justify-center rounded-lg bg-surface-container text-on-surface transition-colors hover:bg-surface-container-high hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              aria-label={
+                theme === "dark"
+                  ? "Switch to light mode"
+                  : "Switch to dark mode"
+              }
+            >
+              {theme === "dark" ? (
+                <Sun className="h-4 w-4 rotate-0 text-secondary transition-transform duration-300 hover:rotate-45" />
+              ) : (
+                <Moon className="h-4 w-4 text-primary transition-transform duration-300" />
+              )}
+            </button>
+
+            {/* Let's Connect CTA */}
+            <button
+              type="button"
+              onClick={() => handleNavClick("contact")}
+              className="hidden items-center justify-center rounded-lg bg-primary px-space-md py-2.5 font-label-lg text-label-lg text-on-primary shadow-sm transition-all hover:bg-primary-container hover:text-on-primary-container active:scale-95 sm:inline-flex"
+            >
+              Let's Connect
+            </button>
+
+            {/* Mobile Hamburger Toggle */}
+            <button
+              type="button"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="flex h-10 w-10 items-center justify-center rounded-lg bg-surface-container text-on-surface transition-colors hover:bg-surface-container-high hover:text-primary lg:hidden"
+              aria-label={
+                mobileOpen ? "Close navigation menu" : "Open navigation menu"
+              }
+              aria-expanded={mobileOpen}
+            >
+              {mobileOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Drawer Overlay & Dropdown */}
+        {mobileOpen && (
+          <div className="border-surface-container-high/70 bg-surface/95 animate-fadeIn border-t px-margin py-space-lg backdrop-blur-xl transition-all lg:hidden">
+            <nav
+              className="flex flex-col gap-space-sm"
+              aria-label="Mobile navigation"
+            >
+              {NAV_LINKS.map((link) => {
+                const active = isItemActive(link.id);
+                return (
+                  <button
+                    key={link.id}
+                    type="button"
+                    onClick={() => handleNavClick(link.id)}
+                    className={`flex items-center justify-between rounded-lg px-space-md py-2.5 text-left font-label-lg text-label-lg transition-colors ${
+                      active
+                        ? "bg-surface-container font-semibold text-primary"
+                        : "text-on-surface-variant hover:bg-surface-container-low hover:text-primary"
+                    }`}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    <span>{link.label}</span>
+                  </button>
+                );
+              })}
+              <button
+                type="button"
+                onClick={() => handleNavClick("contact")}
+                className="mt-space-sm inline-flex w-full items-center justify-center rounded-lg bg-primary px-space-md py-3 font-label-lg text-label-lg text-on-primary shadow-sm transition-all hover:bg-primary-container hover:text-on-primary-container"
+              >
+                Let's Connect
+              </button>
+            </nav>
+          </div>
+        )}
+      </header>
+
+      {/* Floating Back to top button */}
       <BackToTop onScrollToTop={scrollToTop} />
     </>
   );
