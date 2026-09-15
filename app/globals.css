@@ -320,3 +320,78 @@ html {
 #blog-content h3 {
   scroll-margin-top: 5rem; /* Matches sticky navbar height */
 }
+
+/* Code block syntax highlighting */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #64748b;
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: #94a3b8;
+}
+
+.token.namespace {
+  opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #fca5a5;
+}
+
+.token.boolean,
+.token.number {
+  color: #fcd34d;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #6ee7b7;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: #7dd3fc;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.token.function,
+.token.class-name {
+  color: #5eead4;
+  font-weight: 500;
+}
+
+.token.regex,
+.token.important,
+.token.variable,
+.token.parameter {
+  color: #93c5fd;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+

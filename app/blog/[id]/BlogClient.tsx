@@ -22,6 +22,17 @@ import {
   type TocItem,
 } from "@/hooks/use-table-of-contents";
 import { useReadingProgress } from "@/hooks/use-reading-progress";
+import Prism from "prismjs";
+import "prismjs/components/prism-bash";
+import "prismjs/components/prism-typescript";
+import "prismjs/components/prism-javascript";
+import "prismjs/components/prism-json";
+import "prismjs/components/prism-markdown";
+import "prismjs/components/prism-css";
+import "prismjs/components/prism-jsx";
+import "prismjs/components/prism-tsx";
+import "prismjs/components/prism-sql";
+import "prismjs/components/prism-python";
 
 function extractText(children: React.ReactNode): string {
   if (
@@ -89,6 +100,32 @@ function MarkdownH3({
   );
 }
 
+function highlightCode(code: string, rawLanguage: string): string {
+  const lang = rawLanguage.toLowerCase().trim();
+  const grammar =
+    Prism.languages[lang] ||
+    (lang === "ts" ? Prism.languages.typescript : undefined) ||
+    (lang === "js" ? Prism.languages.javascript : undefined) ||
+    (lang === "sh" || lang === "shell" || lang === "zsh"
+      ? Prism.languages.bash
+      : undefined) ||
+    (lang === "py" ? Prism.languages.python : undefined) ||
+    Prism.languages[lang] ||
+    Prism.languages.javascript;
+
+  if (grammar) {
+    try {
+      return Prism.highlight(code, grammar, lang);
+    } catch {
+      // Fallback to unhighlighted safe HTML
+    }
+  }
+  return code
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
 function MarkdownCode({
   className,
   children,
@@ -102,7 +139,7 @@ function MarkdownCode({
   if (!isBlock) {
     return (
       <code
-        className="border-surface-container-high/70 rounded-md border bg-surface-container px-1.5 py-0.5 font-mono text-xs text-primary sm:text-sm"
+        className="rounded-md border border-surface-container-high/80 bg-surface-container/80 px-1.5 py-0.5 font-mono text-[13px] font-medium text-primary dark:bg-surface-container-high/50 dark:text-teal-300"
         {...props}
       >
         {children}
@@ -112,43 +149,88 @@ function MarkdownCode({
 
   const handleCopy = () => {
     const textToCopy = rawText.replace(/\n$/, "");
-    navigator.clipboard.writeText(textToCopy);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(textToCopy);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   const language = className?.replace("language-", "") || "code";
+  const cleanCode = rawText.replace(/\n$/, "");
+  const lines = cleanCode.split("\n");
+  const highlightedHtml = highlightCode(cleanCode, language);
+  const isBash = ["bash", "sh", "shell", "zsh"].includes(
+    language.toLowerCase()
+  );
 
   return (
-    <div className="border-surface-container-high/80 group relative my-6 overflow-hidden rounded-xl border bg-surface shadow-sm">
-      <div className="border-surface-container-high/80 flex items-center justify-between border-b bg-surface-container px-4 py-2.5">
-        <span className="font-label-sm text-label-sm font-semibold uppercase tracking-wider text-on-surface-variant">
-          {language}
-        </span>
+    <div className="not-prose group relative my-6 overflow-hidden rounded-xl border border-[#23352d] dark:border-emerald-500/25 bg-[#0c1411] shadow-xl dark:shadow-2xl dark:shadow-emerald-950/40 transition-all duration-300 hover:border-emerald-500/40">
+      {/* Window Bar */}
+      <div className="flex items-center justify-between border-b border-white/[0.08] bg-[#0f1a16] px-4 py-2.5 sm:py-3 text-slate-200">
+        <div className="flex items-center gap-2.5">
+          {/* macOS traffic dots */}
+          <div className="flex items-center gap-1.5" aria-hidden="true">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]/90 transition-opacity group-hover:opacity-100" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/90 transition-opacity group-hover:opacity-100" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]/90 transition-opacity group-hover:opacity-100" />
+          </div>
+          <span className="ml-1 font-mono text-xs font-semibold uppercase tracking-wider text-slate-400">
+            {language}
+          </span>
+        </div>
+
         <button
           type="button"
           onClick={handleCopy}
-          aria-label={copied ? "Copied code" : "Copy"}
-          className="flex items-center gap-1.5 rounded-md px-2.5 py-1 font-label-sm text-label-sm text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-primary"
+          aria-label={copied ? "Copied code" : "Copy code"}
+          className="flex items-center gap-1.5 rounded-md border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 font-mono text-xs text-slate-300 transition-colors hover:bg-white/[0.1] hover:text-white"
         >
           {copied ? (
             <>
-              <Check className="h-3.5 w-3.5 text-primary" />
-              <span>Copied!</span>
+              <Check className="h-3.5 w-3.5 text-emerald-400" />
+              <span className="text-emerald-400">Copied!</span>
             </>
           ) : (
             <>
-              <Copy className="h-3.5 w-3.5" />
+              <Copy className="h-3.5 w-3.5 text-slate-400" />
               <span>Copy</span>
             </>
           )}
         </button>
       </div>
-      <pre className="bg-surface-container-lowest/80 !mt-0 overflow-x-auto !rounded-none p-4 font-mono text-xs leading-relaxed text-on-surface dark:bg-surface-container-lowest sm:text-sm">
-        <code className="font-mono text-on-surface" {...props}>
-          {children}
-        </code>
-      </pre>
+
+      {/* Code Block Body */}
+      <div className="overflow-x-auto p-4 sm:p-5 font-mono text-xs sm:text-[13px] leading-relaxed text-slate-100 bg-[#0c1411]">
+        <div className="flex items-start gap-3 sm:gap-4">
+          {/* Line Numbers or Bash Prompt */}
+          {lines.length > 1 ? (
+            <div
+              className="flex select-none flex-col text-right font-mono text-xs text-slate-600 dark:text-emerald-500/35 space-y-0 leading-relaxed pr-3 border-r border-white/[0.08]"
+              aria-hidden="true"
+            >
+              {lines.map((_, i) => (
+                <span key={i}>{i + 1}</span>
+              ))}
+            </div>
+          ) : isBash ? (
+            <div
+              className="select-none font-mono text-xs text-emerald-400/60 pr-1 leading-relaxed"
+              aria-hidden="true"
+            >
+              $
+            </div>
+          ) : null}
+
+          {/* Highlighted Code */}
+          <pre className="!m-0 !p-0 bg-transparent overflow-x-auto font-mono text-xs sm:text-[13px] leading-relaxed text-slate-100 flex-1 whitespace-pre">
+            <code
+              className="font-mono text-slate-100 block"
+              dangerouslySetInnerHTML={{ __html: highlightedHtml }}
+            />
+          </pre>
+        </div>
+      </div>
     </div>
   );
 }
