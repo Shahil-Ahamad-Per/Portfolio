@@ -79,74 +79,128 @@ export function AboutSection() {
           {/* Right Column: Interactive Code & Focus Area Mosaic */}
           <div className="flex flex-col gap-space-md lg:col-span-6">
             {/* Terminal / Architectural Shell */}
-            <div className="overflow-hidden rounded-xl bg-inverse-surface text-inverse-on-surface shadow-md">
+            <div className="group relative overflow-hidden rounded-xl border border-[#23352d] dark:border-emerald-500/25 bg-[#0c1411] shadow-xl dark:shadow-2xl dark:shadow-emerald-950/40 transition-all duration-300 hover:border-emerald-500/40">
+              {/* Subtle ambient highlight glow */}
+              <div className="pointer-events-none absolute -top-16 right-0 h-32 w-64 rounded-full bg-emerald-500/10 blur-3xl" />
+
               {/* Window Bar */}
-              <div className="flex items-center justify-between bg-tertiary px-space-md py-space-sm text-on-tertiary">
-                <div className="flex items-center gap-space-xs">
-                  <span className="h-2.5 w-2.5 rounded-full bg-error" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-secondary" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-primary-fixed" />
-                  <span className="ml-2 font-label-sm text-label-sm text-on-tertiary-container">
-                    shahil-ahamad.system.ts
-                  </span>
+              <div className="flex items-center gap-2 border-b border-white/[0.08] bg-[#0f1a16] px-4 py-3">
+                {/* macOS traffic dots */}
+                <div className="flex items-center gap-1.5" aria-hidden="true">
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]/90" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/90" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]/90" />
                 </div>
-                <span className="font-label-sm text-label-sm text-on-tertiary-container opacity-75">
-                  Production Engine
+                <span className="ml-1 font-mono text-xs text-slate-400">
+                  shahil-ahamad.system.ts
                 </span>
               </div>
 
               {/* Code Block Body */}
-              <div className="overflow-x-auto p-space-md font-label-md text-label-md leading-relaxed">
-                <div className="text-on-tertiary-container">
-                  <span className="text-secondary-fixed">interface</span>{" "}
-                  <span className="text-primary-fixed">
-                    EngineeringBlueprint
-                  </span>{" "}
-                  {"{"}
+              <div className="overflow-x-auto p-4 sm:p-5 font-mono text-xs sm:text-[13px] leading-relaxed text-slate-200">
+                <div className="flex items-start gap-4">
+                  {/* Line Numbers */}
+                  <div
+                    className="flex select-none flex-col text-right font-mono text-xs text-slate-600 dark:text-emerald-500/35 space-y-1.5 pr-3 border-r border-white/[0.08]"
+                    aria-hidden="true"
+                  >
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                    <span>6</span>
+                    <span>7</span>
+                    <span>8</span>
+                    <span>9</span>
+                    <span>10</span>
+                    <span>11</span>
+                  </div>
+
+                  {/* Highlighted Code */}
+                  <div className="flex flex-col space-y-1.5 font-mono text-xs sm:text-[13px] text-slate-200 min-w-max">
+                    <div>
+                      <span className="font-semibold text-amber-400">interface</span>{" "}
+                      <span className="font-semibold text-teal-300">
+                        EngineeringBlueprint
+                      </span>{" "}
+                      <span className="text-slate-400">{"{"}</span>
+                    </div>
+
+                    <div className="pl-4">
+                      <span className="text-slate-300">specialization</span>
+                      <span className="text-slate-500">: </span>
+                      <span className="text-emerald-300">
+                        "Full-Stack Architecture &amp; Interfaces"
+                      </span>
+                      <span className="text-slate-500">;</span>
+                    </div>
+
+                    <div className="pl-4">
+                      <span className="text-slate-300">architecture</span>
+                      <span className="text-slate-500">: </span>
+                      <span className="text-emerald-300">
+                        "Distributed / Cloud-Native"
+                      </span>
+                      <span className="text-slate-500">;</span>
+                    </div>
+
+                    <div className="pl-4">
+                      <span className="text-slate-300">stackCore</span>
+                      <span className="text-slate-500">: [</span>
+                      <span className="text-teal-200">"Next.js"</span>
+                      <span className="text-slate-500">, </span>
+                      <span className="text-teal-200">"TypeScript"</span>
+                      <span className="text-slate-500">, </span>
+                      <span className="text-teal-200">"Node.js"</span>
+                      <span className="text-slate-500">, </span>
+                      <span className="text-teal-200">"PostgreSQL"</span>
+                      <span className="text-slate-500">];</span>
+                    </div>
+
+                    <div className="pl-4">
+                      <span className="text-slate-300">corePrinciples</span>
+                      <span className="text-slate-500">: [</span>
+                    </div>
+
+                    <div className="pl-8">
+                      <span className="text-amber-200/90">
+                        "Semantic purity &amp; WCAG AA compliance"
+                      </span>
+                      <span className="text-slate-500">,</span>
+                    </div>
+
+                    <div className="pl-8">
+                      <span className="text-amber-200/90">
+                        "Zero-tolerance performance bottlenecks"
+                      </span>
+                      <span className="text-slate-500">,</span>
+                    </div>
+
+                    <div className="pl-8">
+                      <span className="text-amber-200/90">
+                        "Scalable microservice / serverless paradigms"
+                      </span>
+                    </div>
+
+                    <div className="pl-4">
+                      <span className="text-slate-500">];</span>
+                    </div>
+
+                    <div className="pl-4">
+                      <span className="text-slate-300">activeState</span>
+                      <span className="text-slate-500">: </span>
+                      <span className="text-emerald-300">
+                        "READY_FOR_COMMISSION"
+                      </span>
+                      <span className="text-slate-500">;</span>
+                    </div>
+
+                    <div>
+                      <span className="text-slate-400">{"}"}</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="pl-4 text-inverse-on-surface">
-                  specialization:{" "}
-                  <span className="text-secondary-fixed">
-                    "Full-Stack Architecture &amp; Interfaces"
-                  </span>
-                  ;
-                </div>
-                <div className="pl-4 text-inverse-on-surface">
-                  architecture:{" "}
-                  <span className="text-secondary-fixed">
-                    "Distributed / Cloud-Native"
-                  </span>
-                  ;
-                </div>
-                <div className="pl-4 text-inverse-on-surface">
-                  stackCore: [
-                  <span className="text-primary-fixed">"Next.js"</span>,{" "}
-                  <span className="text-primary-fixed">"TypeScript"</span>,{" "}
-                  <span className="text-primary-fixed">"Node.js"</span>,{" "}
-                  <span className="text-primary-fixed">"PostgreSQL"</span>
-                  ];
-                </div>
-                <div className="pl-4 text-inverse-on-surface">
-                  corePrinciples: [
-                </div>
-                <div className="pl-8 text-secondary-fixed-dim">
-                  "Semantic purity &amp; WCAG AA compliance",
-                </div>
-                <div className="pl-8 text-secondary-fixed-dim">
-                  "Zero-tolerance performance bottlenecks",
-                </div>
-                <div className="pl-8 text-secondary-fixed-dim">
-                  "Scalable microservice / serverless paradigms"
-                </div>
-                <div className="pl-4 text-inverse-on-surface">];</div>
-                <div className="pl-4 text-inverse-on-surface">
-                  activeState:{" "}
-                  <span className="text-secondary-fixed">
-                    "READY_FOR_COMMISSION"
-                  </span>
-                  ;
-                </div>
-                <div className="text-on-tertiary-container">{"}"}</div>
               </div>
             </div>
 
