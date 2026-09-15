@@ -22,6 +22,10 @@ export function useWelcomeScreen() {
   }, []);
 
   const handleWelcomeExit = () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo(0, 0);
+      window.history.replaceState(null, "", "#home");
+    }
     setShowWelcome(false);
     try {
       sessionStorage.setItem("hasVisitedInSession", "true");

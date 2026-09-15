@@ -188,7 +188,7 @@ html {
 }
 
 .font-serif {
-  font-family: var(--font-display), var(--font-serif);
+  font-family: var(--font-display), "Newsreader", Georgia, "Times New Roman", serif;
 }
 
 .font-sans {
@@ -197,6 +197,18 @@ html {
 
 .font-mono {
   font-family: var(--font-mono);
+}
+
+.font-cinzel {
+  font-family: "Cinzel", var(--font-display), "Newsreader", Georgia, serif;
+}
+
+.font-bodoni {
+  font-family: "Bodoni Moda", "Didot", var(--font-display), serif;
+}
+
+.font-syne {
+  font-family: "Syne", var(--font-sans), sans-serif;
 }
 
 .material-symbols-outlined {
@@ -250,7 +262,25 @@ html {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes scrollWheel {
+  0% {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
   }
 }
 
@@ -267,7 +297,11 @@ html {
 }
 
 .animate-bounceArrow {
-  animation: bounceArrow 1.5s infinite;
+  animation: bounceArrow 2s infinite ease-in-out;
+}
+
+.animate-scrollWheel {
+  animation: scrollWheel 2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
 .animation-delay-200 {

@@ -126,6 +126,10 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,600;0,6..96,800;0,6..96,900&family=Syne:wght@700;800&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body
         className={`${newsreader.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} bg-surface font-body-md text-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed`}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTheme } from "next-themes";
 import NavBar from "@/components/Navbar";
 import HeroSection from "./Sections/MainPage";
@@ -23,15 +23,36 @@ export default function Portfolio() {
     !showWelcome && mounted
   );
 
+  const onWelcomeExit = useCallback(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo(0, 0);
+      window.history.replaceState(null, "", "#home");
+    }
+    handleWelcomeExit();
+  }, [handleWelcomeExit]);
+
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    if (!showWelcome && mounted) {
+      const currentHash =
+        typeof window !== "undefined" ? window.location.hash : "";
+      if (!currentHash || currentHash === "#home") {
+        if (typeof window !== "undefined" && window.scrollY !== 0) {
+          window.scrollTo(0, 0);
+        }
+        scrollToSection("home", true);
+      }
+    }
+  }, [showWelcome, mounted, scrollToSection]);
+
   if (!mounted) return null;
-  if (showWelcome) return <WelcomeScreen onExit={handleWelcomeExit} />;
 
   return (
-    <div className="min-h-screen bg-surface text-on-surface transition-colors duration-500 selection:bg-primary-fixed selection:text-on-primary-fixed">
+    <div className="min-h-screen bg-surface text-on-surface transition-colors duration-500 selection:bg-primary-fixed selection:text-on-primary-fixed animate-fadeIn">
+      {showWelcome && <WelcomeScreen onExit={onWelcomeExit} />}
       <NavBar
         theme={theme}
         setTheme={setTheme}
