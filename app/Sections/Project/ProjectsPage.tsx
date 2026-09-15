@@ -37,7 +37,7 @@ export default function ProjectsSection() {
       </div>
 
       {/* Projects List (Clean, Professional, Non-Card Layout) */}
-      <div className="divide-y divide-surface-container-high/70 border-y border-surface-container-high/80">
+      <div className="divide-surface-container-high/70 border-surface-container-high/80 divide-y border-y">
         {projects.map((project) => {
           const isComingSoon =
             project.status === "Coming Soon" ||
@@ -46,7 +46,7 @@ export default function ProjectsSection() {
           return (
             <article
               key={project.title}
-              className="group relative flex flex-col justify-between gap-space-md py-space-lg transition-all duration-300 hover:bg-surface-container-low/40 rounded-xl px-space-md -mx-space-md sm:py-space-xl md:flex-row md:items-center"
+              className="hover:bg-surface-container-low/40 group relative -mx-space-md flex flex-col justify-between gap-space-md rounded-xl px-space-md py-space-lg transition-all duration-300 sm:py-space-xl md:flex-row md:items-center"
             >
               {/* Left Content: Title, Description & Tech Stack */}
               <div className="flex max-w-3xl flex-col gap-space-xs">
@@ -57,7 +57,7 @@ export default function ProjectsSection() {
                   </h3>
 
                   {isComingSoon && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-secondary-container/80 px-2.5 py-0.5 font-label-sm text-label-sm font-medium text-on-secondary-container">
+                    <span className="bg-secondary-container/80 inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 font-label-sm text-label-sm font-medium text-on-secondary-container">
                       <Clock className="h-3 w-3" />
                       {project.status === "Work In Progress"
                         ? "In Dev"
@@ -76,7 +76,7 @@ export default function ProjectsSection() {
                   {project.tech.map((t) => (
                     <span
                       key={t}
-                      className="rounded-md border border-surface-container-high/80 bg-surface-container-low/70 px-2.5 py-0.5 font-mono text-[11px] font-medium text-on-surface-variant/90 transition-colors group-hover:border-primary/30 group-hover:text-primary"
+                      className="border-surface-container-high/80 bg-surface-container-low/70 text-on-surface-variant/90 group-hover:border-primary/30 rounded-md border px-2.5 py-0.5 font-mono text-[11px] font-medium transition-colors group-hover:text-primary"
                     >
                       {t}
                     </span>
@@ -91,7 +91,7 @@ export default function ProjectsSection() {
                     variant="outline"
                     size="sm"
                     onClick={() => window.open(project.github, "_blank")}
-                    className="inline-flex items-center gap-1.5 rounded-lg border-surface-container-high bg-surface px-3.5 py-1.5 font-label-sm text-label-sm text-on-surface shadow-xs transition-colors hover:border-surface-container-highest hover:bg-surface-container hover:text-primary"
+                    className="shadow-xs inline-flex items-center gap-1.5 rounded-lg border-surface-container-high bg-surface px-3.5 py-1.5 font-label-sm text-label-sm text-on-surface transition-colors hover:border-surface-container-highest hover:bg-surface-container hover:text-primary"
                   >
                     <Code2 className="h-3.5 w-3.5" />
                     <span>Code</span>
@@ -102,7 +102,7 @@ export default function ProjectsSection() {
                   <Button
                     size="sm"
                     onClick={() => window.open(project.live, "_blank")}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-1.5 font-label-sm text-label-sm text-on-primary shadow-xs transition-all hover:bg-primary-container hover:text-on-primary-container"
+                    className="shadow-xs inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-1.5 font-label-sm text-label-sm text-on-primary transition-all hover:bg-primary-container hover:text-on-primary-container"
                   >
                     <span>Live Demo</span>
                     <ExternalLink className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

@@ -79,7 +79,7 @@ export function AboutSection() {
           {/* Right Column: Interactive Code & Focus Area Mosaic */}
           <div className="flex flex-col gap-space-md lg:col-span-6">
             {/* Terminal / Architectural Shell */}
-            <div className="group relative overflow-hidden rounded-xl border border-[#23352d] dark:border-emerald-500/25 bg-[#0c1411] shadow-xl dark:shadow-2xl dark:shadow-emerald-950/40 transition-all duration-300 hover:border-emerald-500/40">
+            <div className="group relative overflow-hidden rounded-xl border border-[#23352d] bg-[#0c1411] shadow-xl transition-all duration-300 hover:border-emerald-500/40 dark:border-emerald-500/25 dark:shadow-2xl dark:shadow-emerald-950/40">
               {/* Subtle ambient highlight glow */}
               <div className="pointer-events-none absolute -top-16 right-0 h-32 w-64 rounded-full bg-emerald-500/10 blur-3xl" />
 
@@ -97,11 +97,11 @@ export function AboutSection() {
               </div>
 
               {/* Code Block Body */}
-              <div className="overflow-x-auto p-4 sm:p-5 font-mono text-xs sm:text-[13px] leading-relaxed text-slate-200">
+              <div className="overflow-x-auto p-4 font-mono text-xs leading-relaxed text-slate-200 sm:p-5 sm:text-[13px]">
                 <div className="flex items-start gap-4">
                   {/* Line Numbers */}
                   <div
-                    className="flex select-none flex-col text-right font-mono text-xs text-slate-600 dark:text-emerald-500/35 space-y-1.5 pr-3 border-r border-white/[0.08]"
+                    className="flex select-none flex-col space-y-1.5 border-r border-white/[0.08] pr-3 text-right font-mono text-xs text-slate-600 dark:text-emerald-500/35"
                     aria-hidden="true"
                   >
                     <span>1</span>
@@ -118,9 +118,11 @@ export function AboutSection() {
                   </div>
 
                   {/* Highlighted Code */}
-                  <div className="flex flex-col space-y-1.5 font-mono text-xs sm:text-[13px] text-slate-200 min-w-max">
+                  <div className="flex min-w-max flex-col space-y-1.5 font-mono text-xs text-slate-200 sm:text-[13px]">
                     <div>
-                      <span className="font-semibold text-amber-400">interface</span>{" "}
+                      <span className="font-semibold text-amber-400">
+                        interface
+                      </span>{" "}
                       <span className="font-semibold text-teal-300">
                         EngineeringBlueprint
                       </span>{" "}

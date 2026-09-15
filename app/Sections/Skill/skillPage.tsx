@@ -221,17 +221,15 @@ export default function SkillsSection({
               <Database className="h-5 w-5 text-secondary" />
             </div>
             <div className="flex flex-wrap gap-space-xs">
-              {["PostgreSQL", "MongoDB", "MySQL", "Supabase"].map(
-                (tech) => (
-                  <span
-                    key={tech}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-surface-container px-space-sm py-1 font-label-sm text-label-sm text-on-surface"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-secondary"></span>{" "}
-                    {tech}
-                  </span>
-                )
-              )}
+              {["PostgreSQL", "MongoDB", "MySQL", "Supabase"].map((tech) => (
+                <span
+                  key={tech}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-surface-container px-space-sm py-1 font-label-sm text-label-sm text-on-surface"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-secondary"></span>{" "}
+                  {tech}
+                </span>
+              ))}
             </div>
             <div className="mt-auto flex flex-col gap-1 pt-space-sm font-body-sm text-body-sm text-on-surface-variant">
               <span className="font-label-sm text-label-sm font-semibold uppercase text-on-surface">

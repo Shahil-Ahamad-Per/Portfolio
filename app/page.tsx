@@ -51,7 +51,7 @@ export default function Portfolio() {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen bg-surface text-on-surface transition-colors duration-500 selection:bg-primary-fixed selection:text-on-primary-fixed animate-fadeIn">
+    <div className="animate-fadeIn min-h-screen bg-surface text-on-surface transition-colors duration-500 selection:bg-primary-fixed selection:text-on-primary-fixed">
       {showWelcome && <WelcomeScreen onExit={onWelcomeExit} />}
       <NavBar
         theme={theme}

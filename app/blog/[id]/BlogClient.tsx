@@ -139,7 +139,7 @@ function MarkdownCode({
   if (!isBlock) {
     return (
       <code
-        className="rounded-md border border-surface-container-high/80 bg-surface-container/80 px-1.5 py-0.5 font-mono text-[13px] font-medium text-primary dark:bg-surface-container-high/50 dark:text-teal-300"
+        className="border-surface-container-high/80 bg-surface-container/80 dark:bg-surface-container-high/50 rounded-md border px-1.5 py-0.5 font-mono text-[13px] font-medium text-primary dark:text-teal-300"
         {...props}
       >
         {children}
@@ -165,9 +165,9 @@ function MarkdownCode({
   );
 
   return (
-    <div className="not-prose group relative my-6 overflow-hidden rounded-xl border border-[#23352d] dark:border-emerald-500/25 bg-[#0c1411] shadow-xl dark:shadow-2xl dark:shadow-emerald-950/40 transition-all duration-300 hover:border-emerald-500/40">
+    <div className="not-prose group relative my-6 overflow-hidden rounded-xl border border-[#23352d] bg-[#0c1411] shadow-xl transition-all duration-300 hover:border-emerald-500/40 dark:border-emerald-500/25 dark:shadow-2xl dark:shadow-emerald-950/40">
       {/* Window Bar */}
-      <div className="flex items-center justify-between border-b border-white/[0.08] bg-[#0f1a16] px-4 py-2.5 sm:py-3 text-slate-200">
+      <div className="flex items-center justify-between border-b border-white/[0.08] bg-[#0f1a16] px-4 py-2.5 text-slate-200 sm:py-3">
         <div className="flex items-center gap-2.5">
           {/* macOS traffic dots */}
           <div className="flex items-center gap-1.5" aria-hidden="true">
@@ -201,12 +201,12 @@ function MarkdownCode({
       </div>
 
       {/* Code Block Body */}
-      <div className="overflow-x-auto p-4 sm:p-5 font-mono text-xs sm:text-[13px] leading-relaxed text-slate-100 bg-[#0c1411]">
+      <div className="overflow-x-auto bg-[#0c1411] p-4 font-mono text-xs leading-relaxed text-slate-100 sm:p-5 sm:text-[13px]">
         <div className="flex items-start gap-3 sm:gap-4">
           {/* Line Numbers or Bash Prompt */}
           {lines.length > 1 ? (
             <div
-              className="flex select-none flex-col text-right font-mono text-xs text-slate-600 dark:text-emerald-500/35 space-y-0 leading-relaxed pr-3 border-r border-white/[0.08]"
+              className="flex select-none flex-col space-y-0 border-r border-white/[0.08] pr-3 text-right font-mono text-xs leading-relaxed text-slate-600 dark:text-emerald-500/35"
               aria-hidden="true"
             >
               {lines.map((_, i) => (
@@ -215,7 +215,7 @@ function MarkdownCode({
             </div>
           ) : isBash ? (
             <div
-              className="select-none font-mono text-xs text-emerald-400/60 pr-1 leading-relaxed"
+              className="select-none pr-1 font-mono text-xs leading-relaxed text-emerald-400/60"
               aria-hidden="true"
             >
               $
@@ -223,9 +223,9 @@ function MarkdownCode({
           ) : null}
 
           {/* Highlighted Code */}
-          <pre className="!m-0 !p-0 bg-transparent overflow-x-auto font-mono text-xs sm:text-[13px] leading-relaxed text-slate-100 flex-1 whitespace-pre">
+          <pre className="!m-0 flex-1 overflow-x-auto whitespace-pre bg-transparent !p-0 font-mono text-xs leading-relaxed text-slate-100 sm:text-[13px]">
             <code
-              className="font-mono text-slate-100 block"
+              className="block font-mono text-slate-100"
               dangerouslySetInnerHTML={{ __html: highlightedHtml }}
             />
           </pre>

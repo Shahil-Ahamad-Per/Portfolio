@@ -188,7 +188,8 @@ html {
 }
 
 .font-serif {
-  font-family: var(--font-display), "Newsreader", Georgia, "Times New Roman", serif;
+  font-family:
+    var(--font-display), "Newsreader", Georgia, "Times New Roman", serif;
 }
 
 .font-sans {
@@ -394,4 +395,3 @@ html {
 .token.italic {
   font-style: italic;
 }
-
