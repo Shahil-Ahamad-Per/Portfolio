@@ -155,7 +155,6 @@ export default function SkillsSection({
                 "Next.js",
                 "TypeScript",
                 "Tailwind CSS",
-                "Vue.js",
                 "JavaScript",
               ].map((tech) => (
                 <span
@@ -192,7 +191,6 @@ export default function SkillsSection({
                 "Express.js",
                 "GraphQL",
                 "Prisma",
-                "Python",
                 "RESTful APIs",
               ].map((tech) => (
                 <span
@@ -223,7 +221,7 @@ export default function SkillsSection({
               <Database className="h-5 w-5 text-secondary" />
             </div>
             <div className="flex flex-wrap gap-space-xs">
-              {["PostgreSQL", "MongoDB", "MySQL", "Supabase", "Redis"].map(
+              {["PostgreSQL", "MongoDB", "MySQL", "Supabase"].map(
                 (tech) => (
                   <span
                     key={tech}
