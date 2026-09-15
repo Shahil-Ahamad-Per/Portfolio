@@ -1,4 +1,13 @@
-export const projects = [
+export interface Project {
+  title: string;
+  description: string;
+  tech: string[];
+  github?: string;
+  live?: string;
+  status?: string;
+}
+
+export const projects: Project[] = [
   {
     title: "Express Js Weather API",
     description: "A Weather API build using Node.js, Express.js, and Swagger.",
@@ -49,7 +58,6 @@ export const projects = [
     live: "https://bagchal.shahilahamad.com.np/",
     status: "Work In Progress",
   },
-
   {
     title: "Aditya Rana Portfolio",
     description: "A Portfolio Website build using Next.js, Tailwind CSS.",
