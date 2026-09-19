@@ -100,7 +100,7 @@ export default function WelcomeScreen({
   return (
     <div className="relative min-h-screen overflow-hidden">
       <div
-        className={`ease-[cubic-bezier(0.76,0,0.24,1)] fixed inset-0 z-[100] flex flex-col items-center justify-center bg-surface transition-transform duration-700 dark:bg-[radial-gradient(ellipse_85%_65%_at_50%_50%,#172621_0%,#0e1513_100%)] ${
+        className={`ease-[cubic-bezier(0.76,0,0.24,1)] bg-surface fixed inset-0 z-[100] flex flex-col items-center justify-center transition-transform duration-700 dark:bg-[radial-gradient(ellipse_85%_65%_at_50%_50%,#172621_0%,#0e1513_100%)] ${
           isExiting ? "pointer-events-none -translate-y-full" : "translate-y-0"
         }`}
         style={
@@ -116,7 +116,7 @@ export default function WelcomeScreen({
         <div className="relative z-10 flex w-full flex-col items-center justify-center px-4 text-center sm:px-6 md:px-8">
           {/* Monumental Screen-Covering WELCOME Heading */}
           <h1
-            className={`font-serif whitespace-nowrap text-[clamp(3.5rem,15.2vw,17.5rem)] font-bold uppercase leading-none tracking-[0.03em] sm:tracking-[0.04em] ${
+            className={`whitespace-nowrap font-serif text-[clamp(3.5rem,15.2vw,17.5rem)] font-bold uppercase leading-none tracking-[0.03em] sm:tracking-[0.04em] ${
               welcomeTextAnimated
                 ? "translate-y-0 scale-100 opacity-100"
                 : "translate-y-8 scale-[0.97] opacity-0"
@@ -137,11 +137,11 @@ export default function WelcomeScreen({
               className="group flex flex-col items-center gap-2 rounded-xl p-2 transition-all hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               {/* Modern Mouse Scroll Pill */}
-              <div className="border-primary/40 dark:border-primary/50 flex h-8 w-5 items-start justify-center rounded-full border-2 p-1 shadow-sm transition-all group-hover:border-primary dark:shadow-[0_0_12px_rgba(139,199,175,0.15)] dark:group-hover:border-primary">
+              <div className="flex h-8 w-5 items-start justify-center rounded-full border-2 border-primary/40 p-1 shadow-sm transition-all group-hover:border-primary dark:border-primary/50 dark:shadow-[0_0_12px_rgba(139,199,175,0.15)] dark:group-hover:border-primary">
                 <div className="animate-scrollWheel h-1.5 w-1 rounded-full bg-primary shadow-sm dark:bg-primary dark:shadow-[0_0_6px_rgba(139,199,175,0.8)]" />
               </div>
 
-              <span className="font-sans text-xs font-semibold uppercase tracking-widest text-on-surface-variant transition-colors group-hover:text-primary dark:text-on-surface-variant dark:group-hover:text-primary sm:text-sm">
+              <span className="text-on-surface-variant dark:text-on-surface-variant font-sans text-xs font-semibold uppercase tracking-widest transition-colors group-hover:text-primary dark:group-hover:text-primary sm:text-sm">
                 Scroll to explore
               </span>
 
