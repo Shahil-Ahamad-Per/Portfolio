@@ -116,11 +116,7 @@ export default function WelcomeScreen({
         <div className="relative z-10 flex w-full flex-col items-center justify-center px-4 text-center sm:px-6 md:px-8">
           {/* Monumental Screen-Covering WELCOME Heading */}
           <h1
-            style={{
-              fontFamily:
-                '"Cinzel", var(--font-display), "Newsreader", "Playfair Display", Georgia, serif',
-            }}
-            className={`font-cinzel whitespace-nowrap font-serif text-[clamp(3.5rem,15.2vw,17.5rem)] font-bold uppercase leading-none tracking-[0.03em] sm:tracking-[0.04em] ${
+            className={`font-serif whitespace-nowrap text-[clamp(3.5rem,15.2vw,17.5rem)] font-bold uppercase leading-none tracking-[0.03em] sm:tracking-[0.04em] ${
               welcomeTextAnimated
                 ? "translate-y-0 scale-100 opacity-100"
                 : "translate-y-8 scale-[0.97] opacity-0"
